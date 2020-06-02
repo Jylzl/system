@@ -1,0 +1,30 @@
+/* theme color */
+$--color-primary: #409EFF;
+
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+// 滚动条
+.scrollbar-wrapper {
+    overflow-x: hidden !important;
+}
+
+.el-scrollbar,
+.el-scrollbar__view {
+    height: 100%;
+}
+
+.el-scrollbar__bar {
+    right: 1px;
+}
+
+.el-scrollbar__thumb {
+    border-radius: 0;
+}
+
+//输入框背景色透明
+.el-input input {
+    background-color: transparent;
+}
