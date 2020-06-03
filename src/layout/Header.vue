@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-05-25 11:56:07
+ * @lastTime: 2020-06-03 11:50:46
  -->
 <template>
 	<div class="header-box">
@@ -28,6 +28,9 @@
 					@blur="siteSearchShow(false)"
 				>
 					<el-option v-for="item in options" :key="item.path" :value="item" :label="item.name" />
+				</el-select>
+				<el-select v-model="search" placeholder="请选择" size="small">
+					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
 				</el-select>
 			</div>
 			<div class="message">
