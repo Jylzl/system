@@ -3,13 +3,13 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-10 14:40:47
+ * @lastTime: 2020-06-10 14:17:19
  -->
 <template>
 	<el-container>
 		<el-aside width="240px">
 			<div class="left-top">
-				<el-button type="text" icon="el-icon-menu" @click="menuTreeClick(-1)">顶级机构</el-button>
+				<el-button type="text" icon="el-icon-menu" @click="menuTreeClick(-1)">顶级菜单</el-button>
 				<el-button type="text" icon="el-icon-refresh" @click="menuTreeClick(nowMenuID)">刷新</el-button>
 			</div>
 			<div class="left-center" v-loading="menuTreeLoading">
@@ -126,7 +126,6 @@
 									</el-form>
 								</template>
 							</el-table-column>
-							<el-table-column prop="menuId" label="ID" width="80" align="center"></el-table-column>
 							<el-table-column prop="orderNum" label="排序" width="60" align="center"></el-table-column>
 							<el-table-column label="类型" width="80" align="center">
 								<template slot-scope="scope">
@@ -184,28 +183,6 @@
 						</el-table>
 					</div>
 				</el-scrollbar>
-			</div>
-			<div class="right-bottom">
-				<div class="right-bottom-left">
-					<el-button
-						type="danger"
-						size="small"
-						class="m-lr-5"
-						icon="el-icon-delete"
-						@click="delSelectUser"
-					>删除</el-button>
-				</div>
-				<div class="right-bottom-right">
-					<el-pagination
-						:current-page="1"
-						:page-sizes="[10,20]"
-						:page-size="10"
-						:pager-count="5"
-						layout="total, sizes, prev, pager, next, jumper"
-						:total="100"
-						background
-					></el-pagination>
-				</div>
 			</div>
 		</el-main>
 	</el-container>
@@ -379,12 +356,6 @@ export default {
 .el-table__body-wrapper {
 	height: calc(100% - 40px);
 }
-
-.el-table--group::after,
-.el-table--border::after,
-.el-table::before {
-	background-color: #fff;
-}
 </style>
 
 <style scoped>
@@ -413,6 +384,7 @@ export default {
 	box-sizing: border-box;
 	height: 50px;
 	padding: 5px 15px;
+	line-height: 40px;
 }
 
 .left-top,
@@ -423,17 +395,11 @@ export default {
 
 .left-center,
 .right-table {
-	height: calc(100% - 100px);
+	height: calc(100% - 50px);
 }
 
 .right-bottom {
-	justify-content: space-between;
-	border-top: 1px dashed #e7ecf3;
-}
-
-.right-bottom .right-bottom-left,
-.right-bottom .right-bottom-right {
-	align-items: center;
+	justify-content: flex-start;
 }
 
 .right-bottom .el-dropdown,
@@ -456,6 +422,15 @@ export default {
 
 .table-box {
 	height: 100%;
+}
+
+.list-paging {
+	box-sizing: border-box;
+	height: 50px;
+	line-height: 50px;
+	margin-top: 30px;
+	padding: 5px 15px;
+	text-align: right;
 }
 
 .news-link {

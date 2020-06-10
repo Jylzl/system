@@ -3,13 +3,16 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-03 11:50:46
+ * @lastTime: 2020-06-10 17:47:22
  -->
 <template>
 	<div class="header-box">
 		<div class="header-left">header</div>
 		<div class="header-right">
 			<div class="siteSearch-form" :class="{'show':show}">
+				<el-select v-model="search" placeholder="请选择站点" size="mini" class="site-select mr-20">
+					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+				</el-select>
 				<el-button type="text" @click.stop="siteSearchShow(true)">
 					<svg width="26" height="26">
 						<image xlink:href="@/assets/svg/search.svg" src="svg.png" width="26" height="26" />
@@ -29,11 +32,8 @@
 				>
 					<el-option v-for="item in options" :key="item.path" :value="item" :label="item.name" />
 				</el-select>
-				<el-select v-model="search" placeholder="请选择" size="small">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-				</el-select>
 			</div>
-			<div class="message">
+			<div class="message mr-20">
 				<el-button @click="toNews" type="text">
 					<el-badge is-dot class="user-name">
 						<svg width="26" height="26">
@@ -96,7 +96,7 @@ export default {
 			return { userName: "admin" };
 		},
 		routes() {
-			console.log(this.$store.getters.getRoutes[0].children);
+			// console.log(this.$store.getters.getRoutes[0].children);
 			return this.$store.getters.getRoutes[0].children;
 		}
 	},
@@ -238,6 +238,10 @@ export default {
 </script>
 
 <style  lang="scss" scoped>
+.mr-20 {
+	margin-right: 20px;
+}
+
 .header-box {
 	display: flex;
 	flex-direction: row;
@@ -284,10 +288,6 @@ export default {
 	margin-right: 8px;
 }
 
-.message {
-	margin-right: 20px;
-}
-
 .header-search-select {
 	display: flex;
 	align-items: center;
@@ -312,7 +312,9 @@ export default {
 		vertical-align: middle;
 		color: #fff;
 	}
-
+	/deep/ input {
+		background-color: transparent;
+	}
 	/deep/ .el-input.is-focus .el-input__inner {
 		border-bottom: 2px solid #fff;
 	}
@@ -366,6 +368,16 @@ export default {
 		display: block;
 		width: 210px;
 		margin-left: 10px;
+	}
+}
+
+.site-select {
+	display: flex;
+	align-items: center;
+
+	/deep/ input {
+		border: 1px solid #e6f7f8;
+		background: #e6f7f8;
 	}
 }
 </style>

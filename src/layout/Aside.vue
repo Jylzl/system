@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-09 20:22:56
  * @LastAuthor: lizlong
- * @lastTime: 2019-08-22 17:58:44
+ * @lastTime: 2020-06-10 11:21:15
  -->
 <template>
   <div class="p-aside">
@@ -102,7 +102,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.routers);
+    // console.log(this.routers);
   },
   methods: {}
 };

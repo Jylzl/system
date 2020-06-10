@@ -1,10 +1,11 @@
-/*
- * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-08-22 18:00:31
- * @LastEditTime: 2020-05-08 11:53:31
- * @LastEditors: OBKoro1
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2020-05-21 01:36:36
+ * @LastAuthor: lizlong
+ * @lastTime: 2020-06-10 11:04:30
  */
+
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
@@ -13,7 +14,7 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || '信息资源管理平台' // page title
+const name = defaultSettings.title // page title
 
 module.exports = {
     publicPath: '/' + process.env.BASE_URL, // 根路径

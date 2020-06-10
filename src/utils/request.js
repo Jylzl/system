@@ -11,7 +11,7 @@
  * @Author: lizlong<94648929@qq.com>
  * @Date: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-06 17:46:37
+ * @lastTime: 2020-06-10 11:24:04
  */
 
 import axios from 'axios'
@@ -97,6 +97,7 @@ service.interceptors.response.use(
 		return response.data;
 	},
 	error => {
+		console.log(error)
 		showMessage('服务器响应失败');
 		return Promise.reject(error)
 	}

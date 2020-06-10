@@ -3,11 +3,10 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-02 10:57:10
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-01 16:46:22
+ * @lastTime: 2020-06-10 11:15:38
  */
 
 import service from "@/utils/request";
-import serviceJson from "@/utils/requestJson";
 import api from "@/api/api";
 import code from "@/code/code";
 import { deepClones } from '@/utils/tools'
@@ -19,8 +18,6 @@ const pageGroup = [20, 40, 100, 200];
 export default {
     install(Vue) {
         Vue.prototype.$axios = service; //axios全局方法(正常form提交)
-        Vue.prototype.$json = serviceJson; //axios全局方法（json格式提交）
-        // Vue.prototype.$httpajax = service; //axios全局方法（json格式提交）
         window.axios = service;
         Vue.prototype.$api = api; //api地址全局方法
         Vue.prototype.$code = code; //code状态码全局方法

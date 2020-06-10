@@ -45,6 +45,16 @@ const routes = [
             children: [
                 {
                     meta: {
+                        title: '菜单管理',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/power/menu',
+                    name: 'Menu',
+                    component: () => import('@/views/power/Menu.vue')
+                }, {
+                    meta: {
                         title: '区域管理',
                         hidden: false,
                         leaf: true,
@@ -89,13 +99,35 @@ const routes = [
             meta: {
                 title: '应用管理',
                 hidden: false,
-                leaf: true,
+                leaf: false,
                 iconCls: "el-icon-connection"
             },
             path: '/app',
             name: 'App',
-            component: () => import('@/views/work/Work.vue')
-        },]
+            component: ChildView,
+            children: [
+                {
+                    meta: {
+                        title: '应用一',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/app/one',
+                    name: 'AppOne',
+                    component: () => import('@/views/app/AppOne.vue')
+                }, {
+                    meta: {
+                        title: '应用二',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/app/two',
+                    name: 'AppTwo',
+                    component: () => import('@/views/app/AppTwo.vue')
+                }]
+        }]
     },
     {
         meta: {
@@ -140,6 +172,15 @@ const routes = [
         },
         path: '/404',
         name: 'err404',
+        component: () => import('@/views/error/404.vue')
+    },
+    {
+        meta: {
+            title: '404',
+            hidden: true
+        },
+        path: '*',
+        name: 'err404all',
         component: () => import('@/views/error/404.vue')
     }
 ]
