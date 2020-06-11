@@ -3,35 +3,37 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-10 17:47:22
+ * @lastTime: 2020-06-11 18:20:48
  -->
 <template>
 	<div class="header-box">
 		<div class="header-left">header</div>
 		<div class="header-right">
 			<div class="siteSearch-form" :class="{'show':show}">
-				<el-select v-model="search" placeholder="请选择站点" size="mini" class="site-select mr-20">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+				<el-select v-model="site" placeholder="请选择站点" size="mini" class="site-select mr-20">
+					<el-option v-for="item in siteList" :key="item.value" :label="item.label" :value="item.value"></el-option>
 				</el-select>
-				<el-button type="text" @click.stop="siteSearchShow(true)">
-					<svg width="26" height="26">
-						<image xlink:href="@/assets/svg/search.svg" src="svg.png" width="26" height="26" />
-					</svg>
-				</el-button>
-				<el-select
-					ref="siteSearchInput"
-					v-model="search"
-					:remote-method="querySearch"
-					filterable
-					default-first-option
-					remote
-					placeholder="请输入内容"
-					class="header-search-select"
-					@change="change"
-					@blur="siteSearchShow(false)"
-				>
-					<el-option v-for="item in options" :key="item.path" :value="item" :label="item.name" />
-				</el-select>
+				<el-popover placement="bottom" width="260" trigger="click">
+					<el-select
+						ref="siteSearchInput"
+						v-model="search"
+						:remote-method="querySearch"
+						filterable
+						default-first-option
+						remote
+						placeholder="请输入您要查找的内容"
+						@change="change"
+						@blur="siteSearchShow(false)"
+						class="w100"
+					>
+						<el-option v-for="item in options" :key="item.path" :value="item" :label="item.name" />
+					</el-select>
+					<el-button type="text" slot="reference">
+						<svg width="26" height="26">
+							<image xlink:href="@/assets/svg/search.svg" src="svg.png" width="26" height="26" />
+						</svg>
+					</el-button>
+				</el-popover>
 			</div>
 			<div class="message mr-20">
 				<el-button @click="toNews" type="text">
@@ -77,7 +79,22 @@ export default {
 			options: [],
 			searchPool: [],
 			show: false,
-			fuse: undefined
+			fuse: undefined,
+			site: "1",
+			siteList: [
+				{
+					value: "1",
+					label: "孝感市门户网站"
+				},
+				{
+					value: "2",
+					label: "大悟县门户网站"
+				},
+				{
+					value: "3",
+					label: "孝南区门户网站"
+				}
+			]
 		};
 	},
 	watch: {
@@ -286,57 +303,6 @@ export default {
 
 .user-header-img {
 	margin-right: 8px;
-}
-
-.header-search-select {
-	display: flex;
-	align-items: center;
-	font-size: 18px;
-	transition: width 0.2s;
-	width: 0;
-	overflow: hidden;
-	background: transparent;
-	border-radius: 0;
-	display: inline-block;
-	vertical-align: middle;
-	border-radius: 10px;
-	padding-top: 8px;
-
-	/deep/ .el-input__inner {
-		border-radius: 0;
-		border: 0;
-		padding-left: 0;
-		padding-right: 0;
-		box-shadow: none !important;
-		border-bottom: 2px solid #fff;
-		vertical-align: middle;
-		color: #fff;
-	}
-	/deep/ input {
-		background-color: transparent;
-	}
-	/deep/ .el-input.is-focus .el-input__inner {
-		border-bottom: 2px solid #fff;
-	}
-
-	/deep/ input::-webkit-input-placeholder {
-		color: #fff;
-	}
-
-	/deep/ input::-moz-placeholder {
-		/* Mozilla Firefox 19+ */
-		color: #fff;
-	}
-
-	/deep/ input:-moz-placeholder {
-		/* Mozilla Firefox 4 to 18 */
-		color: #fff;
-	}
-
-	/deep/ input:-ms-input-placeholder {
-		/* Internet Explorer 10-11 */
-		color: #fff;
-	}
 }
 
 .siteSearch-form {
