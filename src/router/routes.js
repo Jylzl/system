@@ -126,6 +126,48 @@ const routes = [
                     path: '/app/two',
                     name: 'AppTwo',
                     component: () => import('@/views/app/AppTwo.vue')
+                }, {
+                    meta: {
+                        title: '应用三',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/app/three',
+                    name: 'AppThree',
+                    component: () => import('@/views/app/AppThree.vue')
+                }]
+        }, {
+            meta: {
+                title: '运维管理',
+                hidden: false,
+                leaf: false,
+                iconCls: "el-icon-odometer"
+            },
+            path: '/monitor',
+            name: 'Monitor',
+            component: ChildView,
+            children: [
+                {
+                    meta: {
+                        title: '百度统计',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/app/one1',
+                    name: 'AppOne1',
+                    component: () => import('@/views/app/AppOne.vue')
+                }, {
+                    meta: {
+                        title: '系统监控',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/app/two1',
+                    name: 'AppTwo1',
+                    component: () => import('@/views/app/AppTwo.vue')
                 }]
         }]
     },

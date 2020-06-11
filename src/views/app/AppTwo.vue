@@ -6,5 +6,14 @@
  * @lastTime: 2020-06-10 14:05:08
 --> 
 <template>
-  <div>app1</div>
+  <MyEditor></MyEditor>
 </template>
+
+<script>
+import MyEditor from "@/components/Monaco.vue";
+export default {
+  components: {
+    MyEditor
+  }
+};
+</script>
