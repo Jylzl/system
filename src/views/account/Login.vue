@@ -2,8 +2,8 @@
  * @Description: 登录页
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
- * @LastEditors: OBKoro1
- * @LastEditTime: 2020-05-08 10:53:48
+ * @LastAuthor: lizlong
+ * @lastTime: 2020-06-12 09:36:55
  -->
 <template>
   <div class="land-box">
@@ -149,7 +149,7 @@
         </div>
         <div class="three-land">
           <div class="three-land-left">
-            <el-link type="info">注册一个账户</el-link>
+            <el-link type="info">注册一个新账户</el-link>
           </div>
           <div class="three-land-right">
             <el-button type="text">

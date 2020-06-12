@@ -136,6 +136,16 @@ const routes = [
                     path: '/app/three',
                     name: 'AppThree',
                     component: () => import('@/views/app/AppThree.vue')
+                }, {
+                    meta: {
+                        title: '应用四',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/app/four',
+                    name: 'AppFour',
+                    component: () => import('@/views/app/AppFour.vue')
                 }]
         }, {
             meta: {

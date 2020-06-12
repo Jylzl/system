@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-09 20:22:56
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-10 11:21:15
+ * @lastTime: 2020-06-12 09:09:31
  -->
 <template>
   <div class="p-aside">
@@ -20,14 +20,14 @@
             <!-- 第一级 -->
             <template v-if="item.meta.leaf || !(item.children)">
               <el-menu-item :index="item.redirect || item.path" :key="item.redirect">
-                <i :class="item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
+                <i :class="item.meta.iconCls"></i>
                 <span class="collapse-font" slot="title">{{item.meta.title}}</span>
               </el-menu-item>
             </template>
             <el-submenu v-else :index="item.path" :key="item.path">
               <!-- 第二级 -->
               <template slot="title">
-                <i :class="item.meta.iconCls" class="icon iconfont el-submenu-iconfont"></i>
+                <i :class="item.meta.iconCls"></i>
                 <span class="collapse-font" slot="title">{{item.meta.title}}</span>
               </template>
               <template v-for="child in item.children">
