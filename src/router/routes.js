@@ -233,6 +233,7 @@ const routes = [
         },
         path: '*',
         name: 'err404all',
+        redirect: '/404',
         component: () => import('@/views/error/404.vue')
     }
 ]
