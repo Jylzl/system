@@ -3,7 +3,7 @@
  * @Author: lihaoran<94648929@qq.com>
  * @Date: 2020-04-30 14:53:22
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-10 17:14:44
+ * @lastTime: 2020-06-28 09:15:40
  -->
 <template>
 	<el-container class="h100">
@@ -11,7 +11,7 @@
 			<Header></Header>
 		</el-header>
 		<el-container>
-			<el-aside width="220px">
+			<el-aside :width="collapseWidth">
 				<Aside></Aside>
 			</el-aside>
 			<el-main class="p-main">
@@ -35,7 +35,11 @@ export default {
 	data() {
 		return {};
 	},
-	computed: {},
+	computed: {
+		collapseWidth() {
+			return this.$store.getters.getCollapse.width + "px";
+		}
+	},
 	methods: {}
 };
 </script>
@@ -48,7 +52,6 @@ export default {
 .p-main {
 	background-color: #f7f7f9;
 	color: #333;
-	padding-top: 0;
 	height: 100%;
 }
 </style>

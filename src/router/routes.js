@@ -108,7 +108,7 @@ const routes = [
             children: [
                 {
                     meta: {
-                        title: '应用一',
+                        title: 'tinymce富文本',
                         hidden: false,
                         leaf: true,
                         iconCls: "el-icon-place"
@@ -118,7 +118,7 @@ const routes = [
                     component: () => import('@/views/app/AppOne.vue')
                 }, {
                     meta: {
-                        title: '应用二',
+                        title: 'vscode编辑器',
                         hidden: false,
                         leaf: true,
                         iconCls: "el-icon-place"
@@ -128,7 +128,7 @@ const routes = [
                     component: () => import('@/views/app/AppTwo.vue')
                 }, {
                     meta: {
-                        title: '应用三',
+                        title: '动态表单',
                         hidden: false,
                         leaf: true,
                         iconCls: "el-icon-place"
@@ -138,7 +138,7 @@ const routes = [
                     component: () => import('@/views/app/AppThree.vue')
                 }, {
                     meta: {
-                        title: '应用四',
+                        title: '百度统计',
                         hidden: false,
                         leaf: true,
                         iconCls: "el-icon-place"
@@ -146,6 +146,16 @@ const routes = [
                     path: '/app/four',
                     name: 'AppFour',
                     component: () => import('@/views/app/AppFour.vue')
+                }, {
+                    meta: {
+                        title: '图标选择器',
+                        hidden: false,
+                        leaf: true,
+                        iconCls: "el-icon-place"
+                    },
+                    path: '/app/five',
+                    name: 'AppFive',
+                    component: () => import('@/views/app/AppFive.vue')
                 }]
         }, {
             meta: {

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-22 22:24:48
+ * @lastTime: 2020-06-24 12:10:08
  -->
 <template>
   <div>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import tinymce from "tinymce/tinymce";
 import Editor from "@tinymce/tinymce-vue";
 //图标
@@ -154,6 +155,7 @@ export default {
   },
   methods: {
     imagesUploadHandlerfunction() {
+      // eslint-disable-next-line no-unused-vars
       return function(blobInfo, success, failure) {
         setTimeout(function() {
           /* no matter what you upload, we will turn it into TinyMCE logo :)*/
@@ -174,6 +176,7 @@ export default {
             xhr = new XMLHttpRequest();
             xhr.open("POST", self.apiUrl);
             xhr.withCredentials = self.credentials;
+            // eslint-disable-next-line no-unused-vars
             xhr.upload.onprogress = function(e) {
               // 进度(e.loaded / e.total * 100)
             };
