@@ -9,7 +9,9 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="4" v-for="i in 6" :key="i" class="m-b-20">
-        <div :class="'grid-content bg-purple-'+i">{{i}}</div>
+        <div :class="'grid-content bg-purple-'+i">
+          <countTo :startVal="startVal" :endVal="endVal" :duration="3000"></countTo>
+        </div>
       </el-col>
     </el-row>
     <el-row :gutter="20">
@@ -26,10 +28,22 @@
   </div>
 </template>
 
+<script>
+import countTo from "vue-count-to";
+export default {
+  components: { countTo },
+  data() {
+    return {
+      startVal: 0,
+      endVal: 2017
+    };
+  }
+};
+</script>
 <style scoped>
 .grid-content {
-  height: 100px;
-  line-height: 100px;
+  height: 110px;
+  line-height: 110px;
 }
 .bg-purple-1 {
   background: linear-gradient(90deg, #2f80ed, #54c9f2);
