@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:54:28
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-28 09:16:21
+ * @lastTime: 2020-06-30 08:36:46
  -->
 <template>
 	<div class="h100 router-box">
@@ -13,6 +13,6 @@
 
 <style scoped>
 .router-box {
-	background-color: #fff;
+  background-color: #fff;
 }
 </style>

@@ -6,9 +6,9 @@
  * @lastTime: 2020-06-11 18:18:31
  -->
 <template>
-	<div id="app">
-		<router-view />
-	</div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <style lang="scss">
@@ -17,38 +17,42 @@
 @import url(./assets/iconfont/iconfont.css);
 
 @media (-webkit-max-device-pixel-ratio: 1) {
-	::-webkit-scrollbar-track-piece {
-		background-color: #ffffff;
-	}
-	::-webkit-scrollbar {
-		width: 8px;
-		height: 8px;
-	}
+  ::-webkit-scrollbar-track-piece {
+    background-color: #ffffff;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-	::-webkit-scrollbar-thumb {
-		background-color: #c2c2c2;
-		background-clip: padding-box;
-		min-height: 28px;
-	}
+  ::-webkit-scrollbar-thumb {
+    background-color: #c2c2c2;
+    background-clip: padding-box;
+    min-height: 28px;
+  }
 
-	::-webkit-scrollbar-thumb:hover {
-		background-color: #a0a0a0;
-	}
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a0a0a0;
+  }
 }
 
 html,
 body,
 #app {
-	position: relative;
-	height: 100%;
-	width: 100%;
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .w100 {
-	width: 100%;
+  width: 100%;
 }
 
 .h100 {
-	height: 100%;
+  height: 100%;
+}
+
+.m-b-20 {
+  margin-bottom: 20px;
 }
 </style>
