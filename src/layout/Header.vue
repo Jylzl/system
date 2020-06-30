@@ -3,393 +3,394 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-12 09:32:43
+ * @lastTime: 2020-06-30 18:51:37
  -->
 <template>
-  <div class="header-box">
-    <div class="header-left">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        background-color="transparent"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-      >
-        <el-menu-item index="0">欢迎页</el-menu-item>
-        <el-menu-item index="1">门户网站</el-menu-item>
-        <el-menu-item index="2">信息公开</el-menu-item>
-        <el-menu-item index="3">政务新媒体</el-menu-item>
-        <el-menu-item index="4">智慧OA</el-menu-item>
-        <el-menu-item index="6">系统管理</el-menu-item>
-      </el-menu>
-    </div>
-    <div class="header-right">
-      <div class="siteSearch-form" :class="{'show':show}">
-        <el-select v-model="site" placeholder="请选择站点" size="mini" class="site-select mr-20">
-          <el-option
-            v-for="item in siteList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-        <el-popover placement="bottom" width="260" trigger="click">
-          <el-select
-            ref="siteSearchInput"
-            v-model="search"
-            :remote-method="querySearch"
-            filterable
-            default-first-option
-            remote
-            size="small"
-            placeholder="请输入您要查找的内容"
-            @change="change"
-            @blur="siteSearchShow(false)"
-            class="w100"
-          >
-            <el-option v-for="item in options" :key="item.path" :value="item" :label="item.name" />
-          </el-select>
-          <el-button type="text" slot="reference">
-            <svg width="26" height="26">
-              <image xlink:href="@/assets/svg/search.svg" src="svg.png" width="26" height="26" />
-            </svg>
-          </el-button>
-        </el-popover>
-      </div>
-      <div class="message mr-20">
-        <el-button @click="toNews" type="text">
-          <el-badge is-dot class="user-name">
-            <svg width="26" height="26">
-              <image xlink:href="@/assets/svg/news.svg" src="svg.png" width="26" height="26" />
-            </svg>
-          </el-badge>
-        </el-button>
-      </div>
-      <div class="user-inf">
-        <el-dropdown trigger="click">
-          <div class="el-dropdown-link">
-            <el-avatar
-              class="user-header-img"
-              :size="32"
-              src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-            >A</el-avatar>
-            <span class="user-name">{{user.userName}}</span>
-            <i class="el-icon-caret-bottom"></i>
-          </div>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <el-link :underline="false">个人主页</el-link>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <el-button type="text" @click="logout">切换用户</el-button>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-    </div>
-  </div>
+	<div class="header-box">
+		<div class="header-left">
+			<el-menu
+				:router="true"
+				:default-active="activeIndex"
+				mode="horizontal"
+				background-color="transparent"
+				text-color="#fff"
+				active-text-color="#ffd04b"
+			>
+				<template v-for="topRouter in topRouters">
+					<el-menu-item
+						:index="topRouter.redirect || topRouter.path"
+						v-if="topRouter.meta.hidden == false"
+						:key="topRouter.path"
+					>{{topRouter.meta.title}}</el-menu-item>
+				</template>
+			</el-menu>
+		</div>
+		<div class="header-right">
+			<div class="siteSearch-form" :class="{'show':show}">
+				<el-select v-model="site" placeholder="请选择站点" size="mini" class="site-select mr-20">
+					<el-option v-for="item in siteList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+				</el-select>
+				<el-popover placement="bottom" width="260" trigger="click">
+					<el-select
+						ref="siteSearchInput"
+						v-model="search"
+						:remote-method="querySearch"
+						filterable
+						default-first-option
+						remote
+						size="small"
+						placeholder="请输入您要查找的内容"
+						@change="change"
+						@blur="siteSearchShow(false)"
+						class="w100"
+					>
+						<el-option v-for="item in options" :key="item.path" :value="item" :label="item.name" />
+					</el-select>
+					<el-button type="text" slot="reference">
+						<svg width="26" height="26">
+							<image xlink:href="@/assets/svg/search.svg" src="svg.png" width="26" height="26" />
+						</svg>
+					</el-button>
+				</el-popover>
+			</div>
+			<div class="message mr-20">
+				<el-button @click="toNews" type="text">
+					<el-badge is-dot class="user-name">
+						<svg width="26" height="26">
+							<image xlink:href="@/assets/svg/news.svg" src="svg.png" width="26" height="26" />
+						</svg>
+					</el-badge>
+				</el-button>
+			</div>
+			<div class="user-inf">
+				<el-dropdown trigger="click">
+					<div class="el-dropdown-link">
+						<el-avatar
+							class="user-header-img"
+							:size="32"
+							src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+						>A</el-avatar>
+						<span class="user-name">{{user.userName}}</span>
+						<i class="el-icon-caret-bottom"></i>
+					</div>
+					<el-dropdown-menu slot="dropdown">
+						<el-dropdown-item>
+							<el-link :underline="false">个人主页</el-link>
+						</el-dropdown-item>
+						<el-dropdown-item>
+							<el-button type="text" @click="logout">切换用户</el-button>
+						</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
 import Fuse from "fuse.js";
 import path from "path";
 export default {
-  data() {
-    return {
-      search: "",
-      options: [],
-      searchPool: [],
-      show: false,
-      fuse: undefined,
-      site: "1",
-      siteList: [
-        {
-          value: "1",
-          label: "孝感市门户网站"
-        },
-        {
-          value: "2",
-          label: "大悟县门户网站"
-        },
-        {
-          value: "3",
-          label: "孝南区门户网站"
-        }
-      ],
-      activeIndex: "1"
-    };
-  },
-  watch: {
-    lang() {
-      this.searchPool = this.generateRoutes(this.routes);
-    },
-    routes() {
-      this.searchPool = this.generateRoutes(this.routes);
-    },
-    searchPool(list) {
-      this.initFuse(list);
-    }
-  },
-  computed: {
-    user() {
-      return { userName: "admin" };
-    },
-    routes() {
-      // console.log(this.$store.getters.getRoutes[0].children);
-      return this.$store.getters.getRoutes[0].children;
-    }
-  },
-  created() {},
-  mounted() {
-    this.searchPool = this.generateRoutes(this.routes);
-  },
-  methods: {
-    //锁屏操作
-    clockScreen() {
-      this.$confirm("您在进行锁屏操作, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$router.push({
-            path: "/lock", //跳转的路径
-            query: {
-              user: this.userName
-            }
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消"
-          });
-        });
-    },
-    //退出登陆
-    loginOut() {
-      this.$confirm("您在进行退出操作, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$store.dispatch("loginOut").then(res => {
-            if (res.code == this.$code.success) {
-              this.successMessage("退出成功");
-              this.$router.push("/login");
-            } else {
-              this.errorMessage("退出失败");
-            }
-          });
-        })
-        .catch(() => {
-          this.warningMessage("已取消");
-        });
-    },
-    //站内搜索
-    siteSearchShow(type) {
-      this.show = type;
-      this.$refs.siteSearchInput.focus();
-    },
-    change(val) {
-      this.$router.push(val.path);
-      this.search = "";
-      this.options = [];
-      this.$nextTick(() => {
-        this.show = false;
-      });
-    },
-    initFuse(list) {
-      this.fuse = new Fuse(list, {
-        shouldSort: true,
-        threshold: 0.4,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: [
-          {
-            name: "name",
-            weight: 0.7
-          },
-          {
-            name: "path",
-            weight: 0.3
-          }
-        ]
-      });
-    },
-    generateRoutes(routes, basePath = "/", prefixTitle = []) {
-      let res = [];
-      for (const router of routes) {
-        // 如果路由不显示就跳出循环
-        if (router.meta.hidden) {
-          continue;
-        }
-        const data = {
-          // eslint-disable-next-line no-undef
-          path: path.resolve(basePath, router.path),
-          name: [...prefixTitle]
-        };
-        if (router.meta && router.meta.title) {
-          // generate internationalized title
-          data.name = [...data.name, router.meta.title];
-          if (router.redirect !== "noredirect") {
-            // only push the routes with title
-            // special case: need to exclude parent router without redirect
-            res.push(data);
-          }
-        }
+	data() {
+		return {
+			search: "",
+			options: [],
+			searchPool: [],
+			show: false,
+			fuse: undefined,
+			site: "1",
+			siteList: [
+				{
+					value: "1",
+					label: "孝感市门户网站"
+				},
+				{
+					value: "2",
+					label: "大悟县门户网站"
+				},
+				{
+					value: "3",
+					label: "孝南区门户网站"
+				}
+			]
+		};
+	},
+	watch: {
+		lang() {
+			this.searchPool = this.generateRoutes(this.routes);
+		},
+		routes() {
+			this.searchPool = this.generateRoutes(this.routes);
+		},
+		searchPool(list) {
+			this.initFuse(list);
+		}
+	},
+	computed: {
+		user() {
+			return { userName: "admin" };
+		},
+		routes() {
+			// console.log(this.$store.getters.getRoutes[0].children);
+			return this.$store.getters.getRoutes[0].children;
+		},
+		topRouters() {
+			return this.$store.getters.getRoutes;
+		},
+		activeIndex() {
+			return this.$route.path;
+		}
+	},
+	created() {},
+	mounted() {
+		this.searchPool = this.generateRoutes(this.routes);
+	},
+	methods: {
+		//锁屏操作
+		clockScreen() {
+			this.$confirm("您在进行锁屏操作, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning"
+			})
+				.then(() => {
+					this.$router.push({
+						path: "/lock", //跳转的路径
+						query: {
+							user: this.userName
+						}
+					});
+				})
+				.catch(() => {
+					this.$message({
+						type: "info",
+						message: "已取消"
+					});
+				});
+		},
+		//退出登陆
+		loginOut() {
+			this.$confirm("您在进行退出操作, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning"
+			})
+				.then(() => {
+					this.$store.dispatch("loginOut").then(res => {
+						if (res.code == this.$code.success) {
+							this.successMessage("退出成功");
+							this.$router.push("/login");
+						} else {
+							this.errorMessage("退出失败");
+						}
+					});
+				})
+				.catch(() => {
+					this.warningMessage("已取消");
+				});
+		},
+		//站内搜索
+		siteSearchShow(type) {
+			this.show = type;
+			this.$refs.siteSearchInput.focus();
+		},
+		change(val) {
+			this.$router.push(val.path);
+			this.search = "";
+			this.options = [];
+			this.$nextTick(() => {
+				this.show = false;
+			});
+		},
+		initFuse(list) {
+			this.fuse = new Fuse(list, {
+				shouldSort: true,
+				threshold: 0.4,
+				location: 0,
+				distance: 100,
+				maxPatternLength: 32,
+				minMatchCharLength: 1,
+				keys: [
+					{
+						name: "name",
+						weight: 0.7
+					},
+					{
+						name: "path",
+						weight: 0.3
+					}
+				]
+			});
+		},
+		generateRoutes(routes, basePath = "/", prefixTitle = []) {
+			let res = [];
+			for (const router of routes) {
+				// 如果路由不显示就跳出循环
+				if (router.meta.hidden) {
+					continue;
+				}
+				const data = {
+					// eslint-disable-next-line no-undef
+					path: path.resolve(basePath, router.path),
+					name: [...prefixTitle]
+				};
+				if (router.meta && router.meta.title) {
+					// generate internationalized title
+					data.name = [...data.name, router.meta.title];
+					if (router.redirect !== "noredirect") {
+						// only push the routes with title
+						// special case: need to exclude parent router without redirect
+						res.push(data);
+					}
+				}
 
-        // recursive child routes
-        if (router.children) {
-          const tempRoutes = this.generateRoutes(
-            router.children,
-            data.path,
-            data.name
-          );
-          if (tempRoutes.length >= 1) {
-            res = [...res, ...tempRoutes];
-          }
-        }
-      }
-      return res;
-    },
-    querySearch(query) {
-      if (query !== "") {
-        this.options = this.fuse.search(query);
-      } else {
-        this.options = [];
-      }
-    },
-    //前往消息中心
-    toNews() {
-      this.$router.push({
-        name: "personalHome",
-        query: {
-          type: "notification"
-        }
-      });
-    },
-    // 登出
-    logout() {
-      this.$confirm("即将登出, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$router.push({
-            name: "Login"
-          });
-          this.$message({
-            type: "success",
-            message: "登出成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消"
-          });
-        });
-    }
-  }
+				// recursive child routes
+				if (router.children) {
+					const tempRoutes = this.generateRoutes(
+						router.children,
+						data.path,
+						data.name
+					);
+					if (tempRoutes.length >= 1) {
+						res = [...res, ...tempRoutes];
+					}
+				}
+			}
+			return res;
+		},
+		querySearch(query) {
+			if (query !== "") {
+				this.options = this.fuse.search(query);
+			} else {
+				this.options = [];
+			}
+		},
+		//前往消息中心
+		toNews() {
+			this.$router.push({
+				name: "personalHome",
+				query: {
+					type: "notification"
+				}
+			});
+		},
+		// 登出
+		logout() {
+			this.$confirm("即将登出, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning"
+			})
+				.then(() => {
+					this.$router.push({
+						name: "Login"
+					});
+					this.$message({
+						type: "success",
+						message: "登出成功!"
+					});
+				})
+				.catch(() => {
+					this.$message({
+						type: "info",
+						message: "已取消"
+					});
+				});
+		}
+	}
 };
 </script>
 
 <style  lang="scss" scoped>
 .mr-20 {
-  margin-right: 20px;
+	margin-right: 20px;
 }
 
 .header-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 60px;
 }
 
 .header-left,
 .header-right {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 .user-inf {
-  display: flex;
-  height: 100%;
-  flex-direction: row-reverse;
+	display: flex;
+	height: 100%;
+	flex-direction: row-reverse;
 }
 
 .el-dropdown-link {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 100%;
-  align-items: center;
-  padding: 0 5px;
-  color: #fff;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 100%;
+	align-items: center;
+	padding: 0 5px;
+	color: #fff;
 }
 
 .el-dropdown-link:hover {
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.025);
+	cursor: pointer;
+	background-color: rgba(0, 0, 0, 0.025);
 }
 
 .user-name {
-  box-sizing: border-box;
-  padding-left: 2px;
-  padding-right: 8px;
-  line-height: 1;
-  color: #ffffff;
+	box-sizing: border-box;
+	padding-left: 2px;
+	padding-right: 8px;
+	line-height: 1;
+	color: #ffffff;
 }
 
 .user-header-img {
-  margin-right: 8px;
+	margin-right: 8px;
 }
 
 .siteSearch-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-right: 15px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-right: 15px;
 }
 
 .siteSearch-form button {
-  font-size: 26px;
+	font-size: 26px;
 }
 
 .siteSearch-form .siteSearch-input {
-  box-sizing: border-box;
-  overflow: hidden;
+	box-sizing: border-box;
+	overflow: hidden;
 }
 
 .siteSearch-form .siteSearch-input input {
-  box-sizing: border-box;
-  border: none;
-  border-radius: 0;
-  border-bottom: 1px solid #fff;
-  padding: 0 10px;
+	box-sizing: border-box;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #fff;
+	padding: 0 10px;
 }
 
 .show {
-  .header-search-select {
-    display: block;
-    width: 210px;
-    margin-left: 10px;
-  }
+	.header-search-select {
+		display: block;
+		width: 210px;
+		margin-left: 10px;
+	}
 }
 
 .site-select {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 
-  /deep/ input {
-    border: 1px solid #e6f7f8;
-    background: #e6f7f8;
-  }
+	/deep/ input {
+		border: 1px solid #e6f7f8;
+		background: #e6f7f8;
+	}
 }
 </style>

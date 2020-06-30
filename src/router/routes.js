@@ -18,21 +18,82 @@ import Register from '@/views/account/Register.vue'
 
 const routes = [
     {
+        meta: {
+            title: '欢迎页',
+            hidden: false
+        },
         path: '/',
         name: 'Layout',
         redirect: '/work',
         component: Layout,
+        children: [
+            {
+                meta: {
+                    title: '工作台',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-data-analysis"
+                },
+                path: '/work',
+                name: 'Work',
+                component: () => import('@/views/work/Work.vue')
+            }
+        ]
+    },
+    {
+        meta: {
+            title: '门户网站',
+            hidden: false
+        },
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        meta: {
+            title: '信息公开',
+            hidden: false
+        },
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        meta: {
+            title: '政务新媒体',
+            hidden: false
+        },
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        meta: {
+            title: '政府公布',
+            hidden: false
+        },
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        meta: {
+            title: '智慧OA',
+            hidden: false
+        },
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        meta: {
+            title: '系统管理',
+            hidden: false
+        },
+        path: '/system',
+        name: 'Login',
+        component: Layout,
         children: [{
-            meta: {
-                title: '工作台',
-                hidden: false,
-                leaf: true,
-                iconCls: "el-icon-data-analysis"
-            },
-            path: '/work',
-            name: 'Work',
-            component: () => import('@/views/work/Work.vue')
-        }, {
             meta: {
                 title: '权限管理',
                 hidden: false,
