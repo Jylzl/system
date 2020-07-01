@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-09 20:22:56
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-28 08:57:55
+ * @lastTime: 2020-07-01 09:54:31
  -->
 <template>
 	<div class="p-aside">
@@ -16,7 +16,7 @@
 				:unique-opened="true"
 				:collapse="isCollapse"
 			>
-				<template v-for="item in routers">
+				<template v-for="item in sonRouter">
 					<template v-if="(item.meta) && !(item.meta.hidden)">
 						<!-- 第一级 -->
 						<template v-if="item.meta.leaf || !(item.children)">
@@ -92,14 +92,23 @@ export default {
 		 * @since: 2019-08-13 09:58:43
 		 */
 		routers() {
-			return this.$store.getters.getRoutes[0].children;
+			return this.$store.getters.getRoutes;
 		},
 		isCollapse() {
 			return this.$store.getters.getCollapse.isCollapse;
+		},
+		sonRouter() {
+			return this.routers.find(item => {
+				return (item.name = this.$route.name);
+			}).children;
 		}
 	},
 	mounted() {
-		// console.log(this.routers);
+		console.log(this.$router);
+		console.log(this.$route);
+		console.log(this.$route.children);
+		console.log("1");
+		console.log(this.sonRouter);
 	},
 	methods: {}
 };

@@ -3,7 +3,7 @@
  * @Author: lihaoran<94648929@qq.com>
  * @Date: 2020-04-30 14:53:22
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-28 09:15:40
+ * @lastTime: 2020-07-01 10:26:12
  -->
 <template>
 	<el-container class="h100">
@@ -44,7 +44,8 @@ export default {
 };
 </script>
 <style>
-.p-header {
+header.p-header {
+	padding: 0 20px 0 0;
 	color: #ffffff;
 	background: #165abb url(../assets/img/header_bg.png) no-repeat center right;
 }

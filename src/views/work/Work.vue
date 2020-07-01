@@ -2,65 +2,168 @@
  * @Description: 
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
- * @LastEditors: OBKoro1
- * @LastEditTime: 2020-04-30 15:42:39
+ * @LastAuthor: lizlong
+ * @lastTime: 2020-07-01 16:13:43
  -->
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="4" v-for="i in 6" :key="i" class="m-b-20">
-        <div :class="'grid-content bg-purple-'+i">
-          <countTo :startVal="startVal" :endVal="endVal" :duration="3000"></countTo>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="8" v-for="i in 3" :key="i" class="m-b-20">
-        <el-card class="box-card" shadow="never">
-          <div slot="header" class="clearfix">
-            <span>卡片名称</span>
-            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-          </div>
-          <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+	<div class="work">
+		<el-row :gutter="20">
+			<el-col :span="4" v-for="(i,index) in inf" :key="i" class="m-b-20">
+				<div :class="'grid-content item bg-purple-'+index">
+					<a href="javascript:void(0);">
+						<div class="item-header">
+							<p>{{i.title}}</p>
+							<span>实时</span>
+						</div>
+						<div class="item-body">
+							<span class="h2">
+								<countTo :startVal="0" :endVal="i.unm" :duration="3000"></countTo>
+							</span>
+						</div>
+						<p class="item-tip">类</p>
+					</a>
+				</div>
+			</el-col>
+		</el-row>
+		<el-row :gutter="20">
+			<el-col :span="8" v-for="i in 3" :key="i" class="m-b-20">
+				<el-card class="box-card" shadow="never">
+					<div slot="header" class="clearfix">
+						<span>卡片名称</span>
+						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+					</div>
+					<div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
+				</el-card>
+			</el-col>
+		</el-row>
+	</div>
 </template>
 
 <script>
 import countTo from "vue-count-to";
 export default {
-  components: { countTo },
-  data() {
-    return {
-      startVal: 0,
-      endVal: 2017
-    };
-  }
+	components: { countTo },
+	data() {
+		return {
+			inf: [
+				{
+					title: "分类统计一",
+					unm: 26889
+				},
+				{
+					title: "分类统计二",
+					unm: 26889
+				},
+				{
+					title: "分类统计三",
+					unm: 26889
+				},
+				{
+					title: "分类统计四",
+					unm: 26889
+				},
+				{
+					title: "分类统计五",
+					unm: 26889
+				},
+				{
+					title: "分类统计六",
+					unm: 26889
+				}
+			]
+		};
+	}
 };
 </script>
 <style scoped>
 .grid-content {
-  height: 110px;
-  line-height: 110px;
+	box-sizing: border-box;
+	position: relative;
+	height: 110px;
+	padding: 12px;
+	color: #fff;
+	font-size: 20px;
+	font-weight: bold;
+	border-radius: 4px;
+}
+
+.bg-purple-0 {
+	background: linear-gradient(90deg, #2f80ed, #54c9f2);
 }
 .bg-purple-1 {
-  background: linear-gradient(90deg, #2f80ed, #54c9f2);
+	background: linear-gradient(90deg, #03c9fb, #3bd3af);
 }
 .bg-purple-2 {
-  background: linear-gradient(90deg, #03c9fb, #3bd3af);
+	background: linear-gradient(90deg, #3387ed, #56ccf2);
 }
 .bg-purple-3 {
-  background: linear-gradient(90deg, #3387ed, #56ccf2);
+	background: linear-gradient(90deg, #068095, #78ffd6);
 }
 .bg-purple-4 {
-  background: linear-gradient(90deg, #068095, #78ffd6);
+	background: linear-gradient(90deg, #30a0ed, #55cbf2);
 }
 .bg-purple-5 {
-  background: linear-gradient(90deg, #30a0ed, #55cbf2);
+	background: linear-gradient(90deg, #3286ed, #56ccf2);
 }
-.bg-purple-6 {
-  background: linear-gradient(90deg, #3286ed, #56ccf2);
+
+.grid-content > a {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+}
+.grid-content a .item-header {
+	position: relative;
+}
+.item-header > p {
+	height: 28px;
+	line-height: 28px;
+	color: #fff;
+	margin: 0;
+	font-size: 14px;
+}
+.item-header > span {
+	box-sizing: border-box;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 26px;
+	padding: 2px 8px;
+	line-height: 22px;
+	border-radius: 4px;
+	font-size: 12px;
+	background: rgba(255, 255, 255, 0.3);
+}
+.item-body {
+	margin-top: 8px;
+	height: 40px;
+	line-height: 40px;
+}
+.item-body .h2 {
+	color: #fff;
+	margin: 0;
+	font-size: 22px;
+	line-height: 42px;
+	font-weight: 700;
+}
+
+.item-tip {
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	bottom: 10px;
+	right: 10px;
+	border: 2px solid #fff;
+	border-radius: 100%;
+	font-size: 26px;
+	-webkit-transform: rotate(-40deg);
+	transform: rotate(-40deg);
+	opacity: 0.1;
 }
 </style>

@@ -3,27 +3,30 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-30 18:51:37
+ * @lastTime: 2020-07-01 14:35:26
  -->
 <template>
 	<div class="header-box">
 		<div class="header-left">
-			<el-menu
-				:router="true"
-				:default-active="activeIndex"
-				mode="horizontal"
-				background-color="transparent"
-				text-color="#fff"
-				active-text-color="#ffd04b"
-			>
-				<template v-for="topRouter in topRouters">
-					<el-menu-item
-						:index="topRouter.redirect || topRouter.path"
-						v-if="topRouter.meta.hidden == false"
-						:key="topRouter.path"
-					>{{topRouter.meta.title}}</el-menu-item>
-				</template>
-			</el-menu>
+			<div class="header-logo">cc</div>
+			<div class="header-menu">
+				<el-menu
+					:router="true"
+					:default-active="activeIndex"
+					mode="horizontal"
+					background-color="transparent"
+					text-color="#fff"
+					active-text-color="#ffd04b"
+				>
+					<template v-for="topRouter in topRouters">
+						<el-menu-item
+							:index="topRouter.redirect || topRouter.path"
+							v-if="topRouter.meta.hidden == false"
+							:key="topRouter.path"
+						>{{topRouter.meta.title}}</el-menu-item>
+					</template>
+				</el-menu>
+			</div>
 		</div>
 		<div class="header-right">
 			<div class="siteSearch-form" :class="{'show':show}">
@@ -319,6 +322,25 @@ export default {
 	display: flex;
 	align-items: center;
 }
+
+.header-logo {
+	box-sizing: border-box;
+	width: 64px;
+	height: 60px;
+	padding: 0 7px;
+	text-align: center;
+	line-height: 60px;
+	font-size: 12px;
+	color: #999;
+	background: url(../assets/img/logo.png) no-repeat center center;
+	background-size: 72%;
+}
+
+.header-menu {
+	box-sizing: border-box;
+	padding-left: 20px;
+}
+
 .user-inf {
 	display: flex;
 	height: 100%;

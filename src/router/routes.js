@@ -37,6 +37,16 @@ const routes = [
                 path: '/work',
                 name: 'Work',
                 component: () => import('@/views/work/Work.vue')
+            }, {
+                meta: {
+                    title: '个人中心',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-s-custom"
+                },
+                path: '/personal',
+                name: 'Personal',
+                component: () => import('@/views/work/Work.vue')
             }
         ]
     },
@@ -45,45 +55,45 @@ const routes = [
             title: '门户网站',
             hidden: false
         },
-        path: '/login',
-        name: 'Login',
-        component: Login
+        path: '/web',
+        name: 'Web',
+        component: Layout
     },
     {
         meta: {
             title: '信息公开',
             hidden: false
         },
-        path: '/login',
-        name: 'Login',
-        component: Login
+        path: '/information',
+        name: 'Information',
+        component: Layout
     },
     {
         meta: {
             title: '政务新媒体',
             hidden: false
         },
-        path: '/login',
-        name: 'Login',
-        component: Login
+        path: '/media',
+        name: 'Media',
+        component: Layout
     },
     {
         meta: {
-            title: '政府公布',
+            title: '政府公报',
             hidden: false
         },
-        path: '/login',
-        name: 'Login',
-        component: Login
+        path: '/bulletin',
+        name: 'Bulletin',
+        component: Layout
     },
     {
         meta: {
             title: '智慧OA',
             hidden: false
         },
-        path: '/login',
-        name: 'Login',
-        component: Login
+        path: '/oa',
+        name: 'Oa',
+        component: Layout
     },
     {
         meta: {
@@ -91,7 +101,7 @@ const routes = [
             hidden: false
         },
         path: '/system',
-        name: 'Login',
+        name: 'System',
         component: Layout,
         children: [{
             meta: {
