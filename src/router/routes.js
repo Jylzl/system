@@ -46,7 +46,7 @@ const routes = [
                 },
                 path: '/personal',
                 name: 'Personal',
-                component: () => import('@/views/work/Work.vue')
+                component: () => import('@/views/work/Personal.vue')
             }
         ]
     },
