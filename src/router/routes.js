@@ -9,7 +9,7 @@ import {
     ansycRoutes
 } from '@/router/ansycRoutes';
 
-import Layout from '@/layout/Container.vue';
+import Container from '@/layout/Container.vue';
 import ChildView from '@/layout/ChildView.vue';
 
 import Login from '@/views/account/Login.vue'
@@ -25,7 +25,7 @@ const routes = [
         path: '/',
         name: 'Layout',
         redirect: '/work',
-        component: Layout,
+        component: Container,
         children: [
             {
                 meta: {
@@ -57,7 +57,7 @@ const routes = [
         },
         path: '/web',
         name: 'Web',
-        component: Layout
+        component: Container
     },
     {
         meta: {
@@ -66,7 +66,7 @@ const routes = [
         },
         path: '/information',
         name: 'Information',
-        component: Layout
+        component: Container
     },
     {
         meta: {
@@ -75,7 +75,7 @@ const routes = [
         },
         path: '/media',
         name: 'Media',
-        component: Layout
+        component: Container
     },
     {
         meta: {
@@ -84,7 +84,7 @@ const routes = [
         },
         path: '/bulletin',
         name: 'Bulletin',
-        component: Layout
+        component: Container
     },
     {
         meta: {
@@ -93,7 +93,7 @@ const routes = [
         },
         path: '/oa',
         name: 'Oa',
-        component: Layout
+        component: Container
     },
     {
         meta: {
@@ -102,7 +102,8 @@ const routes = [
         },
         path: '/system',
         name: 'System',
-        component: Layout,
+        redirect: '/system/power',
+        component: Container,
         children: [{
             meta: {
                 title: '权限管理',
@@ -110,7 +111,7 @@ const routes = [
                 leaf: false,
                 iconCls: "el-icon-lock"
             },
-            path: '/power',
+            path: '/system/power',
             name: 'power',
             component: ChildView,
             children: [
@@ -121,7 +122,7 @@ const routes = [
                         leaf: true,
                         iconCls: "el-icon-place"
                     },
-                    path: '/power/menu',
+                    path: '/system/power/menu',
                     name: 'Menu',
                     component: () => import('@/views/power/Menu.vue')
                 }, {
@@ -131,7 +132,7 @@ const routes = [
                         leaf: true,
                         iconCls: "el-icon-place"
                     },
-                    path: '/power/region',
+                    path: '/system/power/region',
                     name: 'Region',
                     component: () => import('@/views/power/Dept.vue')
                 }, {
@@ -141,7 +142,7 @@ const routes = [
                         leaf: true,
                         iconCls: "el-icon-monitor"
                     },
-                    path: '/power/dept',
+                    path: '/system/power/dept',
                     name: 'Dept',
                     component: () => import('@/views/power/Dept.vue')
                 }, {
@@ -151,7 +152,7 @@ const routes = [
                         leaf: true,
                         iconCls: "el-icon-monitor"
                     },
-                    path: '/power/roles',
+                    path: '/system/power/roles',
                     name: 'Roles',
                     component: () => import('@/views/power/Roles.vue')
                 }, {
@@ -161,73 +162,11 @@ const routes = [
                         leaf: true,
                         iconCls: "el-icon-monitor"
                     },
-                    path: '/power/users',
+                    path: '/system/power/users',
                     name: 'Users',
                     component: () => import('@/views/power/Users.vue')
                 }
             ]
-        }, {
-            meta: {
-                title: '应用管理',
-                hidden: false,
-                leaf: false,
-                iconCls: "el-icon-connection"
-            },
-            path: '/app',
-            name: 'App',
-            component: ChildView,
-            children: [
-                {
-                    meta: {
-                        title: 'tinymce富文本',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/app/one',
-                    name: 'AppOne',
-                    component: () => import('@/views/app/AppOne.vue')
-                }, {
-                    meta: {
-                        title: 'vscode编辑器',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/app/two',
-                    name: 'AppTwo',
-                    component: () => import('@/views/app/AppTwo.vue')
-                }, {
-                    meta: {
-                        title: '动态表单',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/app/three',
-                    name: 'AppThree',
-                    component: () => import('@/views/app/AppThree.vue')
-                }, {
-                    meta: {
-                        title: '百度统计',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/app/four',
-                    name: 'AppFour',
-                    component: () => import('@/views/app/AppFour.vue')
-                }, {
-                    meta: {
-                        title: '图标选择器',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/app/five',
-                    name: 'AppFive',
-                    component: () => import('@/views/app/AppFive.vue')
-                }]
         }, {
             meta: {
                 title: '运维管理',
@@ -237,7 +176,7 @@ const routes = [
             },
             path: '/monitor',
             name: 'Monitor',
-            component: ChildView,
+            component: Container,
             children: [
                 {
                     meta: {
@@ -261,6 +200,69 @@ const routes = [
                     component: () => import('@/views/app/AppTwo.vue')
                 }]
         }]
+    }, {
+        meta: {
+            title: '应用管理',
+            hidden: false,
+            leaf: false,
+            iconCls: "el-icon-connection"
+        },
+        path: '/app',
+        name: 'App',
+        redirect: '/app/three',
+        component: Container,
+        children: [
+            {
+                meta: {
+                    title: 'tinymce富文本',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/one',
+                name: 'AppOne',
+                component: () => import('@/views/app/AppOne.vue')
+            }, {
+                meta: {
+                    title: 'vscode编辑器',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/two',
+                name: 'AppTwo',
+                component: () => import('@/views/app/AppTwo.vue')
+            }, {
+                meta: {
+                    title: '动态表单',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/three',
+                name: 'AppThree',
+                component: () => import('@/views/app/AppThree.vue')
+            }, {
+                meta: {
+                    title: '百度统计',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/four',
+                name: 'AppFour',
+                component: () => import('@/views/app/AppFour.vue')
+            }, {
+                meta: {
+                    title: '图标选择器',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/five',
+                name: 'AppFive',
+                component: () => import('@/views/app/AppFive.vue')
+            }]
     },
     {
         meta: {

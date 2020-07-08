@@ -3,12 +3,12 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-02 10:10:54
+ * @lastTime: 2020-07-08 18:40:00
  -->
 <template>
-	<div class="work">
+	<div class="work h100">
 		<el-row :gutter="20">
-			<el-col :span="4" v-for="(i,index) in inf" :key="i" class="m-b-20">
+			<el-col :span="4" v-for="(i,index) in inf" :key="i.unm + index" class="m-b-20">
 				<div :class="'grid-content item bg-purple-'+index">
 					<a href="javascript:void(0);">
 						<div class="item-header">
@@ -26,15 +26,7 @@
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
-			<el-col :span="8" v-for="i in 3" :key="i" class="m-b-20">
-				<el-card class="box-card" shadow="never">
-					<div slot="header" class="clearfix">
-						<span>卡片名称</span>
-						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-					</div>
-					<div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
-				</el-card>
-			</el-col>
+			<el-col :span="8" v-for="i in 3" :key="i" class="m-b-20">1</el-col>
 		</el-row>
 	</div>
 </template>
@@ -47,19 +39,19 @@ export default {
 		return {
 			inf: [
 				{
-					title: "分类统计一",
+					title: "内容发布量",
 					unm: 26889
 				},
 				{
-					title: "分类统计二",
+					title: "公报发布量",
+					unm: 26189
+				},
+				{
+					title: "公众号文章",
 					unm: 26889
 				},
 				{
-					title: "分类统计三",
-					unm: 26889
-				},
-				{
-					title: "分类统计四",
+					title: "OA邮件",
 					unm: 26889
 				},
 				{
@@ -75,7 +67,12 @@ export default {
 	}
 };
 </script>
+
 <style scoped>
+.work {
+	background-color: #f7f7f9;
+}
+
 .grid-content {
 	box-sizing: border-box;
 	position: relative;
@@ -90,18 +87,23 @@ export default {
 .bg-purple-0 {
 	background: linear-gradient(90deg, #2f80ed, #54c9f2);
 }
+
 .bg-purple-1 {
 	background: linear-gradient(90deg, #03c9fb, #3bd3af);
 }
+
 .bg-purple-2 {
 	background: linear-gradient(90deg, #3387ed, #56ccf2);
 }
+
 .bg-purple-3 {
 	background: linear-gradient(90deg, #068095, #78ffd6);
 }
+
 .bg-purple-4 {
 	background: linear-gradient(90deg, #30a0ed, #55cbf2);
 }
+
 .bg-purple-5 {
 	background: linear-gradient(90deg, #3286ed, #56ccf2);
 }
@@ -111,9 +113,11 @@ export default {
 	color: inherit;
 	text-decoration: none;
 }
+
 .grid-content a .item-header {
 	position: relative;
 }
+
 .item-header > p {
 	height: 28px;
 	line-height: 28px;
@@ -121,6 +125,7 @@ export default {
 	margin: 0;
 	font-size: 14px;
 }
+
 .item-header > span {
 	box-sizing: border-box;
 	position: absolute;
@@ -133,11 +138,13 @@ export default {
 	font-size: 12px;
 	background: rgba(255, 255, 255, 0.3);
 }
+
 .item-body {
 	margin-top: 8px;
 	height: 40px;
 	line-height: 40px;
 }
+
 .item-body .h2 {
 	color: #fff;
 	margin: 0;

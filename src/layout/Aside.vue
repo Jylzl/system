@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-09 20:22:56
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-01 09:54:31
+ * @lastTime: 2020-07-08 08:58:11
  -->
 <template>
 	<div class="p-aside">
@@ -83,14 +83,6 @@ export default {
 		return {};
 	},
 	computed: {
-		/**
-		 * @description: 从VUEX获取侧边菜单栏状态是否折叠
-		 * @param {type} parameter
-		 * @author: lizlong
-		 * @LastEditors: lizlong
-		 * @LastEditTime: Do not edit
-		 * @since: 2019-08-13 09:58:43
-		 */
 		routers() {
 			return this.$store.getters.getRoutes;
 		},
@@ -106,8 +98,6 @@ export default {
 	mounted() {
 		console.log(this.$router);
 		console.log(this.$route);
-		console.log(this.$route.children);
-		console.log("1");
 		console.log(this.sonRouter);
 	},
 	methods: {}

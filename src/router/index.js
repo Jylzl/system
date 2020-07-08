@@ -1,19 +1,24 @@
-/*
- * @Description: 
- * @Author: haoran
- * @Date: 2020-04-30 13:48:12
- * @LastEditors: OBKoro1
- * @LastEditTime: 2020-04-30 14:04:21
+/**
+ * @description: Description
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2020-05-21 01:44:44
+ * @LastAuthor: lizlong
+ * @lastTime: 2020-07-08 08:59:30
  */
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {
   routes
 } from './routes'
 
+// 解决ElementUI导航栏中的vue-router在3.0版本以上重复点击菜单报错问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(VueRouter)
-
-
 
 const router = new VueRouter({
   mode: 'history',

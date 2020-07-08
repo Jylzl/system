@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-01 14:35:26
+ * @lastTime: 2020-07-08 12:04:53
  -->
 <template>
 	<div class="header-box">
@@ -271,9 +271,9 @@ export default {
 		//前往消息中心
 		toNews() {
 			this.$router.push({
-				name: "personalHome",
+				name: "Personal",
 				query: {
-					type: "notification"
+					type: "news"
 				}
 			});
 		},
