@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-09 19:02:56
+ * @lastTime: 2020-07-09 21:14:15
  -->
 <template>
 	<div class="header-box">
@@ -155,7 +155,11 @@ export default {
 			console.log(this.$route.name);
 			console.log(index);
 			console.log(indexPath);
-			this.$store.dispatch("setLeftRouters", this.routes);
+			if (this.$route.name == "Work") {
+				this.$store.dispatch("setLeftRouters", this.routes);
+			} else {
+				this.$store.dispatch("setLeftRouters", []);
+			}
 		},
 		//锁屏操作
 		clockScreen() {
