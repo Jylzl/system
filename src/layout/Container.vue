@@ -3,7 +3,7 @@
  * @Author: lihaoran<94648929@qq.com>
  * @Date: 2020-04-30 14:53:22
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-01 10:26:12
+ * @lastTime: 2020-07-09 17:13:45
  -->
 <template>
 	<el-container class="h100">
@@ -37,7 +37,9 @@ export default {
 	},
 	computed: {
 		collapseWidth() {
-			return this.$store.getters.getCollapse.width + "px";
+			return this.$store.getters.getLeftRouters.length > 0
+				? this.$store.getters.getCollapse.width + "px"
+				: "0px";
 		}
 	},
 	methods: {}

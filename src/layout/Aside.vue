@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-09 20:22:56
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-08 08:58:11
+ * @lastTime: 2020-07-09 16:56:48
  -->
 <template>
 	<div class="p-aside">
@@ -90,9 +90,10 @@ export default {
 			return this.$store.getters.getCollapse.isCollapse;
 		},
 		sonRouter() {
-			return this.routers.find(item => {
-				return (item.name = this.$route.name);
-			}).children;
+			return this.$store.getters.getLeftRouters;
+			// return this.routers.find(item => {
+			// 	return (item.name = this.$route.name);
+			// }).children;
 		}
 	},
 	mounted() {

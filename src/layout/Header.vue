@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-08 12:04:53
+ * @lastTime: 2020-07-09 19:02:56
  -->
 <template>
 	<div class="header-box">
@@ -12,15 +12,17 @@
 			<div class="header-menu">
 				<el-menu
 					:router="true"
-					:default-active="activeIndex"
+					:default-active="$route.name"
 					mode="horizontal"
 					background-color="transparent"
 					text-color="#fff"
 					active-text-color="#ffd04b"
+					@select="menuSelect"
 				>
 					<template v-for="topRouter in topRouters">
 						<el-menu-item
-							:index="topRouter.redirect || topRouter.path"
+							:index="topRouter.name"
+							:route="topRouter"
 							v-if="topRouter.meta.hidden == false"
 							:key="topRouter.path"
 						>{{topRouter.meta.title}}</el-menu-item>
@@ -149,6 +151,12 @@ export default {
 		this.searchPool = this.generateRoutes(this.routes);
 	},
 	methods: {
+		menuSelect(index, indexPath) {
+			console.log(this.$route.name);
+			console.log(index);
+			console.log(indexPath);
+			this.$store.dispatch("setLeftRouters", this.routes);
+		},
 		//锁屏操作
 		clockScreen() {
 			this.$confirm("您在进行锁屏操作, 是否继续?", "提示", {

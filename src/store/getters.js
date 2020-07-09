@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-28 08:54:56
+ * @lastTime: 2020-07-09 16:55:21
  */
 /*
  * @Description: 
@@ -15,6 +15,7 @@
 
 const getters = {
 	getRoutes: state => state.power.routes,
+	getLeftRouters: state => state.power.leftRouters,
 	getCollapse: state => state.system.collapse,
 }
 export default getters
