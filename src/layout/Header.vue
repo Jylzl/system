@@ -1,14 +1,14 @@
 <!--
- * @Description: 
+ * @Description: 头部组件
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-09 21:14:15
+ * @lastTime: 2020-07-10 09:29:13
  -->
 <template>
 	<div class="header-box">
 		<div class="header-left">
-			<div class="header-logo">cc</div>
+			<div class="header-logo">cms</div>
 			<div class="header-menu">
 				<el-menu
 					:router="true"
@@ -129,6 +129,15 @@ export default {
 		},
 		searchPool(list) {
 			this.initFuse(list);
+		},
+		$route(to, from) {
+			console.log(to.path);
+			console.log(from.path);
+			if (to.name == "Work") {
+				this.$store.dispatch("setLeftRouters", this.routes);
+			} else {
+				this.$store.dispatch("setLeftRouters", []);
+			}
 		}
 	},
 	computed: {
@@ -155,11 +164,11 @@ export default {
 			console.log(this.$route.name);
 			console.log(index);
 			console.log(indexPath);
-			if (this.$route.name == "Work") {
-				this.$store.dispatch("setLeftRouters", this.routes);
-			} else {
-				this.$store.dispatch("setLeftRouters", []);
-			}
+			// if (this.$route.name == "Work") {
+			// 	this.$store.dispatch("setLeftRouters", this.routes);
+			// } else {
+			// 	this.$store.dispatch("setLeftRouters", []);
+			// }
 		},
 		//锁屏操作
 		clockScreen() {

@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-08 18:40:00
+ * @lastTime: 2020-07-10 09:21:58
  -->
 <template>
 	<div class="work h100">
@@ -28,11 +28,14 @@
 		<el-row :gutter="20">
 			<el-col :span="8" v-for="i in 3" :key="i" class="m-b-20">1</el-col>
 		</el-row>
+		<div id="canvas"></div>
 	</div>
 </template>
 
 <script>
 import countTo from "vue-count-to";
+import { Line } from "@antv/g2plot";
+
 export default {
 	components: { countTo },
 	data() {
@@ -62,8 +65,29 @@ export default {
 					title: "分类统计六",
 					unm: 26889
 				}
+			],
+			data: [
+				{ year: "1991", value: 3 },
+				{ year: "1992", value: 4 },
+				{ year: "1993", value: 3.5 },
+				{ year: "1994", value: 5 },
+				{ year: "1995", value: 4.9 },
+				{ year: "1996", value: 6 },
+				{ year: "1997", value: 7 },
+				{ year: "1998", value: 9 },
+				{ year: "1999", value: 13 }
 			]
 		};
+	},
+	mounted() {
+		const data = this.data;
+		const linePlot = new Line("canvas", {
+			data,
+			xField: "year",
+			yField: "value"
+		});
+
+		linePlot.render();
 	}
 };
 </script>
