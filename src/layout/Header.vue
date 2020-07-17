@@ -3,12 +3,12 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-10 09:29:13
+ * @lastTime: 2020-07-17 15:21:30
  -->
 <template>
 	<div class="header-box">
 		<div class="header-left">
-			<div class="header-logo">cms</div>
+			<div class="header-logo">os</div>
 			<div class="header-menu">
 				<el-menu
 					:router="true"
@@ -352,7 +352,7 @@ export default {
 	text-align: center;
 	line-height: 60px;
 	font-size: 12px;
-	color: #999;
+	color: #fff;
 	background: url(../assets/img/logo.png) no-repeat center center;
 	background-size: 72%;
 }

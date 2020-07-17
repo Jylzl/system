@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-16 09:13:01
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-19 08:39:55
+ * @lastTime: 2020-07-17 16:19:43
  -->
 <template>
 	<div>
@@ -84,9 +84,13 @@ export default {
 				}
 			],
 			events: {
+				// eslint-disable-next-line no-unused-vars
 				init: o => {
+					// eslint-disable-next-line no-undef
 					AMap.service("AMap.Autocomplete", function() {});
+					// eslint-disable-next-line no-undef
 					AMap.service("AMap.ToolBar", function() {});
+					// eslint-disable-next-line no-undef
 					AMap.service("AMap.Geolocation", function() {});
 				},
 				moveend: () => {},
@@ -98,7 +102,9 @@ export default {
 					this.markers = [];
 					this.center = [lng, lat];
 
+					// eslint-disable-next-line no-undef
 					AMap.service("AMap.Geocoder", function() {
+						// eslint-disable-next-line no-undef
 						var geocoder = new AMap.Geocoder({
 							radius: 1000,
 							extensions: "all",
@@ -182,6 +188,10 @@ export default {
 .map-dialog .el-dialog__body {
 	padding: 0;
 }
+.amap-copyright {
+	line-height: 16px;
+	padding-bottom: 0;
+}
 </style>
 
 <style scoped>
@@ -196,10 +206,14 @@ export default {
 
 .search-box {
 	position: absolute;
-	left: 10px;
+	left: 80px;
 	top: 10px;
 	z-index: 10;
 	width: 220px;
 	height: 40px;
+}
+
+.el-vue-search-box-container .search-box-wrapper input {
+	height: 32px;
 }
 </style>

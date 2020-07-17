@@ -27,9 +27,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 // 对话框
 .el-dialog__header {
     background-color: $--color-primary;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 
+    .dialog-title,
     .el-dialog__title {
         font-size: 16px;
         color: #fff;
@@ -43,4 +44,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
         }
 
     }
+}
+
+.el-dialog__footer {
+    padding-top: 6px;
+    padding-bottom: 10px;
 }

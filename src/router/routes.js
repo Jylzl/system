@@ -47,6 +47,56 @@ const routes = [
                 path: '/personal',
                 name: 'Personal',
                 component: () => import('@/views/work/Personal.vue')
+            }, {
+                meta: {
+                    title: 'tinymce富文本',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/one',
+                name: 'AppOne',
+                component: () => import('@/views/app/AppOne.vue')
+            }, {
+                meta: {
+                    title: 'vscode编辑器',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/two',
+                name: 'AppTwo',
+                component: () => import('@/views/app/AppTwo.vue')
+            }, {
+                meta: {
+                    title: '动态表单',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/three',
+                name: 'AppThree',
+                component: () => import('@/views/app/AppThree.vue')
+            }, {
+                meta: {
+                    title: '百度统计',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/four',
+                name: 'AppFour',
+                component: () => import('@/views/app/AppFour.vue')
+            }, {
+                meta: {
+                    title: '图标选择器',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/five',
+                name: 'AppFive',
+                component: () => import('@/views/app/AppFive.vue')
             }
         ]
     },
