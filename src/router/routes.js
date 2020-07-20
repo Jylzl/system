@@ -97,6 +97,16 @@ const routes = [
                 path: '/app/five',
                 name: 'AppFive',
                 component: () => import('@/views/app/AppFive.vue')
+            }, {
+                meta: {
+                    title: '验证码',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/six',
+                name: 'AppSix',
+                component: () => import('@/views/app/AppSix.vue')
             }
         ]
     },
