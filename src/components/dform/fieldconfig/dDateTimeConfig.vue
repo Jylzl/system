@@ -259,6 +259,7 @@ export default {
 	},
 	watch: {
 		config: {
+			// eslint-disable-next-line no-unused-vars
 			handler(val, oldVal) {
 				this.o_config = val;
 			},

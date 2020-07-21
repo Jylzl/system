@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-15 14:27:29
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-15 17:32:07
+ * @lastTime: 2020-07-21 08:45:24
  -->
 <template>
 	<div>
@@ -165,18 +165,23 @@ export default {
 			this.dialogVisible = true;
 		},
 		// 文件列表移除文件时的钩子
+		// eslint-disable-next-line no-unused-vars
 		fn_remove(file, fileList) {},
 		// 文件上传成功时的钩子
+		// eslint-disable-next-line no-unused-vars
 		fn_success(response, file, fileList) {
 			if (this.s_listType == "picture") {
 				this.imageUrl = URL.createObjectURL(file.raw);
 			}
 		},
 		// 文件上传失败时的钩子
+		// eslint-disable-next-line no-unused-vars
 		fn_error(err, file, fileList) {},
 		// 文件上传时的钩子
+		// eslint-disable-next-line no-unused-vars
 		fn_progress(event, file, fileList) {},
 		// 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
+		// eslint-disable-next-line no-unused-vars
 		fn_change(file, fileList) {},
 		// 文件超出个数限制时的钩子
 		fn_exceed(files, fileList) {
@@ -195,6 +200,7 @@ export default {
 			return isLt;
 		},
 		// 删除文件之前的钩子，参数为上传的文件和文件列表，若返回 false 或者返回 Promise 且被 reject，则停止删除。
+		// eslint-disable-next-line no-unused-vars
 		fn_beforeRemove(file, fileList) {
 			return this.$confirm(
 				`确定移除 ${file.name} 文件, 是否继续？`,

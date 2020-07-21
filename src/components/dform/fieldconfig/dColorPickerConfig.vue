@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-12 22:47:54
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-24 14:53:13
+ * @lastTime: 2020-07-21 08:44:42
  -->
 <template>
 	<div class="field-attribute">
@@ -259,6 +259,7 @@ export default {
 	},
 	watch: {
 		config: {
+			// eslint-disable-next-line no-unused-vars
 			handler(val, oldVal) {
 				this.o_config = val;
 			},
