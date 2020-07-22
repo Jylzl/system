@@ -112,51 +112,6 @@ const routes = [
     },
     {
         meta: {
-            title: '门户网站',
-            hidden: false
-        },
-        path: '/web',
-        name: 'Web',
-        component: Container
-    },
-    {
-        meta: {
-            title: '信息公开',
-            hidden: false
-        },
-        path: '/information',
-        name: 'Information',
-        component: Container
-    },
-    {
-        meta: {
-            title: '政务新媒体',
-            hidden: false
-        },
-        path: '/media',
-        name: 'Media',
-        component: Container
-    },
-    {
-        meta: {
-            title: '政府公报',
-            hidden: false
-        },
-        path: '/bulletin',
-        name: 'Bulletin',
-        component: Container
-    },
-    {
-        meta: {
-            title: '智慧OA',
-            hidden: false
-        },
-        path: '/oa',
-        name: 'Oa',
-        component: Container
-    },
-    {
-        meta: {
             title: '系统管理',
             hidden: false
         },

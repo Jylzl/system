@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-10 09:21:58
+ * @lastTime: 2020-07-22 11:37:11
  -->
 <template>
 	<div class="work h100">
@@ -25,10 +25,9 @@
 				</div>
 			</el-col>
 		</el-row>
-		<el-row :gutter="20">
-			<el-col :span="8" v-for="i in 3" :key="i" class="m-b-20">1</el-col>
-		</el-row>
-		<div id="canvas"></div>
+		<div class="canvas-box">
+			<div id="canvas"></div>
+		</div>
 	</div>
 </template>
 
@@ -84,7 +83,18 @@ export default {
 		const linePlot = new Line("canvas", {
 			data,
 			xField: "year",
-			yField: "value"
+			yField: "value",
+			lineStyle: {
+				stroke: "black",
+				lineWidth: 2,
+				lineDash: [4, 5],
+				strokeOpacity: 0.7,
+				shadowColor: "black",
+				shadowBlur: 10,
+				shadowOffsetX: 5,
+				shadowOffsetY: 5,
+				cursor: "pointer"
+			}
 		});
 
 		linePlot.render();
@@ -196,5 +206,9 @@ export default {
 	-webkit-transform: rotate(-40deg);
 	transform: rotate(-40deg);
 	opacity: 0.1;
+}
+
+.canvas-box {
+	background-color: #fff;
 }
 </style>

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-10-29 17:59:02
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-21 08:42:40
+ * @lastTime: 2020-07-22 11:15:42
  -->
 <template>
 	<el-container
@@ -41,9 +41,9 @@
 						</span>
 						<div class="h100">
 							<el-scrollbar class="h100">
-								<el-collapse accordion>
-									<template v-for="item in components">
-										<el-collapse-item :key="item.id" :title="item.label" :name="item.id" v-if="item.children">
+								<el-collapse v-model="collapseActiveName" accordion>
+									<template v-for="(item,index) in components">
+										<el-collapse-item :key="item.id" :title="item.label" :name="index" v-if="item.children">
 											<div class="p-lf-10">
 												<el-row :gutter="10" class="field-box">
 													<draggable
@@ -196,6 +196,7 @@ export default {
 	data() {
 		return {
 			loading: false,
+			collapseActiveName: 0,
 			formboxwrapHight: "",
 			tabsOneActiveName: "first",
 			tabsTwoActiveName: "first",
