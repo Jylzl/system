@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-17 15:21:30
+ * @lastTime: 2020-07-23 19:34:53
  -->
 <template>
 	<div class="header-box">
@@ -136,7 +136,7 @@ export default {
 			if (to.name == "Work") {
 				this.$store.dispatch("setLeftRouters", this.routes);
 			} else {
-				this.$store.dispatch("setLeftRouters", []);
+				this.$store.dispatch("setLeftRouters", this.routes);
 			}
 		}
 	},
@@ -145,7 +145,6 @@ export default {
 			return { userName: "admin" };
 		},
 		routes() {
-			// console.log(this.$store.getters.getRoutes[0].children);
 			return this.$store.getters.getRoutes[0].children;
 		},
 		topRouters() {

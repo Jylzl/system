@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-22 11:37:11
+ * @lastTime: 2020-07-23 12:01:44
  -->
 <template>
 	<div class="work h100">
@@ -66,30 +66,49 @@ export default {
 				}
 			],
 			data: [
-				{ year: "1991", value: 3 },
-				{ year: "1992", value: 4 },
-				{ year: "1993", value: 3.5 },
-				{ year: "1994", value: 5 },
-				{ year: "1995", value: 4.9 },
-				{ year: "1996", value: 6 },
-				{ year: "1997", value: 7 },
-				{ year: "1998", value: 9 },
-				{ year: "1999", value: 13 }
+				{ year: "00:00", value: 3 },
+				{ year: "01:00", value: 4 },
+				{ year: "02:00", value: 5 },
+				{ year: "03:00", value: 5 },
+				{ year: "04:00", value: 4 },
+				{ year: "05:00", value: 6 },
+				{ year: "06:00", value: 7 },
+				{ year: "07:00", value: 9 },
+				{ year: "08:00", value: 9 },
+				{ year: "09:00", value: 5 },
+				{ year: "10:00", value: 6 },
+				{ year: "11:00", value: 4 },
+				{ year: "12:00", value: 7 },
+				{ year: "13:00", value: 9 },
+				{ year: "14:00", value: 5 },
+				{ year: "15:00", value: null },
+				{ year: "16:00", value: null },
+				{ year: "17:00", value: null },
+				{ year: "18:00", value: 4 },
+				{ year: "19:00", value: 7 },
+				{ year: "20:00", value: 4 },
+				{ year: "21:00", value: 9 },
+				{ year: "22:00", value: 4 },
+				{ year: "23:00", value: 6 }
 			]
 		};
 	},
 	mounted() {
 		const data = this.data;
 		const linePlot = new Line("canvas", {
+			title: {
+				visible: true,
+				text: "访问量"
+			},
 			data,
 			xField: "year",
 			yField: "value",
 			lineStyle: {
-				stroke: "black",
+				stroke: "#1476d1",
 				lineWidth: 2,
 				lineDash: [4, 5],
 				strokeOpacity: 0.7,
-				shadowColor: "black",
+				shadowColor: "#1476d1",
 				shadowBlur: 10,
 				shadowOffsetX: 5,
 				shadowOffsetY: 5,
