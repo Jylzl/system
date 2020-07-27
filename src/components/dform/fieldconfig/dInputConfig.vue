@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-12 22:47:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-21 08:44:30
+ * @lastTime: 2020-07-27 10:41:43
  -->
 <template>
 	<div class="field-attribute">
@@ -47,7 +47,7 @@
 					clearable
 				></el-input>
 			</el-form-item>
-			<el-form-item label="字段栅格" v-if="o_config.type == 'textarea'">
+			<el-form-item label="字段栅格">
 				<el-input-number
 					v-model="o_config.span"
 					controls-position="right"
@@ -138,8 +138,22 @@
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
+					<el-form-item label="可否清空">
+						<el-switch v-model="o_config.clearable" @change="$emit('change', o_config)"></el-switch>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
 					<el-form-item label="字段校验">
 						<el-switch v-model="o_config.check" @change="$emit('change', o_config)"></el-switch>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="立即校验">
+						<el-switch
+							v-model="o_config.checkNow"
+							@change="$emit('change', o_config)"
+							:disabled="!o_config.check"
+						></el-switch>
 					</el-form-item>
 				</el-col>
 			</el-row>
@@ -175,20 +189,20 @@ export default {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		formConfig: {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		components: {
 			type: Array,
 			default() {
 				return [];
-			}
-		}
+			},
+		},
 	},
 	data() {
 		return {
@@ -199,61 +213,61 @@ export default {
 			regexOptions: [
 				{
 					value: "notRequired",
-					label: "标识必填字段"
+					label: "标识必填字段",
 				},
 				{
 					value: "required",
-					label: "普通文本"
+					label: "普通文本",
 				},
 				{
 					value: "checkChinese",
-					label: "非中文字符串"
+					label: "非中文字符串",
 				},
 				{
 					value: "englishStr",
-					label: "英文字符串"
+					label: "英文字符串",
 				},
 				{
 					value: "string",
-					label: "数字或英文"
+					label: "数字或英文",
 				},
 				{
 					value: "number",
-					label: "整数"
+					label: "整数",
 				},
 				{
 					value: "double",
-					label: "浮点数"
+					label: "浮点数",
 				},
 				{
 					value: "email",
-					label: "邮箱"
+					label: "邮箱",
 				},
 				{
 					value: "mobile",
-					label: "手机号码"
+					label: "手机号码",
 				},
 				{
 					value: "isURL",
-					label: "url地址"
+					label: "url地址",
 				},
 				{
 					value: "pswd",
-					label: "8-16位英文数字密码"
+					label: "8-16位英文数字密码",
 				},
 				{
 					value: "0",
-					label: "其他"
-				}
-			]
+					label: "其他",
+				},
+			],
 		};
 	},
 	computed: {
 		componentType() {
 			let components = [];
-			this.components.map(items => {
+			this.components.map((items) => {
 				if (items.children) {
-					items.children.map(item => {
+					items.children.map((item) => {
 						components.push(item);
 					});
 				}
@@ -268,24 +282,24 @@ export default {
 				typeOptions = [
 					{
 						label: "单行文本框",
-						value: "text"
+						value: "text",
 					},
 					{
 						label: "多行文本框",
-						value: "textarea"
+						value: "textarea",
 					},
 					{
 						label: "邮箱文本框",
-						value: "email"
+						value: "email",
 					},
 					{
 						label: "密码文本框",
-						value: "password"
-					}
+						value: "password",
+					},
 				];
 			}
 			return typeOptions;
-		}
+		},
 	},
 	watch: {
 		config: {
@@ -294,8 +308,8 @@ export default {
 				this.o_config = val;
 			},
 			immediate: true,
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	filters: {},
 	methods: {
@@ -306,7 +320,7 @@ export default {
 		componentChange() {
 			delete this.o_config.type;
 			this.$emit("change", this.o_config);
-		}
-	}
+		},
+	},
 };
 </script>

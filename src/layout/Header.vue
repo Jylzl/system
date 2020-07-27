@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-23 19:34:53
+ * @lastTime: 2020-07-27 09:30:37
  -->
 <template>
 	<div class="header-box">
@@ -107,17 +107,17 @@ export default {
 			siteList: [
 				{
 					value: "1",
-					label: "孝感市门户网站"
+					label: "孝感市门户网站",
 				},
 				{
 					value: "2",
-					label: "大悟县门户网站"
+					label: "大悟县门户网站",
 				},
 				{
 					value: "3",
-					label: "孝南区门户网站"
-				}
-			]
+					label: "孝南区门户网站",
+				},
+			],
 		};
 	},
 	watch: {
@@ -134,11 +134,11 @@ export default {
 			console.log(to.path);
 			console.log(from.path);
 			if (to.name == "Work") {
-				this.$store.dispatch("setLeftRouters", this.routes);
+				this.$store.dispatch("setLeftRouters", this.topRouters);
 			} else {
-				this.$store.dispatch("setLeftRouters", this.routes);
+				this.$store.dispatch("setLeftRouters", this.topRouters);
 			}
-		}
+		},
 	},
 	computed: {
 		user() {
@@ -152,10 +152,11 @@ export default {
 		},
 		activeIndex() {
 			return this.$route.path;
-		}
+		},
 	},
 	created() {},
 	mounted() {
+		this.$store.dispatch("setLeftRouters", this.topRouters);
 		this.searchPool = this.generateRoutes(this.routes);
 	},
 	methods: {
@@ -174,20 +175,20 @@ export default {
 			this.$confirm("您在进行锁屏操作, 是否继续?", "提示", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
-				type: "warning"
+				type: "warning",
 			})
 				.then(() => {
 					this.$router.push({
 						path: "/lock", //跳转的路径
 						query: {
-							user: this.userName
-						}
+							user: this.userName,
+						},
 					});
 				})
 				.catch(() => {
 					this.$message({
 						type: "info",
-						message: "已取消"
+						message: "已取消",
 					});
 				});
 		},
@@ -196,10 +197,10 @@ export default {
 			this.$confirm("您在进行退出操作, 是否继续?", "提示", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
-				type: "warning"
+				type: "warning",
 			})
 				.then(() => {
-					this.$store.dispatch("loginOut").then(res => {
+					this.$store.dispatch("loginOut").then((res) => {
 						if (res.code == this.$code.success) {
 							this.successMessage("退出成功");
 							this.$router.push("/login");
@@ -236,13 +237,13 @@ export default {
 				keys: [
 					{
 						name: "name",
-						weight: 0.7
+						weight: 0.7,
 					},
 					{
 						name: "path",
-						weight: 0.3
-					}
-				]
+						weight: 0.3,
+					},
+				],
 			});
 		},
 		generateRoutes(routes, basePath = "/", prefixTitle = []) {
@@ -255,7 +256,7 @@ export default {
 				const data = {
 					// eslint-disable-next-line no-undef
 					path: path.resolve(basePath, router.path),
-					name: [...prefixTitle]
+					name: [...prefixTitle],
 				};
 				if (router.meta && router.meta.title) {
 					// generate internationalized title
@@ -293,8 +294,8 @@ export default {
 			this.$router.push({
 				name: "Personal",
 				query: {
-					type: "news"
-				}
+					type: "news",
+				},
 			});
 		},
 		// 登出
@@ -302,25 +303,25 @@ export default {
 			this.$confirm("即将登出, 是否继续?", "提示", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
-				type: "warning"
+				type: "warning",
 			})
 				.then(() => {
 					this.$router.push({
-						name: "Login"
+						name: "Login",
 					});
 					this.$message({
 						type: "success",
-						message: "登出成功!"
+						message: "登出成功!",
 					});
 				})
 				.catch(() => {
 					this.$message({
 						type: "info",
-						message: "已取消"
+						message: "已取消",
 					});
 				});
-		}
-	}
+		},
+	},
 };
 </script>
 

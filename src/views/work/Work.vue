@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-23 12:01:44
+ * @lastTime: 2020-07-27 12:51:40
  -->
 <template>
 	<div class="work h100">
@@ -25,15 +25,89 @@
 				</div>
 			</el-col>
 		</el-row>
-		<div class="canvas-box">
-			<div id="canvas"></div>
-		</div>
+		<el-row :gutter="20">
+			<el-col :span="8" class="m-b-20" v-for="i in 3" :key="i">
+				<el-card class="custom-card" :body-style="{ padding: '15px' }">
+					<div slot="header">
+						<span>快捷操作</span>
+					</div>
+					<div class="text item">
+						<el-row :gutter="10">
+							<el-col :span="6">
+								<el-link :underline="false" class="personal-inf-card">
+									<div class="card-icon">
+										<i class="el-icon-edit"></i>
+									</div>
+									<div class="card-inf">数据发布</div>
+								</el-link>
+							</el-col>
+							<el-col :span="6">
+								<el-link :underline="false" class="personal-inf-card">
+									<div class="card-icon">
+										<i class="el-icon-cpu"></i>
+									</div>
+									<div class="card-inf">数据清洗</div>
+								</el-link>
+							</el-col>
+							<el-col :span="6">
+								<el-link :underline="false" class="personal-inf-card">
+									<div class="card-icon">
+										<i class="el-icon-search"></i>
+									</div>
+									<div class="card-inf">数据检索</div>
+								</el-link>
+							</el-col>
+							<el-col :span="6">
+								<el-link :underline="false" class="personal-inf-card">
+									<div class="card-icon">
+										<i class="el-icon-pie-chart"></i>
+									</div>
+									<div class="card-inf">数据统计</div>
+								</el-link>
+							</el-col>
+							<el-col :span="6">
+								<el-link :underline="false" class="personal-inf-card">
+									<div class="card-icon">
+										<i class="el-icon-setting"></i>
+									</div>
+									<div class="card-inf">个人设置</div>
+								</el-link>
+							</el-col>
+						</el-row>
+					</div>
+				</el-card>
+			</el-col>
+		</el-row>
+		<el-row :gutter="20">
+			<el-col :span="16" class="m-b-20">
+				<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
+					<div slot="header" class="clearfix">
+						<span>访问量</span>
+						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+					</div>
+					<div class="canvas-box">
+						<div id="canvas"></div>
+					</div>
+				</el-card>
+			</el-col>
+			<el-col :span="8" class="m-b-20">
+				<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
+					<div slot="header" class="clearfix">
+						<span>民生关注</span>
+						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+					</div>
+					<div class="canvas-box">
+						<div id="canvas1"></div>
+					</div>
+				</el-card>
+			</el-col>
+		</el-row>
 	</div>
 </template>
 
 <script>
 import countTo from "vue-count-to";
-import { Line } from "@antv/g2plot";
+import { Line, Radar } from "@antv/g2plot";
 
 export default {
 	components: { countTo },
@@ -42,28 +116,28 @@ export default {
 			inf: [
 				{
 					title: "内容发布量",
-					unm: 26889
+					unm: 26889,
 				},
 				{
 					title: "公报发布量",
-					unm: 26189
+					unm: 26189,
 				},
 				{
 					title: "公众号文章",
-					unm: 26889
+					unm: 26889,
 				},
 				{
 					title: "OA邮件",
-					unm: 26889
+					unm: 26889,
 				},
 				{
 					title: "分类统计五",
-					unm: 26889
+					unm: 26889,
 				},
 				{
 					title: "分类统计六",
-					unm: 26889
-				}
+					unm: 26889,
+				},
 			],
 			data: [
 				{ year: "00:00", value: 3 },
@@ -89,35 +163,109 @@ export default {
 				{ year: "20:00", value: 4 },
 				{ year: "21:00", value: 9 },
 				{ year: "22:00", value: 4 },
-				{ year: "23:00", value: 6 }
-			]
+				{ year: "23:00", value: 6 },
+			],
+			data1: [
+				{
+					item: "招工用工",
+					score: 70,
+				},
+				{
+					item: "税费减免",
+					score: 60,
+				},
+				{
+					item: "融资贷款",
+					score: 60,
+				},
+				{
+					item: "农林牧渔",
+					score: 40,
+				},
+				{
+					item: "交通出行",
+					score: 60,
+				},
+				{
+					item: "社会保障",
+					score: 70,
+				},
+				{
+					item: "返岗复工",
+					score: 50,
+				},
+				{
+					item: "疫情防控",
+					score: 30,
+				},
+				{
+					item: "高考志愿",
+					score: 60,
+				},
+				{
+					item: "中考查询",
+					score: 50,
+				},
+			],
 		};
 	},
 	mounted() {
-		const data = this.data;
-		const linePlot = new Line("canvas", {
-			title: {
-				visible: true,
-				text: "访问量"
-			},
-			data,
-			xField: "year",
-			yField: "value",
-			lineStyle: {
-				stroke: "#1476d1",
-				lineWidth: 2,
-				lineDash: [4, 5],
-				strokeOpacity: 0.7,
-				shadowColor: "#1476d1",
-				shadowBlur: 10,
-				shadowOffsetX: 5,
-				shadowOffsetY: 5,
-				cursor: "pointer"
-			}
-		});
+		this.chart();
+		this.chart1();
+	},
+	methods: {
+		chart() {
+			const data = this.data;
+			const linePlot = new Line("canvas", {
+				title: {
+					visible: false,
+					text: "访问量",
+					style: {
+						fill: "#666",
+						fontSize: 15,
+					},
+				},
+				data,
+				xField: "year",
+				yField: "value",
+				lineStyle: {
+					stroke: "#1476d1",
+					lineWidth: 2,
+					lineDash: [4, 5],
+					strokeOpacity: 0.7,
+					shadowColor: "#1476d1",
+					shadowBlur: 10,
+					shadowOffsetX: 5,
+					shadowOffsetY: 5,
+					cursor: "pointer",
+				},
+			});
 
-		linePlot.render();
-	}
+			linePlot.render();
+		},
+		chart1() {
+			const data = this.data1;
+			const radarPlot = new Radar(document.getElementById("canvas1"), {
+				title: {
+					visible: false,
+					text: "民生关注",
+					style: {
+						fill: "#666",
+						fontSize: 15,
+					},
+				},
+				data,
+				angleField: "item",
+				radiusField: "score",
+				color: ["#1476d1"],
+				radiusAxis: {
+					gridType: "arc",
+					gridAlternateColor: "rgba(0, 0, 0, 0.04)",
+				},
+			});
+			radarPlot.render();
+		},
+	},
 };
 </script>
 
@@ -134,7 +282,7 @@ export default {
 	color: #fff;
 	font-size: 20px;
 	font-weight: bold;
-	border-radius: 4px;
+	border-radius: 1px;
 }
 
 .bg-purple-0 {
@@ -229,5 +377,31 @@ export default {
 
 .canvas-box {
 	background-color: #fff;
+}
+
+/* 个人控制台 */
+.personal-inf-card {
+	display: block;
+	height: 84px;
+}
+
+.personal-inf .el-col:nth-child(n + 5) {
+	margin-top: 10px;
+}
+
+.personal-inf-card .card-icon {
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	font-size: 28px;
+	background-color: #f8f8f8;
+	border-radius: 2px;
+}
+
+.personal-inf-card .card-inf {
+	height: 24px;
+	line-height: 24px;
+	font-size: 14px;
+	text-align: center;
 }
 </style>

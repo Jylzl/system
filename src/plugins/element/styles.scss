@@ -37,7 +37,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     }
 
     .el-dialog__headerbtn {
-        top: 18px;
+        top: 13px;
 
         .el-dialog__close {
             color: #fff;
@@ -49,4 +49,21 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-dialog__footer {
     padding-top: 6px;
     padding-bottom: 10px;
+}
+
+// 自定义custom-card
+.custom-card {
+    border: none;
+    border-radius: 1px;
+
+    .el-card__header {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        padding: 8px 10px;
+        background-color: $--color-primary;
+        color: #fff;
+        line-height: 22px;
+        font-size: 14px;
+    }
 }

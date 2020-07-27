@@ -1,9 +1,9 @@
 <!--
- * @description: Description
+ * @description: 表单设计主界面
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-10-29 17:59:02
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-22 11:15:42
+ * @lastTime: 2020-07-27 10:35:07
  -->
 <template>
 	<el-container
@@ -11,6 +11,7 @@
 		oncontextmenu="self.event.returnValue=false"
 		v-loading="loading"
 	>
+		<!-- 表单设计左 -->
 		<el-aside width="300px">
 			<div class="form-left-card">
 				<el-card class="form-card" shadow="never" :body-style="{ padding: '0px' }">
@@ -89,6 +90,7 @@
 				</el-tabs>
 			</div>
 		</el-aside>
+		<!-- 表单设计中 -->
 		<el-main class="form-box">
 			<el-container class="h100">
 				<el-header class="form-box-header" height="40px">
@@ -97,7 +99,26 @@
 						<el-button type="text" icon="el-icon-refresh-right" size="mini" circle></el-button>
 					</div>
 					<div>
-						<el-button type="text" icon="el-icon-delete" size="mini" @click="clearMyArray" circle></el-button>
+						<el-tooltip class="item" effect="dark" content="预览" placement="top">
+							<el-button
+								type="text"
+								icon="el-icon-view"
+								size="mini"
+								@click="viewMyArray"
+								:disabled="!obj.column.length"
+								circle
+							></el-button>
+						</el-tooltip>
+						<el-tooltip class="item" effect="dark" content="清空" placement="top">
+							<el-button
+								type="text"
+								icon="el-icon-delete"
+								size="mini"
+								@click="clearMyArray"
+								:disabled="!obj.column.length"
+								circle
+							></el-button>
+						</el-tooltip>
 					</div>
 				</el-header>
 				<el-main
@@ -150,6 +171,7 @@
 				</el-footer>
 			</el-container>
 		</el-main>
+		<!-- 表单设计属性 -->
 		<el-aside width="300px">
 			<el-tabs type="border-card" v-model="tabsTwoActiveName" class="h100 form-tabs form-right-tabs">
 				<el-tab-pane label="字段属性" name="first" class="h100">
@@ -172,6 +194,14 @@
 				</el-tab-pane>
 			</el-tabs>
 		</el-aside>
+		<!-- 表单设计预览 -->
+		<el-dialog title="预览" :visible.sync="viewDialogVisible" custom-class="view-dialog" width="60%">
+			<d-form :myArray="obj.column" :formAttribute="obj.formAttribute"></d-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button size="small" @click="viewDialogVisible = false">取 消</el-button>
+				<el-button size="small" type="primary" @click="viewDialogVisible = false">确 定</el-button>
+			</span>
+		</el-dialog>
 	</el-container>
 </template>
 
@@ -190,7 +220,7 @@ export default {
 		"d-form": dForm, //表单设计
 		"widget-form": widgetForm, //表单设计
 		"field-attribute": fieldAttribute, // 字段属性
-		"form-attribute": formAttribute // 表单属性
+		"form-attribute": formAttribute, // 表单属性
 		// MyEditor
 	},
 	data() {
@@ -202,7 +232,7 @@ export default {
 			tabsTwoActiveName: "first",
 			activeInf: {
 				prop: null,
-				index: null
+				index: null,
 			},
 			components: components,
 			codeViewKey: false,
@@ -224,8 +254,8 @@ export default {
 					resetShow: true, //按钮显示
 					btnPosition: "left", //按钮位置
 					submitText: "提交", //提交文字
-					resetText: "重置" //重置文字
-				}
+					resetText: "重置", //重置文字
+				},
 			},
 			data: [
 				{
@@ -235,11 +265,11 @@ export default {
 							label: "二级 1-1",
 							children: [
 								{
-									label: "三级 1-1-1"
-								}
-							]
-						}
-					]
+									label: "三级 1-1-1",
+								},
+							],
+						},
+					],
 				},
 				{
 					label: "一级 2",
@@ -248,19 +278,19 @@ export default {
 							label: "二级 2-1",
 							children: [
 								{
-									label: "三级 2-1-1"
-								}
-							]
+									label: "三级 2-1-1",
+								},
+							],
 						},
 						{
 							label: "二级 2-2",
 							children: [
 								{
-									label: "三级 2-2-1"
-								}
-							]
-						}
-					]
+									label: "三级 2-2-1",
+								},
+							],
+						},
+					],
 				},
 				{
 					label: "一级 3",
@@ -269,21 +299,22 @@ export default {
 							label: "二级 3-1",
 							children: [
 								{
-									label: "三级 3-1-1"
-								}
-							]
+									label: "三级 3-1-1",
+								},
+							],
 						},
 						{
 							label: "二级 3-2",
 							children: [
 								{
-									label: "三级 3-2-1"
-								}
-							]
-						}
-					]
-				}
-			]
+									label: "三级 3-2-1",
+								},
+							],
+						},
+					],
+				},
+			],
+			viewDialogVisible: false, // 预览dialog
 		};
 	},
 	computed: {
@@ -292,7 +323,7 @@ export default {
 		},
 		htmlCodes() {
 			return JSON.stringify(this.obj.column);
-		}
+		},
 	},
 	watch: {},
 	created() {},
@@ -323,14 +354,8 @@ export default {
 		// 左侧复制到右侧
 		cloneDog(original) {
 			let obj = deepClone(original);
-			obj.prop =
-				"attr_" +
-				Math.random()
-					.toString()
-					.slice(-10);
-			obj.id = Math.random()
-				.toString()
-				.slice(-10);
+			obj.prop = "attr_" + Math.random().toString().slice(-10);
+			obj.id = Math.random().toString().slice(-10);
 			return obj;
 		},
 		// 清空
@@ -338,21 +363,25 @@ export default {
 			this.$confirm("清空当前设计表单, 是否继续?", "警告", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
-				type: "warning"
+				type: "warning",
 			})
 				.then(() => {
 					this.obj.column = [];
 					this.$message({
 						type: "success",
-						message: "清空成功!"
+						message: "清空成功!",
 					});
 				})
 				.catch(() => {
 					this.$message({
 						type: "info",
-						message: "已取消"
+						message: "已取消",
 					});
 				});
+		},
+		// 预览
+		viewMyArray() {
+			this.viewDialogVisible = true;
 		},
 		// 编辑器
 		codeView() {
@@ -362,13 +391,17 @@ export default {
 			this.htmlEditor = edit;
 		},
 		// eslint-disable-next-line no-unused-vars
-		htmlOnCodeChange(value, event) {}
-	}
+		htmlOnCodeChange(value, event) {},
+	},
 };
 </script>
 
 <style>
-@import url("http://at.alicdn.com/t/font_1254447_dpcsvgkhila.css");
+@import url("../../assets/iconfont/font_1254447_dpcsvgkhila/iconfont.css");
+
+.view-dialog .el-dialog__body {
+	padding: 0;
+}
 
 /* 工具样式 */
 .clearfix:after {
