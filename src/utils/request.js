@@ -11,7 +11,7 @@
  * @Author: lizlong<94648929@qq.com>
  * @Date: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-10 11:24:04
+ * @lastTime: 2020-07-31 16:54:35
  */
 
 import axios from 'axios'
@@ -24,9 +24,11 @@ import {
 
 import {
 	getToken,
-	removeToken
+	removeToken,
+	csrfToken
 } from '@/utils/auth'
 import code from '@/code/code';
+
 
 function showMessage(value) {
 	return Message({
@@ -39,7 +41,7 @@ function showMessage(value) {
 
 // create an axios instance
 const service = axios.create({
-	withCredentials: true,
+	withCredentials: false,
 	baseURL: process.env.VUE_APP_SERVER_API, // api 的 base_url
 	timeout: 15000 // 请求超时时间
 })
@@ -55,6 +57,10 @@ service.interceptors.request.use(
 		if (getToken()) {
 			// 让每个请求携带token-- ['token']为自定义key 请根据实际情况自行修改
 			config.headers['token'] = getToken();
+		}
+		if (csrfToken()) {
+			// 让每个请求携带csrfToken-- ['x-csrf-token']为固定key
+			config.headers['x-csrf-token'] = csrfToken();
 		}
 
 		for (let key in config.data) {

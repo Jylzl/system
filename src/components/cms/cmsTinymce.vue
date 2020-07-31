@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-17 15:15:42
+ * @lastTime: 2020-07-31 18:29:53
  -->
 <template>
 	<div>
@@ -71,9 +71,47 @@ export default {
 	components: {
 		Editor
 	},
+		props: {
+		options: {
+			type: Object,
+			default: () => {
+				return {};
+			}
+		},
+		upload: {
+			type: Object,
+			default: () => {
+				return {};
+			}
+		},
+		value: {
+			type: String,
+			default: ""
+		},
+		disabled: {
+			type: Boolean,
+			default: false
+		},
+		readonly: {
+			type: Boolean,
+			default: false
+		},
+		height: {
+			type: Number,
+			default: 340
+		},
+		minRows: {
+			type: Number,
+			default: 8
+		},
+		maxRows: {
+			type: Number,
+			default: 10
+		}
+	},
 	data() {
 		return {
-			html: "1111",
+			html: "",
 			init: {
 				cache_suffix: "?v=5.4.1",
 				readonly: true, //只读
@@ -96,6 +134,7 @@ export default {
 				min_height: 360, // 编辑器初始化最小高度
 				branding: false, // 是否禁用“Powered by TinyMCE”
 				images_upload_url: "postAcceptor.php", // 图片上传地址
+				images_upload_base_path: "http://127.0.0.1:7001", // 图片地址基本目录
 				imagetools_cors_hosts: ["mydomain.com", "otherdomain.com"],
 				imagetools_proxy: "proxy.php",
 				file_picker_types: "media,image,file", // 想要哪一个图标提供本地文件选择功能，参数可为media(媒体)、image(图片)、file(文件)
@@ -166,13 +205,43 @@ export default {
 	methods: {
 		imagesUploadHandlerfunction() {
 			// eslint-disable-next-line no-unused-vars
-			return function(blobInfo, success, failure) {
-				setTimeout(function() {
-					/* no matter what you upload, we will turn it into TinyMCE logo :)*/
-					success(
-						"http://moxiecode.cachefly.net/tinymce/v9/images/logo.png"
-					);
-				}, 2000);
+			// return function(blobInfo, success, failure) {
+			// 	setTimeout(function() {
+			// 		/* no matter what you upload, we will turn it into TinyMCE logo :)*/
+			// 		success(
+			// 			"http://moxiecode.cachefly.net/tinymce/v9/images/logo.png"
+			// 		);
+			// 	}, 2000);
+			// };
+						return function(blobInfo, success, failure) {
+				const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk2MTkwODgxfQ.Xz_wSnrJ1o5FaFhAML3JSI6swnD_7dbsC6q82u62weA";
+
+				var xhr, formData;
+				var file = blobInfo.blob(); //转化为易于理解的file对象
+				xhr = new XMLHttpRequest();
+				xhr.withCredentials = false;
+				xhr.open("POST", "http://127.0.0.1:7001/api/uploads");
+				xhr.setRequestHeader("authorization", "Bearer " + token);
+				xhr.onload = function() {
+					var json;
+					if (xhr.status != 200) {
+						failure("HTTP Error: " + xhr.status);
+						return;
+					}
+					json = JSON.parse(xhr.responseText);
+					console.log(xhr);
+					console.log(json);
+					console.log(json.data.url);
+
+					if (!json || json.code != 200) {
+						failure("Invalid JSON: " + xhr.responseText);
+						return;
+					}
+					success("http://127.0.0.1:7001"+json.data.url);
+				};
+				formData = new FormData();
+				formData.append("fields", file, file.name); //此处与源文档不一样
+				xhr.send(formData);
 			};
 		},
 		filePickerCallback() {

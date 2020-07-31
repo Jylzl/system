@@ -11,13 +11,15 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-08-12 15:16:26
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-10 18:45:41
+ * @lastTime: 2020-07-31 15:01:00
  */
 
 const api = {
-    //菜单管理
-    meunList: "/system/menu/list", //菜单列表
-    menuTree: "/system/menu/menuTreeData", //菜单树
+    // 账户操作
+    userLogin: "/passport/local", // 用户登录
+    // 菜单管理
+    meunList: "/system/menu/list", // 菜单列表
+    menuTree: "/system/menu/menuTreeData", // 菜单树
 }
 
 export default api;

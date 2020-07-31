@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-28 11:48:00
+ * @lastTime: 2020-07-31 17:48:34
  -->
 <template>
 	<div class="land-box">
@@ -68,7 +68,12 @@
 										</div>
 									</el-form-item>
 									<div class="forget-password">
-										<el-checkbox v-model="landForm_password.rememberPswd" @change="checkCookies">记住密码</el-checkbox>
+										<el-checkbox
+											v-model="landForm_password.rememberPswd"
+											@change="checkCookies"
+											:true-label="1"
+											:false-label="0"
+										>记住密码</el-checkbox>
 										<router-link to="/register">忘记密码？</router-link>
 									</div>
 								</el-form>
@@ -142,7 +147,7 @@
 						<el-link type="info">注册新账户</el-link>
 					</div>
 					<div class="three-land-right">
-						<el-button type="text">
+						<el-button type="text" @click="threeLand">
 							<icon name="icon_qq" :w="32" :h="32"></icon>
 						</el-button>
 						<el-button type="text">
@@ -172,7 +177,7 @@ export default {
 				open: true, //打开阿里验证
 				show: false, //状态显示
 				maxTimes: 5, //最大错误次数
-				times: 0 //当前错误次数
+				times: 0, //当前错误次数
 			},
 			icon: "icon iconfont icon-icon_yulan",
 			submitFormName: "landForm_password",
@@ -188,41 +193,41 @@ export default {
 				// 自定义手机号规则
 				phone: [r_phone],
 				// 自定义验证码
-				verificationCode: [r_verificationCode]
+				verificationCode: [r_verificationCode],
 			},
 			//密码登陆
 			landForm_password: {
 				user: "admin",
-				pswd: "password",
-				rememberPswd: true
+				pswd: "123",
+				rememberPswd: 1,
 			},
 			// 手机登陆
 			landForm_phone: {
 				areaCode: "0086",
 				phone: "",
-				verificationCode: ""
+				verificationCode: "",
 			},
 			landLoading: {
 				disabled: false,
 				icon: "",
-				content: "登录"
+				content: "登录",
 			},
 			areaCodes: [
 				{
 					name: "中国大陆",
-					code: "0086"
+					code: "0086",
 				},
 				{
 					name: "中国台湾",
-					code: "0886"
+					code: "0886",
 				},
 				{
 					name: "中国香港",
-					code: "0852"
-				}
+					code: "0852",
+				},
 			],
 			// 记住密码
-			rememberUsers: []
+			rememberUsers: [],
 		};
 	},
 	created() {
@@ -262,7 +267,7 @@ export default {
 					title: "警告",
 					message:
 						"浏览器已禁止网站保存和读取Cookies数据，请打开后再试",
-					type: "warning"
+					type: "warning",
 				});
 				this.landForm_password.rememberPswd = false;
 				return false;
@@ -283,11 +288,11 @@ export default {
 			this.$confirm("此操作将从本地删除该用户信息, 是否继续?", "提示", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
-				type: "warning"
+				type: "warning",
 			})
 				.then(() => {
 					this.rememberUsers = this.rememberUsers.filter(
-						user => user.value != userName
+						(user) => user.value != userName
 					);
 					//加密用户信息，并存入cookies
 					Cookies.set(
@@ -299,7 +304,7 @@ export default {
 							)
 							.toString(),
 						{
-							expires: 7
+							expires: 7,
 						}
 					);
 					this.successMessage("删除成功!");
@@ -311,17 +316,14 @@ export default {
 				});
 		},
 		submitForm(formName) {
-			this.$refs[formName].validate(valid => {
+			this.$refs[formName].validate((valid) => {
 				if (valid) {
 					this.landLoading.content = "正在登录...";
 					this.landLoading.icon = "el-icon-loading";
 					this.landLoading.disabled = true;
 					this.$store
-						.dispatch("userLogin", {
-							_this: this,
-							loginForm: this.landForm_password
-						})
-						.then(res => {
+						.dispatch("userLogin", this.landForm_password)
+						.then((res) => {
 							switch (res.code) {
 								case "200":
 									// 登录成功
@@ -353,6 +355,9 @@ export default {
 				}
 			});
 		},
+		threeLand(){
+			
+		},
 		querySearch(queryString, cb) {
 			const rememberUsers = this.rememberUsers;
 			let results =
@@ -369,7 +374,7 @@ export default {
 			cb(results);
 		},
 		createFilter(queryString) {
-			return rememberUser => {
+			return (rememberUser) => {
 				return (
 					rememberUser.value
 						.toLowerCase()
@@ -398,7 +403,7 @@ export default {
 			var nc_token = [
 				"CF_APP_1",
 				new Date().getTime(),
-				Math.random()
+				Math.random(),
 			].join(":");
 			var NC_Opt = {
 				renderTo: "#your-dom-id",
@@ -407,7 +412,7 @@ export default {
 				token: nc_token,
 				customWidth: 321,
 				trans: {
-					key1: "code0"
+					key1: "code0",
 				},
 				elementID: ["usernameID"],
 				is_Opt: 0,
@@ -425,7 +430,7 @@ export default {
 					// 'uab_Url': '//aeu.alicdn.com/js/uac/909.js',
 					// 'umid_serUrl': 'https://g.com/service/um.json'
 				},
-				callback: function() {
+				callback: function () {
 					// window.console && console.log(nc_token)
 					// window.console && console.log(data.csessionid)
 					// window.console && console.log(data.sig)
@@ -435,7 +440,7 @@ export default {
 						_this.aliyun.times = 0;
 						_this.aliyun.show = false;
 					}, 1200);
-				}
+				},
 			};
 			// eslint-disable-next-line
 			var nc = new noCaptcha(NC_Opt);
@@ -445,20 +450,20 @@ export default {
 				_error300:
 					'哎呀，出错了，点击<a href="javascript:__nc.reset()">刷新</a>再来一次',
 				_errorNetwork:
-					'网络不给力，请<a href="javascript:__nc.reset()">点击刷新</a>'
+					'网络不给力，请<a href="javascript:__nc.reset()">点击刷新</a>',
 			});
 		},
 		landSuccess() {
 			this.$store
 				.dispatch("setRouters")
-				.then(res => {
+				.then((res) => {
 					if (res.code == "200") {
 						this.$router.addRoutes(
 							this.$store.state.perms.addRouters
 						);
 						//登录成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
 						this.rememberUsers = this.rememberUsers.filter(
-							user => user.value != this.landForm_password.user
+							(user) => user.value != this.landForm_password.user
 						);
 						// 默认记录5条用户信息，
 						if (this.rememberUsers.length > 4) {
@@ -470,12 +475,12 @@ export default {
 						if (this.landForm_password.rememberPswd) {
 							this.rememberUsers.push({
 								value: this.landForm_password.user,
-								pswd: this.landForm_password.pswd
+								pswd: this.landForm_password.pswd,
 							});
 						} else {
 							this.rememberUsers.push({
 								value: this.landForm_password.user,
-								pswd: ""
+								pswd: "",
 							});
 						}
 						//加密用户信息，并存入cookies
@@ -488,7 +493,7 @@ export default {
 								)
 								.toString(),
 							{
-								expires: 7
+								expires: 7,
 							}
 						);
 						//登录成功手动清除cookies记录的登录次数
@@ -509,19 +514,19 @@ export default {
 							title: "登录成功",
 							message: "欢迎进入 " + siteName + " 后台管理系统",
 							type: "success",
-							showClose: true
+							showClose: true,
 						});
 						// 重置登录样式
 						this.restLand();
 						// 登录成功跳转主页
 						this.$router.push({
-							name: "home"
+							name: "home",
 						});
 					} else {
 						this.landFail();
 					}
 				})
-				.catch(err => {
+				.catch((err) => {
 					this.landFail();
 					console.log(err);
 				});
@@ -536,7 +541,7 @@ export default {
 					? Number(Cookies.get("landingTimes")) + 1
 					: 1,
 				{
-					expires: 1
+					expires: 1,
 				}
 			);
 			this.aliyun.times++;
@@ -565,8 +570,8 @@ export default {
 			this.landLoading.content = "登录";
 			this.landLoading.icon = "";
 			this.landLoading.disabled = false;
-		}
-	}
+		},
+	},
 };
 </script>
 
