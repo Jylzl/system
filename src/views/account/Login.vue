@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-31 17:48:34
+ * @lastTime: 2020-08-04 09:37:34
  -->
 <template>
 	<div class="land-box">
@@ -147,12 +147,30 @@
 						<el-link type="info">注册新账户</el-link>
 					</div>
 					<div class="three-land-right">
+						<el-link :underline="false" :href="threeLinks.sina">
+							<icon name="icon_sina" :w="28" :h="28"></icon>
+						</el-link>
+						<el-link :underline="false" :href="threeLinks.github" class="m-l-10">
+							<icon name="icon_github" :w="28" :h="28"></icon>
+						</el-link>
+						<el-link :underline="false" :href="threeLinks.qq" class="m-l-10">
+							<icon name="icon_qq" :w="28" :h="28"></icon>
+						</el-link>
+						<el-link :underline="false" :href="threeLinks.weichat" class="m-l-10">
+							<icon name="icon_weichat" :w="28" :h="28"></icon>
+						</el-link>
+						<!-- <el-button type="text" @click="threeLand">
+							<icon name="icon_sina" :w="28" :h="28"></icon>
+						</el-button>
 						<el-button type="text" @click="threeLand">
-							<icon name="icon_qq" :w="32" :h="32"></icon>
+							<icon name="icon_github" :w="28" :h="28"></icon>
+						</el-button>
+						<el-button type="text" @click="threeLand">
+							<icon name="icon_qq" :w="28" :h="28"></icon>
 						</el-button>
 						<el-button type="text">
 							<icon name="icon_weichat" :w="28" :h="28"></icon>
-						</el-button>
+						</el-button>-->
 					</div>
 				</div>
 			</div>
@@ -228,6 +246,12 @@ export default {
 			],
 			// 记住密码
 			rememberUsers: [],
+			threeLinks: {
+				sina: `${process.env.VUE_APP_SERVER_API}/passport/sina`,
+				github: `${process.env.VUE_APP_SERVER_API}/passport/github`,
+				qq: `${process.env.VUE_APP_SERVER_API}/passport/qq`,
+				weichat: `${process.env.VUE_APP_SERVER_API}/passport/weichat`,
+			},
 		};
 	},
 	created() {
@@ -355,9 +379,7 @@ export default {
 				}
 			});
 		},
-		threeLand(){
-			
-		},
+		threeLand() {},
 		querySearch(queryString, cb) {
 			const rememberUsers = this.rememberUsers;
 			let results =
@@ -661,7 +683,7 @@ export default {
 	align-items: center;
 	padding: 0 80px;
 	text-align: right;
-	margin-top: 10px;
+	margin-top: 22px;
 }
 
 .show-pswd,
