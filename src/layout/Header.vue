@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-27 09:30:37
+ * @lastTime: 2020-08-05 08:56:56
  -->
 <template>
 	<div class="header-box">
@@ -18,6 +18,7 @@
 					text-color="#fff"
 					active-text-color="#ffd04b"
 					@select="menuSelect"
+					class="top-nav"
 				>
 					<template v-for="topRouter in topRouters">
 						<el-menu-item

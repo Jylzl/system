@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-27 12:51:40
+ * @lastTime: 2020-08-05 12:51:04
  -->
 <template>
 	<div class="work h100">
@@ -26,12 +26,12 @@
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
-			<el-col :span="8" class="m-b-20" v-for="i in 3" :key="i">
+			<el-col :span="8" class="m-b-20" v-for="i in 2" :key="i">
 				<el-card class="custom-card" :body-style="{ padding: '15px' }">
 					<div slot="header">
 						<span>快捷操作</span>
 					</div>
-					<div class="text item">
+					<div class="personal-inf text item">
 						<el-row :gutter="10">
 							<el-col :span="6">
 								<el-link :underline="false" class="personal-inf-card">
@@ -73,6 +73,31 @@
 									<div class="card-inf">个人设置</div>
 								</el-link>
 							</el-col>
+							<el-col :span="6">
+								<el-link :underline="false" class="personal-inf-card">
+									<div class="card-icon">
+										<i class="el-icon-circle-plus-outline"></i>
+									</div>
+									<div class="card-inf">添加入口</div>
+								</el-link>
+							</el-col>
+						</el-row>
+					</div>
+				</el-card>
+			</el-col>
+			<el-col :span="8" :xl="8" :lg="8" :md="12" :sm="12" class="m-b-20">
+				<el-card class="custom-card" :body-style="{ padding: '15px' }">
+					<div slot="header">
+						<span>今日数据</span>
+					</div>
+					<div class="text item">
+						<el-row :gutter="10" class="personal-content">
+							<el-col :span="12" v-for="(item,index) in personalContent" :key="index">
+								<el-link :underline="false" class="personal-content-card">
+									<div class="card-title">{{item.title}}</div>
+									<div class="card-content">{{item.count}}</div>
+								</el-link>
+							</el-col>
 						</el-row>
 					</div>
 				</el-card>
@@ -81,9 +106,9 @@
 		<el-row :gutter="20">
 			<el-col :span="16" class="m-b-20">
 				<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
-					<div slot="header" class="clearfix">
+					<div slot="header" class="clearfix w100">
 						<span>访问量</span>
-						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+						<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
 					</div>
 					<div class="canvas-box">
 						<div id="canvas"></div>
@@ -92,9 +117,9 @@
 			</el-col>
 			<el-col :span="8" class="m-b-20">
 				<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
-					<div slot="header" class="clearfix">
+					<div slot="header" class="clearfix w100">
 						<span>民生关注</span>
-						<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+						<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
 					</div>
 					<div class="canvas-box">
 						<div id="canvas1"></div>
@@ -137,6 +162,24 @@ export default {
 				{
 					title: "分类统计六",
 					unm: 26889,
+				},
+			],
+			personalContent: [
+				{
+					title: "资源录入量",
+					count: 60,
+				},
+				{
+					title: "资源导入量",
+					count: 60,
+				},
+				{
+					title: "资源采集量",
+					count: 60,
+				},
+				{
+					title: "资源同步量",
+					count: 100,
 				},
 			],
 			data: [
@@ -403,5 +446,32 @@ export default {
 	line-height: 24px;
 	font-size: 14px;
 	text-align: center;
+}
+
+.personal-content-card {
+	box-sizing: border-box;
+	display: block;
+	height: 84px;
+	padding: 10px;
+	background-color: #f8f8f8;
+}
+
+.personal-content-card .card-title {
+	height: 24px;
+	line-height: 24px;
+}
+
+.personal-content-card .card-content {
+	height: 40px;
+	line-height: 40px;
+	font-size: 30px;
+	font-weight: bold;
+	color: #009688;
+	text-align: left;
+}
+
+.personal-inf .el-col:nth-child(n + 5),
+.personal-content .el-col:nth-child(n + 3) {
+	margin-top: 10px;
 }
 </style>

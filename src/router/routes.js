@@ -51,114 +51,101 @@ const routes = [
                 component: () => import('@/views/work/Personal.vue')
             }
         ]
-    },
-    {
+    }, {
         meta: {
-            title: '系统管理',
+            title: '权限管理',
             hidden: false,
             leaf: false,
-            iconCls: "el-icon-cpu"
+            iconCls: "el-icon-lock"
         },
-        path: '/system',
-        name: 'System',
-        redirect: '/system/power',
+        path: '/power',
+        name: 'power',
         component: Container,
-        children: [{
-            meta: {
-                title: '权限管理',
-                hidden: false,
-                leaf: false,
-                iconCls: "el-icon-lock"
-            },
-            path: '/system/power',
-            name: 'power',
-            component: ChildView,
-            children: [
-                {
-                    meta: {
-                        title: '菜单管理',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/system/power/menu',
-                    name: 'Menu',
-                    component: () => import('@/views/power/Menu.vue')
-                }, {
-                    meta: {
-                        title: '区域管理',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/system/power/region',
-                    name: 'Region',
-                    component: () => import('@/views/power/Dept.vue')
-                }, {
-                    meta: {
-                        title: '机构管理',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-monitor"
-                    },
-                    path: '/system/power/dept',
-                    name: 'Dept',
-                    component: () => import('@/views/power/Dept.vue')
-                }, {
-                    meta: {
-                        title: '角色管理',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-monitor"
-                    },
-                    path: '/system/power/roles',
-                    name: 'Roles',
-                    component: () => import('@/views/power/Roles.vue')
-                }, {
-                    meta: {
-                        title: '用户管理',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-monitor"
-                    },
-                    path: '/system/power/users',
-                    name: 'Users',
-                    component: () => import('@/views/power/Users.vue')
-                }
-            ]
-        }, {
-            meta: {
-                title: '运维管理',
-                hidden: false,
-                leaf: false,
-                iconCls: "el-icon-odometer"
-            },
-            path: '/monitor',
-            name: 'Monitor',
-            component: Container,
-            children: [
-                {
-                    meta: {
-                        title: '百度统计',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/app/one1',
-                    name: 'AppOne1',
-                    component: () => import('@/views/app/AppOne.vue')
-                }, {
-                    meta: {
-                        title: '系统监控',
-                        hidden: false,
-                        leaf: true,
-                        iconCls: "el-icon-place"
-                    },
-                    path: '/app/two1',
-                    name: 'AppTwo1',
-                    component: () => import('@/views/app/AppTwo.vue')
-                }]
-        }]
+        children: [
+            {
+                meta: {
+                    title: '菜单管理',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/power/menu',
+                name: 'Menu',
+                component: () => import('@/views/power/Menu.vue')
+            }, {
+                meta: {
+                    title: '区域管理',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/power/region',
+                name: 'Region',
+                component: () => import('@/views/power/Dept.vue')
+            }, {
+                meta: {
+                    title: '机构管理',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-monitor"
+                },
+                path: '/power/dept',
+                name: 'Dept',
+                component: () => import('@/views/power/Dept.vue')
+            }, {
+                meta: {
+                    title: '角色管理',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-monitor"
+                },
+                path: '/power/roles',
+                name: 'Roles',
+                component: () => import('@/views/power/Roles.vue')
+            }, {
+                meta: {
+                    title: '用户管理',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-monitor"
+                },
+                path: '/power/users',
+                name: 'Users',
+                component: () => import('@/views/power/Users.vue')
+            }
+        ]
+    }, {
+        meta: {
+            title: '运维管理',
+            hidden: false,
+            leaf: false,
+            iconCls: "el-icon-odometer"
+        },
+        path: '/monitor',
+        name: 'Monitor',
+        component: Container,
+        children: [
+            {
+                meta: {
+                    title: '百度统计',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/monitor/baidu',
+                name: 'Baidu',
+                component: () => import('@/views/monitor/Baidu.vue')
+            }, {
+                meta: {
+                    title: '系统监控',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/monitor/perf',
+                name: 'Perf',
+                component: () => import('@/views/monitor/Perf.vue')
+            }]
     }, {
         meta: {
             title: '应用管理',
@@ -201,16 +188,6 @@ const routes = [
                 path: '/app/three',
                 name: 'AppThree',
                 component: () => import('@/views/app/AppThree.vue')
-            }, {
-                meta: {
-                    title: '百度统计',
-                    hidden: false,
-                    leaf: true,
-                    iconCls: "el-icon-place"
-                },
-                path: '/app/four',
-                name: 'AppFour',
-                component: () => import('@/views/app/AppFour.vue')
             }, {
                 meta: {
                     title: '图标选择器',
