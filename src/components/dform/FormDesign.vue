@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-10-29 17:59:02
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-27 10:35:07
+ * @lastTime: 2020-08-04 21:53:22
  -->
 <template>
 	<el-container
@@ -398,6 +398,10 @@ export default {
 
 <style>
 @import url("../../assets/iconfont/font_1254447_dpcsvgkhila/iconfont.css");
+/* 
+.view-dialog {
+	z-index: 1000;
+} */
 
 .view-dialog .el-dialog__body {
 	padding: 0;

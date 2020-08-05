@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-16 17:18:15
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-24 17:25:05
+ * @lastTime: 2020-08-04 21:44:04
  -->
 <template>
 	<el-form
@@ -60,29 +60,29 @@ export default {
 		"d-slider": dSlider,
 		"d-switch": dSwitch,
 		"d-time": dTime,
-		"d-upload": dUpload
+		"d-upload": dUpload,
 	},
 	props: {
 		myArray: {
 			type: Array,
 			default() {
 				return [];
-			}
+			},
 		},
 		formAttribute: {
 			type: Object,
 			default() {
 				return {};
-			}
-		}
+			},
+		},
 	},
 	data() {
 		return {
 			a_myArray: this.myArray,
 			o_formAttribute: this.formAttribute,
-			rules: {}
+			rules: {},
 		};
-	}
+	},
 };
 </script>
 
@@ -90,6 +90,6 @@ export default {
 .d-form {
 	box-sizing: border-box;
 	width: 100%;
-	padding: 30px;
+	padding: 20px 20px 5px 10px;
 }
 </style>
