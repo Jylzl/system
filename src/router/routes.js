@@ -190,6 +190,16 @@ const routes = [
                 component: () => import('@/views/app/AppThree.vue')
             }, {
                 meta: {
+                    title: '视频播放',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/four',
+                name: 'AppFour',
+                component: () => import('@/views/app/AppFour.vue')
+            }, {
+                meta: {
                     title: '图标选择器',
                     hidden: false,
                     leaf: true,
