@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-03 18:19:43
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-31 15:10:48
+ * @lastTime: 2020-08-06 15:41:30
  */
 import request from '@/utils/request'
 import api from '@/api/api';
@@ -19,7 +19,7 @@ export function userLogin(data) {
 // 退出登陆
 export function userLogout(data) {
     return request({
-        url: api.userLoginout,
+        url: api.userLogout,
         method: 'get',
         params: data
     })

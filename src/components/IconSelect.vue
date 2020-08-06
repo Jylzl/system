@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-28 09:23:17
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-28 09:41:42
+ * @lastTime: 2020-08-06 09:04:21
 --> 
 <template>
 	<div>
@@ -45,13 +45,13 @@ export default {
 		return {
 			input: "111",
 			dialogVisible: false,
-			activeName: "second"
+			activeName: "second",
 		};
 	},
 	methods: {
 		selectClick() {
 			this.dialogVisible = true;
-			console.log(1);
+			// console.log(1);
 		},
 		handleClose(done) {
 			this.$confirm("确认关闭？")
@@ -61,9 +61,9 @@ export default {
 				.catch(() => {});
 		},
 		handleClick(tab, event) {
-			console.log(tab, event);
-		}
-	}
+			// console.log(tab, event);
+		},
+	},
 };
 </script>
 

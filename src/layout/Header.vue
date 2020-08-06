@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-05 08:56:56
+ * @lastTime: 2020-08-06 15:55:25
  -->
 <template>
 	<div class="header-box">
@@ -76,7 +76,7 @@
 							:size="32"
 							src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
 						>A</el-avatar>
-						<span class="user-name">{{user.userName}}</span>
+						<span class="user-name">{{user.name}}</span>
 						<i class="el-icon-caret-bottom"></i>
 					</div>
 					<el-dropdown-menu slot="dropdown">
@@ -84,7 +84,7 @@
 							<el-link :underline="false">个人主页</el-link>
 						</el-dropdown-item>
 						<el-dropdown-item>
-							<el-button type="text" @click="logout">切换用户</el-button>
+							<el-button type="text" @click="loginOut">切换用户</el-button>
 						</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -143,7 +143,7 @@ export default {
 	},
 	computed: {
 		user() {
-			return { userName: "admin" };
+			return this.$store.getters.getUser;
 		},
 		routes() {
 			return this.$store.getters.getRoutes[0].children;
@@ -162,9 +162,9 @@ export default {
 	},
 	methods: {
 		menuSelect(index, indexPath) {
-			console.log(this.$route.name);
-			console.log(index);
-			console.log(indexPath);
+			// console.log(this.$route.name);
+			// console.log(index);
+			// console.log(indexPath);
 			// if (this.$route.name == "Work") {
 			// 	this.$store.dispatch("setLeftRouters", this.routes);
 			// } else {
@@ -201,10 +201,12 @@ export default {
 				type: "warning",
 			})
 				.then(() => {
-					this.$store.dispatch("loginOut").then((res) => {
+					this.$store.dispatch("userLogout").then((res) => {
 						if (res.code == this.$code.success) {
 							this.successMessage("退出成功");
-							this.$router.push("/login");
+							this.$router.push({
+								name: "Login",
+							});
 						} else {
 							this.errorMessage("退出失败");
 						}
@@ -298,29 +300,6 @@ export default {
 					type: "news",
 				},
 			});
-		},
-		// 登出
-		logout() {
-			this.$confirm("即将登出, 是否继续?", "提示", {
-				confirmButtonText: "确定",
-				cancelButtonText: "取消",
-				type: "warning",
-			})
-				.then(() => {
-					this.$router.push({
-						name: "Login",
-					});
-					this.$message({
-						type: "success",
-						message: "登出成功!",
-					});
-				})
-				.catch(() => {
-					this.$message({
-						type: "info",
-						message: "已取消",
-					});
-				});
 		},
 	},
 };

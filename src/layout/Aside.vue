@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-09 20:22:56
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-09 16:56:48
+ * @lastTime: 2020-08-06 08:55:50
  -->
 <template>
 	<div class="p-aside">
@@ -94,14 +94,14 @@ export default {
 			// return this.routers.find(item => {
 			// 	return (item.name = this.$route.name);
 			// }).children;
-		}
+		},
 	},
 	mounted() {
-		console.log(this.$router);
-		console.log(this.$route);
-		console.log(this.sonRouter);
+		// console.log(this.$router);
+		// console.log(this.$route);
+		// console.log(this.sonRouter);
 	},
-	methods: {}
+	methods: {},
 };
 </script>
 <style>

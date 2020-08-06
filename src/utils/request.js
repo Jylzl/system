@@ -11,7 +11,7 @@
  * @Author: lizlong<94648929@qq.com>
  * @Date: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-31 16:54:35
+ * @lastTime: 2020-08-06 18:21:20
  */
 
 import axios from 'axios'
@@ -48,15 +48,11 @@ const service = axios.create({
 
 service.interceptors.request.use(
 	config => {
-		let test = config.baseURL + '/xxzyapi/file/video/upload'
-		if (config.url == test) {
-			config.timeout = 600000;
-		}
 		let params = {};
 
 		if (getToken()) {
-			// 让每个请求携带token-- ['token']为自定义key 请根据实际情况自行修改
-			config.headers['token'] = getToken();
+			// 让每个请求携带token-- ['authorization']为固定key
+			config.headers['authorization'] = `Bearer ${getToken()}`;
 		}
 		if (csrfToken()) {
 			// 让每个请求携带csrfToken-- ['x-csrf-token']为固定key

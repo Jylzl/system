@@ -3,12 +3,12 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-31 17:22:06
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-31 16:53:03
+ * @lastTime: 2020-08-06 15:59:01
  */
 
 import Cookies from 'js-cookie'
 
-const TokenKey = 'token'
+const TokenKey = 'access_token'
 const _csrfToken = 'csrfToken'
 
 export function getToken() {

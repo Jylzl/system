@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-09 16:55:21
+ * @lastTime: 2020-08-06 15:54:05
  */
 /*
  * @Description: 
@@ -14,6 +14,7 @@
  */
 
 const getters = {
+	getUser: state => state.power.user,
 	getRoutes: state => state.power.routes,
 	getLeftRouters: state => state.power.leftRouters,
 	getCollapse: state => state.system.collapse,

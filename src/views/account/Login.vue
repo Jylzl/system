@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-04 09:37:34
+ * @lastTime: 2020-08-06 15:51:45
  -->
 <template>
 	<div class="land-box">
@@ -349,24 +349,20 @@ export default {
 						.dispatch("userLogin", this.landForm_password)
 						.then((res) => {
 							switch (res.code) {
-								case "200":
+								case this.$code.success:
 									// 登录成功
 									this.landSuccess();
 									break;
-								case "304":
+								case this.$code.fail:
 									// 登录失败
 									this.landFail(
 										"warning",
 										"用户或密码名错误!"
 									);
 									break;
-								case "301":
-									// 登录失败
-									this.landFail("warning", res.message + "!");
-									break;
 								default:
 									// 登录失败
-									this.landFail();
+									this.landFail("warning", res.msg + "!");
 									break;
 							}
 						})
@@ -480,9 +476,9 @@ export default {
 				.dispatch("setRouters")
 				.then((res) => {
 					if (res.code == "200") {
-						this.$router.addRoutes(
-							this.$store.state.perms.addRouters
-						);
+						// this.$router.addRoutes(
+						// 	this.$store.state.perms.addRouters
+						// );
 						//登录成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
 						this.rememberUsers = this.rememberUsers.filter(
 							(user) => user.value != this.landForm_password.user
@@ -520,21 +516,9 @@ export default {
 						);
 						//登录成功手动清除cookies记录的登录次数
 						Cookies.remove("landingTimes");
-						let siteName = "";
-						//遍历网站名称
-						for (let i in this.$store.state.perms.siteItems) {
-							if (
-								this.$store.state.perms.siteItems[i].id ==
-								localStorage.getItem("_site_id_param")
-							) {
-								siteName = this.$store.state.perms.siteItems[i]
-									.name;
-								break;
-							}
-						}
 						this.$notify({
 							title: "登录成功",
-							message: "欢迎进入 " + siteName + " 后台管理系统",
+							message: "欢迎进入后台管理系统",
 							type: "success",
 							showClose: true,
 						});
@@ -542,7 +526,7 @@ export default {
 						this.restLand();
 						// 登录成功跳转主页
 						this.$router.push({
-							name: "home",
+							name: "Work",
 						});
 					} else {
 						this.landFail();
