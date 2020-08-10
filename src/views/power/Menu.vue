@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-10 18:33:04
+ * @lastTime: 2020-08-10 18:41:07
  -->
 <template>
 	<el-container>
@@ -396,9 +396,7 @@ export default {
 	created() {
 		this.getMenuTree(false, this.nowMenuID); //获取菜单树
 	},
-	mounted() {
-		this.getMenuList(this.nowMenuID); //获取菜单列表
-	},
+	mounted() {},
 	filters: {},
 	computed: {},
 	methods: {
@@ -465,15 +463,14 @@ export default {
 		},
 		//修改菜单/按钮
 		updateMenu(menu) {
-			this.$refs.menuEdit.updateMenu(menu, this.nowMenuID);
+			this.menuForm = menu;
+			this.menuDialog.visible = true;
 		},
 		//获取菜单列表
 		getMenuList(id) {
 			this.tableLoading = true;
 			getMenu({
 				parent_id: id,
-				currentPage: 1,
-				pageSize: 20,
 			}).then((res) => {
 				console.log(res);
 				this.menus = res.data;
@@ -482,6 +479,7 @@ export default {
 		},
 		//获取菜单树
 		getMenuTree(lazy, parent_id) {
+			this.getMenuList(this.nowMenuID); //获取菜单列表
 			this.menuTreeLoading = true;
 			fetchMenuTree(lazy, parent_id).then((res) => {
 				console.log("fetchMenuTree");
@@ -489,30 +487,11 @@ export default {
 				this.menuTree = res.data;
 				this.menuTreeLoading = false;
 			});
-			return;
-			this.$axios
-				.get(this.$api.menuTree)
-				.then((res) => {
-					let mentData = res;
-					this.menuArray = mentData;
-					let mentData2 = mentData.filter((item) => {
-						return item.menuType == "C";
-					});
-					this.menuTree = translateDataToTree(
-						mentData2,
-						"menuId",
-						"parentId"
-					);
-					this.menuTreeLoading = false;
-				})
-				.catch((err) => {
-					console.log(err);
-					this.menuTreeLoading = false;
-				});
 		},
 		//菜单树点击事件
 		menuTreeClick(index) {
 			console.log(index);
+			this.getMenuList(index);
 		},
 		//二级面包屑
 		creatBread(menuId, arr) {
