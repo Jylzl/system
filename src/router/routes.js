@@ -10,7 +10,7 @@ import {
 } from '@/router/ansycRoutes';
 
 import Container from '@/layout/Container.vue';
-import ChildView from '@/layout/ChildView.vue';
+// import ChildView from '@/layout/ChildView.vue';
 
 import Login from '@/views/account/Login.vue'
 import Lock from '@/views/account/Lock.vue'
@@ -223,7 +223,8 @@ const routes = [
     {
         meta: {
             title: '登录',
-            hidden: true
+            hidden: true,
+            open: true
         },
         path: '/login',
         name: 'Login',
@@ -232,7 +233,8 @@ const routes = [
     {
         meta: {
             title: '锁屏',
-            hidden: true
+            hidden: true,
+            open: true
         },
         path: '/lock',
         name: 'Lock',
@@ -241,7 +243,8 @@ const routes = [
     {
         meta: {
             title: '注册',
-            hidden: true
+            hidden: true,
+            open: true
         },
         path: '/register',
         name: 'Register',
@@ -250,7 +253,8 @@ const routes = [
     {
         meta: {
             title: '401',
-            hidden: true
+            hidden: true,
+            open: true
         },
         path: '/401',
         name: 'err401',
@@ -259,7 +263,8 @@ const routes = [
     {
         meta: {
             title: '404',
-            hidden: true
+            hidden: true,
+            open: true
         },
         path: '/404',
         name: 'err404',

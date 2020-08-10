@@ -11,11 +11,11 @@
  * @Author: lizlong<94648929@qq.com>
  * @Date: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-06 18:21:20
+ * @lastTime: 2020-08-10 10:58:13
  */
 
 import axios from 'axios'
-import qs from 'qs'
+// import qs from 'qs'
 
 import router from '@/router/index'
 import {
@@ -41,14 +41,14 @@ function showMessage(value) {
 
 // create an axios instance
 const service = axios.create({
-	withCredentials: false,
+	withCredentials: true,
 	baseURL: process.env.VUE_APP_SERVER_API, // api 的 base_url
 	timeout: 15000 // 请求超时时间
 })
 
 service.interceptors.request.use(
 	config => {
-		let params = {};
+		// let params = {};
 
 		if (getToken()) {
 			// 让每个请求携带token-- ['authorization']为固定key
@@ -59,11 +59,11 @@ service.interceptors.request.use(
 			config.headers['x-csrf-token'] = csrfToken();
 		}
 
-		for (let key in config.data) {
-			params[key] = config.data[key]; //添加进参数列表
-		}
+		// for (let key in config.data) {
+		// 	params[key] = config.data[key]; //添加进参数列表
+		// }
 
-		config.data = qs.stringify(params); //序列化
+		// config.data = qs.stringify(params); //序列化
 		return config
 	},
 	error => {

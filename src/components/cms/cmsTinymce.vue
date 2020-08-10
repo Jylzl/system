@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-31 18:29:53
+ * @lastTime: 2020-08-10 13:00:12
  -->
 <template>
 	<div>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { getToken } from "@/utils/auth";
 // eslint-disable-next-line no-unused-vars
 import tinymce from "tinymce/tinymce";
 import Editor from "@tinymce/tinymce-vue";
@@ -69,45 +70,45 @@ import "tinymce/plugins/wordcount"; // 字数统计插件
 export default {
 	name: "cms-tinymce",
 	components: {
-		Editor
+		Editor,
 	},
-		props: {
+	props: {
 		options: {
 			type: Object,
 			default: () => {
 				return {};
-			}
+			},
 		},
 		upload: {
 			type: Object,
 			default: () => {
 				return {};
-			}
+			},
 		},
 		value: {
 			type: String,
-			default: ""
+			default: "",
 		},
 		disabled: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		readonly: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		height: {
 			type: Number,
-			default: 340
+			default: 340,
 		},
 		minRows: {
 			type: Number,
-			default: 8
+			default: 8,
 		},
 		maxRows: {
 			type: Number,
-			default: 10
-		}
+			default: 10,
+		},
 	},
 	data() {
 		return {
@@ -127,7 +128,7 @@ export default {
 				external_plugins: {
 					powerpaste: "/tinymce/plugins/powerpaste/plugin.js",
 					formatpainter: "/tinymce/plugins/formatpainter/plugin.js",
-					a11ychecker: "/tinymce/plugins/a11ychecker/plugin.js"
+					a11ychecker: "/tinymce/plugins/a11ychecker/plugin.js",
 				},
 				height: 240, // 编辑器高度(autoresize开启后无效)
 				max_height: 800, // 编辑器初始化最大高度
@@ -151,55 +152,55 @@ export default {
 				menu: {
 					file: {
 						title: "File",
-						items: "newdocument restoredraft | preview  | print "
+						items: "newdocument restoredraft | preview  | print ",
 					},
 					edit: {
 						title: "Edit",
-						items: "undo redo | cut copy paste | selectall"
+						items: "undo redo | cut copy paste | selectall",
 					},
 					view: {
 						title: "View",
 						items:
-							"code | visualaid visualchars visualblocks | spellchecker | preview fullscreen"
+							"code | visualaid visualchars visualblocks | spellchecker | preview fullscreen",
 					},
 					insert: {
 						title: "Insert",
 						items:
-							"image link media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor toc | insertdatetime"
+							"image link media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor toc | insertdatetime",
 					},
 					format: {
 						title: "Format",
 						items:
-							"bold italic underline strikethrough superscript subscript codeformat | formats blockformats fontformats fontsizes align | forecolor backcolor | removeformat"
+							"bold italic underline strikethrough superscript subscript codeformat | formats blockformats fontformats fontsizes align | forecolor backcolor | removeformat",
 					},
 					tools: {
 						title: "Tools",
 						items:
-							"spellcheckerlanguage | wordcount | fullpage | searchreplace"
+							"spellcheckerlanguage | wordcount | fullpage | searchreplace",
 					},
 					table: {
 						title: "Table",
 						items:
-							"inserttable tableprops deletetable row column cell"
+							"inserttable tableprops deletetable row column cell",
 					},
 					help: {
 						title: "Help",
-						items: "help"
-					}
+						items: "help",
+					},
 				},
 				plugins:
 					"enclosure a11ychecker bdmap indent2em lineheight formatpainter powerpaste advlist anchor autolink autoresize autosave charmap code codesample directionality emoticons fullpage fullscreen help hr image imagetools importcss insertdatetime legacyoutput link lists media nonbreaking noneditable pagebreak preview print quickbars save searchreplace spellchecker tabfocus table template textpattern toc visualblocks visualchars wordcount",
 				toolbar:
 					"undo redo | formatselect | formatpainter a11ycheck | fontselect | fontsizeselect | bold italic underline strikethrough subscript superscript removeformat | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent indent2em | lists image media emoticons link charmap codesample table | bdmap lineheight enclosure | fullscreen",
-				setup: function(editor) {
+				setup: function (editor) {
 					console.log(`ID为:${editor.id}的编辑器即将初始化.`);
 				},
-				init_instance_callback: function(editor) {
+				init_instance_callback: function (editor) {
 					console.log(`ID为:${editor.id}的编辑器已初始化完成.`);
 				},
 				images_upload_handler: this.imagesUploadHandlerfunction(),
-				file_picker_callback: this.filePickerCallback()
-			}
+				file_picker_callback: this.filePickerCallback(),
+			},
 		};
 	},
 	methods: {
@@ -213,16 +214,19 @@ export default {
 			// 		);
 			// 	}, 2000);
 			// };
-						return function(blobInfo, success, failure) {
-				const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk2MTkwODgxfQ.Xz_wSnrJ1o5FaFhAML3JSI6swnD_7dbsC6q82u62weA";
-
+			return function (blobInfo, success, failure) {
+				const token =
+					getToken() || localStorage.getItem("access_token"); //登录标示
 				var xhr, formData;
 				var file = blobInfo.blob(); //转化为易于理解的file对象
 				xhr = new XMLHttpRequest();
 				xhr.withCredentials = false;
-				xhr.open("POST", "http://127.0.0.1:7001/api/uploads");
+				xhr.open(
+					"POST",
+					process.env.VUE_APP_SERVER_API + "/api/uploads"
+				);
 				xhr.setRequestHeader("authorization", "Bearer " + token);
-				xhr.onload = function() {
+				xhr.onload = function () {
 					var json;
 					if (xhr.status != 200) {
 						failure("HTTP Error: " + xhr.status);
@@ -237,36 +241,46 @@ export default {
 						failure("Invalid JSON: " + xhr.responseText);
 						return;
 					}
-					success("http://127.0.0.1:7001"+json.data.url);
+					success(process.env.VUE_APP_SERVER_API + json.data.url);
 				};
 				formData = new FormData();
-				formData.append("fields", file, file.name); //此处与源文档不一样
+				console.log(file.name);
+				formData.append("fields", file, file.name || "x"); //此处与源文档不一样
 				xhr.send(formData);
 			};
 		},
 		filePickerCallback() {
-			return function(cb, value, meta) {
+			return function (cb, value, meta) {
+				const token =
+					getToken() || localStorage.getItem("access_token"); //登录标示
 				//当点击meidia图标上传时,判断meta.filetype == 'media'有必要，因为file_picker_callback是media(媒体)、image(图片)、file(文件)的共同入口
 				if (meta.filetype == "media") {
 					//创建一个隐藏的type=file的文件选择input
 					let input = document.createElement("input");
 					input.setAttribute("type", "file");
-					input.onchange = function() {
+					input.onchange = function () {
 						let file = this.files[0]; //只选取第一个文件。如果要选取全部，后面注意做修改
 						let xhr, formData;
 						xhr = new XMLHttpRequest();
-						xhr.open("POST", self.apiUrl);
+						xhr.open(
+							"POST",
+							process.env.VUE_APP_SERVER_API + "/api/uploads"
+						);
+						xhr.setRequestHeader(
+							"authorization",
+							"Bearer " + token
+						);
 						xhr.withCredentials = self.credentials;
 						// eslint-disable-next-line no-unused-vars
-						xhr.upload.onprogress = function(e) {
+						xhr.upload.onprogress = function (e) {
 							// 进度(e.loaded / e.total * 100)
 						};
-						xhr.onerror = function() {
+						xhr.onerror = function () {
 							//根据自己的需要添加代码
 							console.log(xhr.status);
 							return;
 						};
-						xhr.onload = function() {
+						xhr.onload = function () {
 							let json;
 							if (xhr.status < 200 || xhr.status >= 300) {
 								console.log("HTTP 错误: " + xhr.status);
@@ -279,7 +293,7 @@ export default {
 								let mediaLocation = json.data.location;
 								//cb()回调函数，将mediaLocation显示在弹框输入框中
 								cb(mediaLocation, {
-									title: file.name
+									title: file.name,
 								});
 							} else {
 								console.log(json.msg);
@@ -296,7 +310,7 @@ export default {
 					input.click();
 				}
 			};
-		}
-	}
+		},
+	},
 };
 </script>

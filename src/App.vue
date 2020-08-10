@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 13:48:12
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-06 11:00:52
+ * @lastTime: 2020-08-10 16:33:26
  -->
 <template>
 	<div id="app">
@@ -46,7 +46,7 @@ body,
 }
 
 .w100 {
-	width: 100%;
+	width: 100% !important;
 }
 
 .h100 {
