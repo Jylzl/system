@@ -3,14 +3,20 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-28 09:23:17
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-11 18:29:47
+ * @lastTime: 2020-08-11 19:54:02
 --> 
 <template>
 	<div>
-		<el-input placeholder="请输入内容" v-model="input" class="input-with-select" clearable>
+		<el-input
+			placeholder="请输入内容"
+			v-model="s_value"
+			class="input-with-select"
+			@change="change"
+			clearable
+		>
 			<el-button
 				slot="append"
-				:icon="input?input:'el-icon-picture-outline-round'"
+				:icon="s_value?s_value:'el-icon-picture-outline-round'"
 				@click="selectClick"
 			></el-button>
 		</el-input>
@@ -36,13 +42,28 @@
 <script>
 import iconList from "@/plugins/iconfont/iconList";
 export default {
+	props: {
+		value: {
+			type: String,
+			default: function () {
+				return "";
+			},
+		},
+	},
 	data() {
 		return {
-			input: "",
+			s_value: this.value,
 			dialogVisible: false,
 			activeName: "name0",
 			iocns: iconList,
 		};
+	},
+	watch: {
+		value: {
+			handler(value) {
+				this.s_value = value;
+			},
+		},
 	},
 	methods: {
 		selectClick() {
@@ -50,8 +71,11 @@ export default {
 		},
 		iconClick(className) {
 			this.dialogVisible = false;
-			this.input = className;
-			this.$emit("returnClassName", className);
+			this.s_value = className;
+			this.$emit("input", this.s_value);
+		},
+		change() {
+			this.$emit("input", this.s_value);
 		},
 	},
 };

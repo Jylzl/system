@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-11 18:30:31
+ * @lastTime: 2020-08-11 21:33:26
  -->
 <template>
 	<el-container>
@@ -22,7 +22,7 @@
 						@open="menuTreeClick"
 					>
 						<template v-for="item in  menuTree">
-							<template v-if="item.display == 0">
+							<template v-if="item.display == 1">
 								<el-submenu
 									:index="(item.id).toString()"
 									:key="item.id"
@@ -33,7 +33,7 @@
 										<span>{{item.title}}</span>
 									</template>
 									<template v-for="child in item.children">
-										<template v-if="child.display == 0">
+										<template v-if="child.display == 1">
 											<el-menu-item
 												v-if="!(child.children) || child.leaf == 1"
 												:index="(child.id).toString()"
@@ -49,7 +49,7 @@
 													<span class="collapse-font">{{child.title}}</span>
 												</template>
 												<template v-for="child2 in child.children">
-													<template v-if="child2.display == 0">
+													<template v-if="child2.display">
 														<el-menu-item
 															v-if="!(child2.children)  || child2.leaf == 1"
 															:index="(child2.id).toString()"
@@ -145,19 +145,19 @@
 							<el-table-column prop="title" label="标题" align="left" :show-overflow-tooltip="true"></el-table-column>
 							<el-table-column prop="show" label="禁用" width="60" align="center">
 								<template slot-scope="scope">
-									<span v-if="scope.row.visible == '1'">否</span>
-									<span v-else>是</span>
+									<span v-if="scope.row.visible">是</span>
+									<span v-else>否</span>
 								</template>
 							</el-table-column>
 							<el-table-column prop="show" label="显示" width="60" align="center">
 								<template slot-scope="scope">
-									<span v-if="scope.row.display == '1'">是</span>
+									<span v-if="scope.row.display">是</span>
 									<span v-else>否</span>
 								</template>
 							</el-table-column>
 							<el-table-column prop="show" label="叶子节点" width="100" align="center">
 								<template slot-scope="scope">
-									<span v-if="scope.row.leaf == '1'">是</span>
+									<span v-if="scope.row.leaf">是</span>
 									<span v-else>否</span>
 								</template>
 							</el-table-column>
@@ -195,6 +195,8 @@
 			:top="menuDialog.top"
 			:width="menuDialog.width"
 			:close-on-click-modal="false"
+			:destroy-on-close="true"
+			:before-close="beforeClose"
 		>
 			<!-- 修改表单 -->
 			<el-form
@@ -269,17 +271,17 @@
 						<el-row>
 							<el-col :span="8">
 								<el-form-item label="禁用">
-									<el-switch v-model="menuForm.visible" active-value="0" inactive-value="1"></el-switch>
+									<el-switch v-model="menuForm.visible" :active-value="0" :inactive-value="1"></el-switch>
 								</el-form-item>
 							</el-col>
 							<el-col :span="8">
 								<el-form-item label="显示">
-									<el-switch v-model="menuForm.display" active-value="1" inactive-value="0"></el-switch>
+									<el-switch v-model="menuForm.display" :active-value="1" :inactive-value="0"></el-switch>
 								</el-form-item>
 							</el-col>
 							<el-col :span="8">
 								<el-form-item label="叶子节点">
-									<el-switch v-model="menuForm.leaf" active-value="1" inactive-value="0"></el-switch>
+									<el-switch v-model="menuForm.leaf" :active-value="1" :inactive-value="0"></el-switch>
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -312,7 +314,6 @@ export default {
 		//引入自定义验证规则
 		let r_required = va.required();
 		let r_notRequired = va.notRequired();
-		let r_icon = va.required("", "change");
 		let r_number = va.number();
 		let r_string = va.string();
 		let r_checkChinese = va.checkChinese();
@@ -395,6 +396,11 @@ export default {
 	filters: {},
 	computed: {},
 	methods: {
+		//
+		beforeClose(done) {
+			this.$refs["menuForm"].resetFields();
+			done();
+		},
 		// 重置
 		resetForm(formName) {
 			this.$refs[formName].resetFields();
@@ -411,14 +417,14 @@ export default {
 						addObj(this.menuForm).then((res) => {
 							console.log(res);
 							this.menuDialog.visible = false;
-							this.getMenuList(this.nowMenuID); //获取菜单列表
+							this.getMenuTree(false, this.nowMenuID); //获取菜单列表
 							this.$message.success("添加成功");
 						});
 					} else {
 						putObj(this.menuForm).then((res) => {
 							console.log(res);
 							this.menuDialog.visible = false;
-							this.getMenuList(this.nowMenuID); //获取菜单列表
+							this.getMenuTree(false, this.nowMenuID); //获取菜单列表
 							this.$message.success("修改成功");
 						});
 					}
@@ -432,8 +438,20 @@ export default {
 			this.menuDialog.visible = true;
 			this.menuDialog.menuForm = "add";
 			this.menuDialog.title = "新增";
-			this.menuForm.type = menuType;
-			this.menuForm.parent_id = this.nowMenuID;
+			this.menuForm = {
+				parent_id: Number(this.nowMenuID),
+				order_num: 0,
+				icon: "",
+				type: menuType,
+				name: "",
+				title: "",
+				url: "",
+				perms: "",
+				visible: 1,
+				display: 1,
+				leaf: 0,
+				remark: "",
+			};
 		},
 		//删除
 		delMenu(menuId) {
