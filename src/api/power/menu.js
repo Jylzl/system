@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-10 18:08:15
+ * @lastTime: 2020-08-11 09:01:30
  */
 
 import request from '@/utils/request'
@@ -56,7 +56,7 @@ export function delObj(id) {
 
 export function putObj(obj) {
   return request({
-    url: '/api/menus',
+    url: '/api/menus/' + obj.id,
     method: 'put',
     data: obj
   })

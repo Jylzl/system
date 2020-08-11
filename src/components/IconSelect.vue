@@ -3,65 +3,55 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-28 09:23:17
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-06 09:04:21
+ * @lastTime: 2020-08-11 18:29:47
 --> 
 <template>
 	<div>
-		<el-input
-			placeholder="请输入内容"
-			v-model="input"
-			class="input-with-select"
-			:disabled="true"
-			:clear="true"
-		>
-			<el-button slot="append" icon="el-icon-search" @click="selectClick"></el-button>
+		<el-input placeholder="请输入内容" v-model="input" class="input-with-select" clearable>
+			<el-button
+				slot="append"
+				:icon="input?input:'el-icon-picture-outline-round'"
+				@click="selectClick"
+			></el-button>
 		</el-input>
-		<el-dialog
-			title="选择图标"
-			:visible.sync="dialogVisible"
-			width="30%"
-			custom-class="icon-select"
-			:before-close="handleClose"
-		>
-			<div>
-				<el-tabs v-model="activeName" @tab-click="handleClick">
-					<el-tab-pane label="阿里图标" name="first">用户管理</el-tab-pane>
-					<el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-					<el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-					<el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-				</el-tabs>
-			</div>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false" size="mini">取 消</el-button>
-				<el-button type="primary" @click="dialogVisible = false" size="mini">确 定</el-button>
-			</span>
+		<el-dialog title="选择图标" :visible.sync="dialogVisible" width="60%" :modal="false">
+			<el-tabs v-model="activeName">
+				<el-tab-pane :label="i.label" :name="'name'+index" v-for="(i,index) in iocns" :key="index">
+					<div class="class-box">
+						<el-scrollbar wrap-class="scrollbar-wrapper">
+							<ul class="icon_lists">
+								<li class="dib" v-for="item in i.list" :key="item.className">
+									<i :class="item.className" @click="iconClick(item.className)" :title="item.title"></i>
+									<div class="code-name" :title="item.className">{{item.className}}</div>
+								</li>
+							</ul>
+						</el-scrollbar>
+					</div>
+				</el-tab-pane>
+			</el-tabs>
 		</el-dialog>
 	</div>
 </template>
 
 <script>
+import iconList from "@/plugins/iconfont/iconList";
 export default {
 	data() {
 		return {
-			input: "111",
+			input: "",
 			dialogVisible: false,
-			activeName: "second",
+			activeName: "name0",
+			iocns: iconList,
 		};
 	},
 	methods: {
 		selectClick() {
 			this.dialogVisible = true;
-			// console.log(1);
 		},
-		handleClose(done) {
-			this.$confirm("确认关闭？")
-				.then(() => {
-					done();
-				})
-				.catch(() => {});
-		},
-		handleClick(tab, event) {
-			// console.log(tab, event);
+		iconClick(className) {
+			this.dialogVisible = false;
+			this.input = className;
+			this.$emit("returnClassName", className);
 		},
 	},
 };
@@ -70,6 +60,62 @@ export default {
 
 <style lang="scss">
 .icon-select .el-dialog__body {
-	padding: 0 20px;
+	padding: 10px 20px;
+}
+</style>
+
+
+<style scoped>
+.class-box {
+	height: 600px;
+}
+
+.icon_lists {
+	width: 100% !important;
+	overflow: hidden;
+	*zoom: 1;
+}
+
+.icon_lists li {
+	display: inline-block;
+	width: 80px;
+	margin-bottom: 10px;
+	margin-right: 20px;
+	text-align: center;
+	list-style: none !important;
+	cursor: default;
+	vertical-align: top;
+}
+
+.icon_lists i {
+	display: block;
+	height: 60px;
+	line-height: 60px;
+	font-size: 32px;
+	margin: 5px auto;
+	color: #333;
+	-webkit-transition: font-size 0.25s linear, width 0.25s linear;
+	-moz-transition: font-size 0.25s linear, width 0.25s linear;
+	transition: font-size 0.25s linear, width 0.25s linear;
+	cursor: pointer;
+}
+
+.icon_lists i:hover {
+	font-size: 52px;
+}
+
+.icon_lists li .name,
+.icon_lists li .code-name {
+	font-size: 14px;
+	color: #666;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.icon_lists li .code-name {
+	font-size: 13px;
 }
 </style>

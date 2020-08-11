@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:42
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-17 15:29:20
+ * @lastTime: 2020-08-11 10:33:00
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -16,6 +16,7 @@ import global from "@/utils/global" //全局方法
 import '@/utils/permissions' //全局路由钩子
 import "@/plugins/element/element.js"; // 引入饿了么UI
 import "@/plugins/svg/svg.js"; // 引入svg图标
+import "@/plugins/iconfont/iconfont.js"; // 引入iconfont图标
 
 import VueAMap from 'vue-amap';
 

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-07 08:57:14
+ * @lastTime: 2020-08-11 08:47:13
  */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -41,18 +41,25 @@ router.beforeEach((to, from, next) => {
             if (perms) {
                 next();
             } else {
-                store.dispatch('setRouters').then((res) => {
-                    if (res.code != 200) {
-                        next('/login');
-                    } else {
-                        router.addRoutes(store.state.power.routes);
-                        console.log(1)
-                        console.log(router)
-                        next({
-                            ...to
-                        }) // hack方法 确保addRoutes已完成
-                    }
-                })
+                try {
+                    store.dispatch('setRouters').then((res) => {
+                        if (res.code != 200) {
+                            next('/login');
+                        } else {
+                            router.addRoutes(store.state.power.routes);
+                            next({ ...to, replace: true })
+                        }
+                    })
+
+                    // hack method to ensure that addRoutes is complete
+                    // set the replace: true, so the navigation will not leave a history record
+                } catch (error) {
+                    // remove token and go to login page to re-login
+                    next(`/login?redirect=${to.path}`)
+                    NProgress.done()
+                }
+
+
             }
         }
     }

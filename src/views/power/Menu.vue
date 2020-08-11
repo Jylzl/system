@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-10 18:41:07
+ * @lastTime: 2020-08-11 18:30:31
  -->
 <template>
 	<el-container>
@@ -29,7 +29,7 @@
 									v-if="item.children && item.leaf != 1"
 								>
 									<template slot="title">
-										<i :class="'icon iconfont ' + item.icon"></i>
+										<i :class="item.icon"></i>
 										<span>{{item.title}}</span>
 									</template>
 									<template v-for="child in item.children">
@@ -75,7 +75,7 @@
 									</template>
 								</el-submenu>
 								<el-menu-item :index="(item.id).toString()" :key="item.id" v-else>
-									<i :class="'icon iconfont ' + item.icon"></i>
+									<i :class="item.icon"></i>
 									<span slot="title">{{item.title}}</span>
 								</el-menu-item>
 							</template>
@@ -139,7 +139,7 @@
 							<el-table-column prop="name" label="名称" align="left"></el-table-column>
 							<el-table-column prop="icon" label="图标" width="100" align="center">
 								<template slot-scope="scope">
-									<i :class="'icon iconfont '+scope.row.icon"></i>
+									<i :class="scope.row.icon"></i>
 								</template>
 							</el-table-column>
 							<el-table-column prop="title" label="标题" align="left" :show-overflow-tooltip="true"></el-table-column>
@@ -207,12 +207,13 @@
 			>
 				<el-row :gutter="20">
 					<el-col :span="menuDialog.span">
-						<el-form-item label="上级菜单" prop="menProp">
+						<el-form-item label="上级菜单">
 							<el-cascader
 								v-model="menuForm.parent_id"
 								:options="menuTree"
 								:props="menProps"
 								:show-all-levels="false"
+								clearable
 								class="w100"
 							></el-cascader>
 						</el-form-item>
@@ -251,12 +252,7 @@
 					</el-col>
 					<el-col :span="menuDialog.span">
 						<el-form-item label="图标" prop="icon">
-							<el-input placeholder="请输入内容" v-model="menuForm.icon" maxlength="100">
-								<template slot="prepend">
-									<i :class="'icon iconfont ' + menuForm.icon"></i>
-								</template>
-								<el-button slot="append" icon="icon iconfont icon-charutupian"></el-button>
-							</el-input>
+							<icon-select v-model="menuForm.icon"></icon-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span">
@@ -298,19 +294,20 @@
 	</el-container>
 </template>
 <script>
-import { translateDataToTree } from "@/utils/tools.js";
 import va from "@/rules/index.js";
 import {
 	addObj,
 	delObj,
 	fetchMenuTree,
-	getObj,
 	putObj,
 	getMenu,
 } from "@/api/power/menu";
+import IconSelect from "@/components/IconSelect.vue";
 export default {
 	name: "menuList",
-	components: {},
+	components: {
+		"icon-select": IconSelect,
+	},
 	data() {
 		//引入自定义验证规则
 		let r_required = va.required();
@@ -322,12 +319,13 @@ export default {
 		return {
 			tableLoading: false, //表格加载loading
 			menuTreeLoading: false, //菜单树加载loading
+			//二级面包屑
 			breadItems: [
 				{
 					name: "顶级菜单",
 					id: -1,
 				},
-			], //二级面包屑
+			],
 			menuTypeLists: [
 				{
 					menuType: 1,
@@ -346,8 +344,6 @@ export default {
 			menuArray: [],
 			menuTree: [],
 			nowMenuID: -1,
-			dialogVisible: false,
-			dialogTitle: "新增",
 			// 表单信息
 			menuDialog: {
 				top: "15vh",
@@ -381,10 +377,9 @@ export default {
 			},
 			// 表单验证规则
 			menuFormRules: {
-				menProp: [r_required],
 				account: [r_required],
 				orderNum: [r_required, r_number],
-				icon: [r_icon, r_checkChinese],
+				icon: [r_checkChinese],
 				menuName: [r_required, r_string],
 				menuTitle: [r_required],
 				url: [r_required, r_checkChinese],
@@ -400,32 +395,47 @@ export default {
 	filters: {},
 	computed: {},
 	methods: {
+		// 重置
 		resetForm(formName) {
 			this.$refs[formName].resetFields();
 			this.menuDialog.visible = false;
 		},
-		//添加菜单/按钮
-		addMenu(menuType) {
-			this.menuDialog.visible = true;
-			this.menuForm.type = menuType;
-			console.log(menuType);
-		},
-		// 添加保存
+		// 保存
 		menuSave() {
 			this.$refs["menuForm"].validate((valid) => {
 				if (valid) {
-					addObj(this.menuForm).then((res) => {
-						console.log(res);
-						this.menuDialog.visible = false;
-						this.getMenuList(this.nowMenuID); //获取菜单列表
-						this.$message.success("添加成功");
-					});
+					if (this.menuForm.parent_id == "") {
+						this.menuForm.parent_id = -1;
+					}
+					if (this.menuDialog.menuForm == "add") {
+						addObj(this.menuForm).then((res) => {
+							console.log(res);
+							this.menuDialog.visible = false;
+							this.getMenuList(this.nowMenuID); //获取菜单列表
+							this.$message.success("添加成功");
+						});
+					} else {
+						putObj(this.menuForm).then((res) => {
+							console.log(res);
+							this.menuDialog.visible = false;
+							this.getMenuList(this.nowMenuID); //获取菜单列表
+							this.$message.success("修改成功");
+						});
+					}
 				} else {
 					return false;
 				}
 			});
 		},
-		//删除菜单/按钮
+		//添加
+		addMenu(menuType) {
+			this.menuDialog.visible = true;
+			this.menuDialog.menuForm = "add";
+			this.menuDialog.title = "新增";
+			this.menuForm.type = menuType;
+			this.menuForm.parent_id = this.nowMenuID;
+		},
+		//删除
 		delMenu(menuId) {
 			this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
 				confirmButtonText: "确定",
@@ -434,25 +444,12 @@ export default {
 			})
 				.then(() => {
 					this.tableLoading = true;
-					this.$axios
-						.get(this.$api.meunDel, {
-							params: {
-								menuId: menuId,
-							},
-						})
-						.then((res) => {
-							if (res.code == this.$code.success) {
-								this.refreshMenu(this.nowMenuID); //删除成功后刷新菜单数据
-								this.successMessage("删除成功");
-							} else {
-								this.errorMessage(res.data);
-								this.tableLoading = false;
-							}
-						})
-						.catch((err) => {
-							console.log(err);
-							this.tableLoading = false;
-						});
+					delObj(menuId).then((res) => {
+						console.log(res);
+						this.tableLoading = false;
+						this.getMenuList(this.nowMenuID); //获取菜单列表
+						this.$message.success("删除成功");
+					});
 				})
 				.catch(() => {
 					this.$message({
@@ -461,10 +458,12 @@ export default {
 					});
 				});
 		},
-		//修改菜单/按钮
+		//修改
 		updateMenu(menu) {
-			this.menuForm = menu;
 			this.menuDialog.visible = true;
+			this.menuDialog.menuForm = "update";
+			this.menuDialog.title = "修改";
+			this.menuForm = menu;
 		},
 		//获取菜单列表
 		getMenuList(id) {
@@ -479,42 +478,37 @@ export default {
 		},
 		//获取菜单树
 		getMenuTree(lazy, parent_id) {
-			this.getMenuList(this.nowMenuID); //获取菜单列表
 			this.menuTreeLoading = true;
-			fetchMenuTree(lazy, parent_id).then((res) => {
-				console.log("fetchMenuTree");
-				console.log(res.data);
+			this.nowMenuID = parent_id;
+			this.getMenuList(parent_id); //获取菜单列表
+			fetchMenuTree(lazy, -1).then((res) => {
 				this.menuTree = res.data;
 				this.menuTreeLoading = false;
 			});
 		},
 		//菜单树点击事件
 		menuTreeClick(index) {
-			console.log(index);
+			this.nowMenuID = index;
 			this.getMenuList(index);
+			// this.creatBread(index, []);
 		},
 		//二级面包屑
 		creatBread(menuId, arr) {
 			if (menuId != -1) {
 				let obj = this.menuArray.filter((element) => {
-					return element.menuId == menuId;
+					return element.id == menuId;
 				})[0];
 				let params = {
 					name: obj.title,
-					menuId: obj.menuId,
+					id: obj.id,
 				};
 				arr.push(params);
-				this.creatBread(obj.parentId, arr);
+				this.creatBread(obj.parent_id, arr);
 			} else {
 				arr.push(this.breadItems[0]);
 				this.breadItems = arr.reverse();
 				return false;
 			}
-		},
-		//刷新部门数据
-		refreshMenu(nowMenuID) {
-			this.getMenuTree();
-			this.getMenuList(nowMenuID);
 		},
 	},
 };
