@@ -84,7 +84,7 @@ const routes = [
                 component: () => import('@/views/power/Dept.vue')
             }, {
                 meta: {
-                    title: '机构管理',
+                    title: '部门管理',
                     hidden: false,
                     leaf: true,
                     iconCls: "el-icon-monitor"

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 16:34:42
  * @LastAuthor: lizlong
- * @lastTime: 2019-08-27 16:49:46
+ * @lastTime: 2020-08-12 17:13:47
  */
 // import axios from "axios";
 // import request from '@/utils/request'
@@ -261,7 +261,6 @@ function isURL(message) { // URL格式验证
 }
 
 function pswd(message) { //密码校验，及复杂度校验
-    console.log("1pass------");
 
     let grade;
     return {
@@ -283,8 +282,11 @@ function pswd(message) { //密码校验，及复杂度校验
             } else {
                 grade = 0;
             }
-
-            if (!reg3.test(value)) {
+            console.log(value);
+            console.log(value === '' || value === undefined);
+            if (value === '' || value === undefined) {
+                callback();
+            } else if (!reg3.test(value)) {
                 callback(new Error(message || '您输入的密码不满足要求!'));
             } else {
                 callback();

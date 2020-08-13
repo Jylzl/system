@@ -1,0 +1,82 @@
+.p-main .el-container,
+.p-main .table-box {
+  height: 100%;
+}
+
+.p-main .el-aside {
+  box-sizing: border-box;
+  border-right: 2px solid #d4dde2;
+  background-color: #fff;
+  line-height: 1;
+}
+
+.p-main .el-main {
+  padding: 0;
+  background-color: #fff;
+}
+
+.left-center .icon {
+  margin-right: 15px;
+  font-size: 16px;
+}
+
+.left-top,
+.right-top,
+.right-bottom {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 5px 15px;
+  line-height: 40px;
+}
+
+.left-top,
+.right-top {
+  justify-content: space-between;
+  border-bottom: 1px dashed #e7ecf3;
+}
+
+.left-center,
+.right-table-50 {
+  height: calc(100% - 50px);
+}
+
+.right-table-100 {
+  height: calc(100% - 100px);
+}
+
+.right-bottom {
+  justify-content: space-between;
+}
+
+.right-bottom .el-dropdown,
+.right-bottom .el-button+.el-button {
+  margin-left: 3px;
+}
+
+.right-bottom .el-dropdown .el-button {
+  height: 30px;
+}
+
+.el-breadcrumb {
+  line-height: 40px;
+}
+
+.list-paging {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  line-height: 28px;
+  padding: 9px 15px;
+  text-align: right;
+}
+
+.left-center .el-menu {
+  border-right: none;
+}
+
+.el-table__body-wrapper {
+  height: calc(100% - 40px);
+}

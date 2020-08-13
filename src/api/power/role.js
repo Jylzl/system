@@ -3,38 +3,22 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 09:46:02
+ * @lastTime: 2020-08-12 09:57:01
  */
 
 import request from '@/utils/request'
 
-export function getMenu(params) {
+export function getRole(params) {
   return request({
-    url: '/api/menu',
+    url: '/api/role',
     params,
     method: 'get'
   })
 }
 
-export function getTopMenu() {
-  return request({
-    url: '/api/menu',
-    params: { type: 'top' },
-    method: 'get'
-  })
-}
-
-export function fetchMenuTree(lazy, parent_id) {
-  return request({
-    url: '/api/menu/tree',
-    method: 'get',
-    params: { lazy, parent_id }
-  })
-}
-
 export function addObj(obj) {
   return request({
-    url: '/api/menu',
+    url: '/api/role',
     method: 'post',
     data: obj
   })
@@ -42,21 +26,21 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/api/menu/' + id,
+    url: '/api/role/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/api/menu/' + id,
+    url: '/api/role/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(obj) {
   return request({
-    url: '/api/menu/' + obj.id,
+    url: '/api/role/' + obj.id,
     method: 'put',
     data: obj
   })

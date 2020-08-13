@@ -11,7 +11,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-08-12 15:16:26
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-10 15:40:44
+ * @lastTime: 2020-08-12 09:50:34
  */
 
 const api = {
@@ -19,10 +19,6 @@ const api = {
     userLogin: "/passport/local", // 用户登录
     userLogout: "/account/logout", // 用户登出
     getPerms: "/account/getperms", // 获取权限
-    // 菜单管理
-    meunList: "/api/menus", // 菜单列表
-    menuTree: "/api/menus", // 菜单树
-    menuAdd: "/api/menus", // 菜单树
 }
 
 export default api;

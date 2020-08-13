@@ -3,12 +3,12 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-28 09:23:17
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-11 19:54:02
+ * @lastTime: 2020-08-13 11:15:24
 --> 
 <template>
 	<div>
 		<el-input
-			placeholder="请输入内容"
+			placeholder="请点击右边按钮选择图标"
 			v-model="s_value"
 			class="input-with-select"
 			@change="change"

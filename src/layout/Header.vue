@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-06 15:55:25
+ * @lastTime: 2020-08-12 10:48:45
  -->
 <template>
 	<div class="header-box">
@@ -131,9 +131,7 @@ export default {
 		searchPool(list) {
 			this.initFuse(list);
 		},
-		$route(to, from) {
-			console.log(to.path);
-			console.log(from.path);
+		$route(to) {
 			if (to.name == "Work") {
 				this.$store.dispatch("setLeftRouters", this.topRouters);
 			} else {
@@ -162,9 +160,6 @@ export default {
 	},
 	methods: {
 		menuSelect(index, indexPath) {
-			// console.log(this.$route.name);
-			// console.log(index);
-			// console.log(indexPath);
 			// if (this.$route.name == "Work") {
 			// 	this.$store.dispatch("setLeftRouters", this.routes);
 			// } else {

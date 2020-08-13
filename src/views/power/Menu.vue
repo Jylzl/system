@@ -1,9 +1,9 @@
 <!--
- * @description: Description
+ * @description: 菜单管理
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-11 21:33:26
+ * @lastTime: 2020-08-13 11:20:24
  -->
 <template>
 	<el-container>
@@ -12,7 +12,7 @@
 				<el-button type="text" icon="el-icon-menu" @click="getMenuTree(false, -1);">顶级菜单</el-button>
 				<el-button type="text" icon="el-icon-refresh" @click="getMenuTree(false,nowMenuID)">刷新</el-button>
 			</div>
-			<div class="left-center" v-loading="menuTreeLoading">
+			<div class="left-center" v-loading="treeLoading">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<el-menu
 						default-active="0"
@@ -92,7 +92,7 @@
 					</el-breadcrumb>
 				</div>
 				<div class="right-top-right">
-					<el-dropdown @command="addMenu">
+					<el-dropdown @command="add">
 						<el-button type="primary" icon="el-icon-edit" size="mini">添加</el-button>
 						<el-dropdown-menu slot="dropdown">
 							<el-dropdown-item
@@ -104,7 +104,7 @@
 					</el-dropdown>
 				</div>
 			</div>
-			<div class="right-table" v-loading="tableLoading">
+			<div class="right-table-50" v-loading="tableLoading">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
 						<el-table :data="menus" stripe style="width: 100%;height:100%;" size="small">
@@ -168,7 +168,7 @@
 									<el-button
 										size="mini"
 										type="primary"
-										@click="updateMenu(scope.row)"
+										@click="update(scope.row)"
 										icon="el-icon-edit"
 										title="编辑"
 										circle
@@ -176,7 +176,7 @@
 									<el-button
 										size="mini"
 										type="danger"
-										@click="delMenu(scope.row.id)"
+										@click="del(scope.row.id)"
 										icon="el-icon-delete"
 										title="删除"
 										circle
@@ -217,6 +217,7 @@
 								:show-all-levels="false"
 								clearable
 								class="w100"
+								placeholder="请选择上级菜单，为空则为顶级菜单"
 							></el-cascader>
 						</el-form-item>
 					</el-col>
@@ -233,23 +234,23 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span">
-						<el-form-item label="名称" prop="menuName">
-							<el-input v-model="menuForm.name" maxlength="50"></el-input>
+						<el-form-item label="英文名称" prop="menuName">
+							<el-input v-model="menuForm.name" maxlength="50" placeholder="请输入英文名称"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span">
-						<el-form-item label="标题" prop="menuTitle">
-							<el-input v-model="menuForm.title" maxlength="50"></el-input>
+						<el-form-item label="中文标题" prop="menuTitle">
+							<el-input v-model="menuForm.title" maxlength="50" placeholder="请输入中文标题"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span" v-if="menuForm.type == 1 || menuForm.type == 2">
 						<el-form-item label="路由路径" prop="url">
-							<el-input v-model="menuForm.url" maxlength="200"></el-input>
+							<el-input v-model="menuForm.url" maxlength="200" placeholder="请输入路由路径"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span" v-if="menuForm.type == 3">
 						<el-form-item label="权限标识" prop="perms">
-							<el-input v-model="menuForm.perms" maxlength="200"></el-input>
+							<el-input v-model="menuForm.perms" maxlength="200" placeholder="请输入权限标识"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span">
@@ -264,7 +265,7 @@
 					</el-col>
 					<el-col :span="menuDialog.span">
 						<el-form-item label="描述" prop="remark">
-							<el-input v-model="menuForm.remark" maxlength="500"></el-input>
+							<el-input v-model="menuForm.remark" maxlength="500" placeholder="请输入描述"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span">
@@ -289,7 +290,7 @@
 				</el-row>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
-				<el-button type="primary" @click="menuSave()" icon="el-icon-circle-check" size="small">保 存</el-button>
+				<el-button type="primary" @click="saveForm()" icon="el-icon-circle-check" size="small">保 存</el-button>
 				<el-button @click="resetForm('menuForm')" icon="el-icon-circle-close" size="small">取 消</el-button>
 			</span>
 		</el-dialog>
@@ -319,7 +320,7 @@ export default {
 		let r_checkChinese = va.checkChinese();
 		return {
 			tableLoading: false, //表格加载loading
-			menuTreeLoading: false, //菜单树加载loading
+			treeLoading: false, //树加载loading
 			//二级面包屑
 			breadItems: [
 				{
@@ -407,22 +408,20 @@ export default {
 			this.menuDialog.visible = false;
 		},
 		// 保存
-		menuSave() {
+		saveForm() {
 			this.$refs["menuForm"].validate((valid) => {
 				if (valid) {
 					if (this.menuForm.parent_id == "") {
 						this.menuForm.parent_id = -1;
 					}
 					if (this.menuDialog.menuForm == "add") {
-						addObj(this.menuForm).then((res) => {
-							console.log(res);
+						addObj(this.menuForm).then(() => {
 							this.menuDialog.visible = false;
 							this.getMenuTree(false, this.nowMenuID); //获取菜单列表
 							this.$message.success("添加成功");
 						});
 					} else {
-						putObj(this.menuForm).then((res) => {
-							console.log(res);
+						putObj(this.menuForm).then(() => {
 							this.menuDialog.visible = false;
 							this.getMenuTree(false, this.nowMenuID); //获取菜单列表
 							this.$message.success("修改成功");
@@ -434,7 +433,7 @@ export default {
 			});
 		},
 		//添加
-		addMenu(menuType) {
+		add(menuType) {
 			this.menuDialog.visible = true;
 			this.menuDialog.menuForm = "add";
 			this.menuDialog.title = "新增";
@@ -454,19 +453,19 @@ export default {
 			};
 		},
 		//删除
-		delMenu(menuId) {
-			this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+		del(id) {
+			this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
 				type: "warning",
 			})
 				.then(() => {
 					this.tableLoading = true;
-					delObj(menuId).then((res) => {
+					delObj(id).then((res) => {
 						console.log(res);
 						this.tableLoading = false;
 						this.getMenuList(this.nowMenuID); //获取菜单列表
-						this.$message.success("删除成功");
+						this.$message.success(`成功删除${res.data}条数据`);
 					});
 				})
 				.catch(() => {
@@ -477,11 +476,11 @@ export default {
 				});
 		},
 		//修改
-		updateMenu(menu) {
+		update(row) {
 			this.menuDialog.visible = true;
 			this.menuDialog.menuForm = "update";
 			this.menuDialog.title = "修改";
-			this.menuForm = menu;
+			this.menuForm = row;
 		},
 		//获取菜单列表
 		getMenuList(id) {
@@ -489,19 +488,18 @@ export default {
 			getMenu({
 				parent_id: id,
 			}).then((res) => {
-				console.log(res);
 				this.menus = res.data;
 				this.tableLoading = false;
 			});
 		},
 		//获取菜单树
 		getMenuTree(lazy, parent_id) {
-			this.menuTreeLoading = true;
+			this.treeLoading = true;
 			this.nowMenuID = parent_id;
 			this.getMenuList(parent_id); //获取菜单列表
 			fetchMenuTree(lazy, -1).then((res) => {
 				this.menuTree = res.data;
-				this.menuTreeLoading = false;
+				this.treeLoading = false;
 			});
 		},
 		//菜单树点击事件
@@ -531,110 +529,3 @@ export default {
 	},
 };
 </script>
-
-<style>
-.left-center .el-menu {
-	border-right: none;
-}
-
-.el-table__body-wrapper {
-	height: calc(100% - 40px);
-}
-</style>
-
-<style scoped>
-.el-container {
-	height: 100%;
-}
-
-.el-aside {
-	box-sizing: border-box;
-	border-right: 2px solid #d4dde2;
-	background-color: #fff;
-	line-height: 1;
-}
-
-.left-center .icon {
-	margin-right: 15px;
-	font-size: 16px;
-}
-
-.left-top,
-.right-top,
-.right-bottom {
-	display: flex;
-	align-items: center;
-	/*垂直居中*/
-	box-sizing: border-box;
-	height: 50px;
-	padding: 5px 15px;
-	line-height: 40px;
-}
-
-.left-top,
-.right-top {
-	justify-content: space-between;
-	border-bottom: 1px dashed #e7ecf3;
-}
-
-.left-center,
-.right-table {
-	height: calc(100% - 50px);
-}
-
-.right-bottom {
-	justify-content: flex-start;
-}
-
-.right-bottom .el-dropdown,
-.right-bottom .el-button + .el-button {
-	margin-left: 3px;
-}
-
-.right-bottom .el-dropdown .el-button {
-	height: 30px;
-}
-
-.el-breadcrumb {
-	line-height: 40px;
-}
-
-.el-main {
-	background-color: #fff;
-	padding: 0;
-}
-
-.table-box {
-	height: 100%;
-}
-
-.list-paging {
-	box-sizing: border-box;
-	height: 50px;
-	line-height: 50px;
-	margin-top: 30px;
-	padding: 5px 15px;
-	text-align: right;
-}
-
-.news-link {
-	display: inline;
-	color: inherit;
-	text-decoration: none;
-}
-
-.demo-table-expand {
-	font-size: 0;
-}
-
-.demo-table-expand label {
-	width: 90px;
-	color: #99a9bf;
-}
-
-.demo-table-expand .el-form-item {
-	margin-right: 0;
-	margin-bottom: 0;
-	width: 20%;
-}
-</style>

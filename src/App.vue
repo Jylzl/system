@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 13:48:12
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-10 16:33:26
+ * @lastTime: 2020-08-12 08:39:33
  -->
 <template>
 	<div id="app">
@@ -15,6 +15,7 @@
 @import url(./assets/css/rest.min.css);
 @import url(./assets/css/animate.css);
 @import url(./assets/iconfont/iconfont.css);
+@import url(./assets/css/style.css);
 
 @media (-webkit-max-device-pixel-ratio: 1) {
 	::-webkit-scrollbar-track-piece {

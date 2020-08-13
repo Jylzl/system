@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-10 13:00:12
+ * @lastTime: 2020-08-12 09:51:23
  -->
 <template>
 	<div>
@@ -223,7 +223,7 @@ export default {
 				xhr.withCredentials = false;
 				xhr.open(
 					"POST",
-					process.env.VUE_APP_SERVER_API + "/api/uploads"
+					process.env.VUE_APP_SERVER_API + "/api/upload"
 				);
 				xhr.setRequestHeader("authorization", "Bearer " + token);
 				xhr.onload = function () {
@@ -264,7 +264,7 @@ export default {
 						xhr = new XMLHttpRequest();
 						xhr.open(
 							"POST",
-							process.env.VUE_APP_SERVER_API + "/api/uploads"
+							process.env.VUE_APP_SERVER_API + "/api/upload"
 						);
 						xhr.setRequestHeader(
 							"authorization",

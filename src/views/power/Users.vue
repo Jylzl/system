@@ -1,89 +1,25 @@
 <!--
- * @description: Description
+ * @description: 菜单管理
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-06-10 14:40:47
+ * @lastTime: 2020-08-13 10:24:32
  -->
 <template>
 	<el-container>
 		<el-aside width="240px">
 			<div class="left-top">
-				<el-button type="text" icon="el-icon-menu" @click="menuTreeClick(-1)">顶级机构</el-button>
-				<el-button type="text" icon="el-icon-refresh" @click="menuTreeClick(nowMenuID)">刷新</el-button>
+				<el-button type="text" icon="el-icon-menu" @click="getDeptTree(false, -1);">顶级部门</el-button>
+				<el-button type="text" icon="el-icon-refresh" @click="getDeptTree(false,nowDeptID)">刷新</el-button>
 			</div>
-			<div class="left-center" v-loading="menuTreeLoading">
+			<div class="left-center" v-loading="treeLoading">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
-					<el-menu
-						default-active="0"
-						class="el-menu-vertical-demo"
-						:unique-opened="true"
-						@select="menuTreeClick"
-						@open="menuTreeClick"
-					>
-						<template v-for="item in  menuTree">
-							<template v-if="item.display == '1'">
-								<el-submenu
-									:index="(item.menuId).toString()"
-									:key="item.menuId"
-									v-if="item.children && item.leaf != '1'"
-								>
-									<template slot="title">
-										<i :class="'icon iconfont ' + item.icon"></i>
-										<span>{{item.title}}</span>
-									</template>
-									<template v-for="child in item.children">
-										<template v-if="child.display == '1'">
-											<el-menu-item
-												v-if="!(child.children) || child.leaf == '1'"
-												:index="(child.menuId).toString()"
-												:key="child.path"
-											>{{child.title}}</el-menu-item>
-											<el-submenu
-												v-else
-												:index="(child.menuId).toString()"
-												class="child-padding"
-												:key="child.path"
-											>
-												<template slot="title">
-													<span class="collapse-font">{{child.title}}</span>
-												</template>
-												<template v-for="child2 in child.children">
-													<template v-if="child2.display == '1'">
-														<el-menu-item
-															v-if="!(child2.children)  || child2.leaf == '1'"
-															:index="(child2.menuId).toString()"
-															:key="child2.path"
-														>{{child2.title}}</el-menu-item>
-														<el-submenu
-															v-else
-															:index="(child2.menuId).toString()"
-															class="child-padding"
-															:key="child2.path"
-														>
-															<template slot="title">
-																<span class="collapse-font">{{child2.title}}</span>
-															</template>
-															<template v-for="child3 in child2.children">
-																<el-menu-item
-																	:index="(child3.menuId).toString()"
-																	:key="child3.path"
-																>{{child3.title}}</el-menu-item>
-															</template>
-														</el-submenu>
-													</template>
-												</template>
-											</el-submenu>
-										</template>
-									</template>
-								</el-submenu>
-								<el-menu-item :index="(item.menuId).toString()" :key="item.menuId" v-else>
-									<i :class="'icon iconfont ' + item.icon"></i>
-									<span slot="title">{{item.title}}</span>
-								</el-menu-item>
-							</template>
-						</template>
-					</el-menu>
+					<el-tree
+						:data="deptTree"
+						:props="deptTreeProps"
+						:default-expand-all="true"
+						@node-click="deptTreeClick"
+					></el-tree>
 				</el-scrollbar>
 			</div>
 		</el-aside>
@@ -95,78 +31,31 @@
 					</el-breadcrumb>
 				</div>
 				<div class="right-top-right">
-					<el-dropdown @command="addMenu">
-						<el-button type="primary" icon="el-icon-edit" size="mini">添加</el-button>
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item
-								v-for="item in menuTypeLists"
-								:key="item.menuType"
-								:command="item.menuType"
-							>{{'添加'+item.name}}</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
+					<el-button type="primary" icon="el-icon-edit" size="mini" @click="add">添加</el-button>
 				</div>
 			</div>
-			<div class="right-table" v-loading="tableLoading">
+			<div class="right-table-100" v-loading="tableLoading">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
 						<el-table :data="menus" stripe style="width: 100%;height:100%;" size="small">
-							<el-table-column type="expand">
-								<template slot-scope="props">
-									<el-form label-position="left" inline class="demo-table-expand">
-										<el-form-item label="parentId:">
-											<span>{{ props.row.parentId }}</span>
-										</el-form-item>
-										<el-form-item label="Name:">
-											<span>{{ props.row.menuName }}</span>
-										</el-form-item>
-										<el-form-item label="描述:">
-											<span>{{ props.row.remark }}</span>
-										</el-form-item>
-									</el-form>
-								</template>
-							</el-table-column>
-							<el-table-column prop="menuId" label="ID" width="80" align="center"></el-table-column>
-							<el-table-column prop="orderNum" label="排序" width="60" align="center"></el-table-column>
-							<el-table-column label="类型" width="80" align="center">
+							<el-table-column prop="image_url" label="用户头像" width="120" align="center">
 								<template slot-scope="scope">
-									<el-tag type="success" size="medium" v-if="scope.row.menuType == 'C'">菜单</el-tag>
-									<el-tag type="info" v-else>按钮</el-tag>
+									<el-avatar size="small" :src="scope.row.image_url"></el-avatar>
 								</template>
 							</el-table-column>
-							<el-table-column prop="menuName" label="名称" align="left"></el-table-column>
-							<el-table-column prop="icon" label="图标" width="100" align="center">
-								<template slot-scope="scope">
-									<i :class="'icon iconfont '+scope.row.icon"></i>
-								</template>
-							</el-table-column>
-							<el-table-column prop="menuTitle" label="标题" align="left" :show-overflow-tooltip="true"></el-table-column>
-							<el-table-column prop="show" label="禁用" width="60" align="center">
-								<template slot-scope="scope">
-									<span v-if="scope.row.visible == '1'">否</span>
-									<span v-else>是</span>
-								</template>
-							</el-table-column>
-							<el-table-column prop="show" label="显示" width="60" align="center">
-								<template slot-scope="scope">
-									<span v-if="scope.row.display == '1'">是</span>
-									<span v-else>否</span>
-								</template>
-							</el-table-column>
-							<el-table-column prop="show" label="叶子节点" width="100" align="center">
-								<template slot-scope="scope">
-									<span v-if="scope.row.leaf == '1'">是</span>
-									<span v-else>否</span>
-								</template>
-							</el-table-column>
-							<el-table-column prop="url" label="前端地址"></el-table-column>
-							<el-table-column prop="perms" label="权限"></el-table-column>
+							<el-table-column prop="name" label="用户名" align="left"></el-table-column>
+							<el-table-column prop="real_name" label="真实姓名" align="left"></el-table-column>
+							<el-table-column prop="phone" label="手机号码" align="left"></el-table-column>
+							<el-table-column prop="email" label="邮箱号码" align="left"></el-table-column>
+							<el-table-column prop="last_login_time" label="后登录时间" align="left"></el-table-column>
+							<el-table-column prop="status" label="用户状态" align="left"></el-table-column>
+							<el-table-column prop="login_count" label="登录次数" align="left"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
 										size="mini"
 										type="primary"
-										@click="updateMenu(scope.row)"
+										@click="update(scope.row)"
 										icon="el-icon-edit"
 										title="编辑"
 										circle
@@ -174,7 +63,7 @@
 									<el-button
 										size="mini"
 										type="danger"
-										@click="delMenu(scope.row.menuId)"
+										@click="del(scope.row.id)"
 										icon="el-icon-delete"
 										title="删除"
 										circle
@@ -186,296 +75,411 @@
 				</el-scrollbar>
 			</div>
 			<div class="right-bottom">
-				<div class="right-bottom-left">
-					<el-button
-						type="danger"
-						size="small"
-						class="m-lr-5"
-						icon="el-icon-delete"
-						@click="delSelectUser"
-					>删除</el-button>
-				</div>
-				<div class="right-bottom-right">
+				<div></div>
+				<div class="list-paging">
 					<el-pagination
-						:current-page="1"
-						:page-sizes="[10,20]"
-						:page-size="10"
-						:pager-count="5"
+						@size-change="handleSizeChange"
+						@current-change="handleCurrentChange"
+						:current-page="page.currentPage"
+						:page-sizes="page.pageSizes"
+						:page-size="page.pageSize"
 						layout="total, sizes, prev, pager, next, jumper"
-						:total="100"
+						:total="page.total"
 						background
 					></el-pagination>
 				</div>
 			</div>
 		</el-main>
+		<!-- 修改表单弹窗 -->
+		<el-dialog
+			:title="userDialog.title"
+			:visible.sync="userDialog.visible"
+			:top="userDialog.top"
+			:width="userDialog.width"
+			:close-on-click-modal="false"
+			:destroy-on-close="true"
+			:before-close="beforeClose"
+		>
+			<!-- 修改表单 -->
+			<el-form
+				:model="userForm"
+				:rules="userFormRules"
+				ref="userForm"
+				label-width="100px"
+				size="medium"
+				label-suffix=":"
+			>
+				<el-row :gutter="20">
+					<el-col :span="userDialog.span">
+						<el-row :gutter="20">
+							<el-col :span="18">
+								<el-form-item label="用户名" prop="name">
+									<el-input v-model="userForm.name" maxlength="50"></el-input>
+								</el-form-item>
+								<el-form-item label="真实姓名" prop="real_name">
+									<el-input v-model="userForm.real_name" maxlength="50"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-upload
+									class="avatar-uploader"
+									:action="uploadAction"
+									name="fields"
+									:headers="uploadHeader"
+									:show-file-list="false"
+									:on-success="handleAvatarSuccess"
+									:before-upload="beforeAvatarUpload"
+								>
+									<img v-if="userForm.image_url" :src="userForm.image_url" class="avatar" />
+									<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+								</el-upload>
+							</el-col>
+						</el-row>
+					</el-col>
+					<el-col :span="userDialog.span">
+						<el-form-item label="密码" :prop="userDialog.type == 'add'? 'pswd':'_pswd'">
+							<el-input v-model="userForm.pswd" maxlength="32" show-password></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="userDialog.span">
+						<el-form-item label="身份证" prop="id_card">
+							<el-input v-model="userForm.id_card" maxlength="200"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="userDialog.span">
+						<el-form-item label="手机号码" prop="phone">
+							<el-input v-model="userForm.phone" maxlength="200"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="userDialog.span">
+						<el-form-item label="邮箱号码" prop="email">
+							<el-input v-model="userForm.email" maxlength="200"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="userDialog.span">
+						<el-form-item label="所在部门" prop="dept_id">
+							<el-cascader
+								v-model="userForm.dept_id"
+								:options="deptTree"
+								:props="deptCascaderProps"
+								:show-all-levels="false"
+								clearable
+								class="w100"
+							></el-cascader>
+						</el-form-item>
+					</el-col>
+					<el-col :span="userDialog.span">
+						<el-form-item label="用户角色" prop="role_ids">
+							<el-select v-model="userForm.role_ids" multiple placeholder="请选择用户角色" class="w100">
+								<el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+				</el-row>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button type="primary" @click="saveForm()" icon="el-icon-circle-check" size="small">保 存</el-button>
+				<el-button @click="resetForm('userForm')" icon="el-icon-circle-close" size="small">取 消</el-button>
+			</span>
+		</el-dialog>
 	</el-container>
 </template>
 <script>
-import { translateDataToTree } from "@/utils/tools.js";
+import { getToken } from "@/utils/auth";
+import va from "@/rules/index.js";
+import { Encrypt } from "@/utils/aes.js";
+import { fetchDeptTree } from "@/api/power/dept";
+import { addObj, delObj, putObj, getUser } from "@/api/power/user";
+import { getRole } from "@/api/power/role";
+
 export default {
 	name: "menuList",
 	components: {},
 	data() {
+		//引入自定义验证规则
+		let r_required = va.required();
+		let r_email = va.email();
+		let r_mobile = va.mobile();
+		let r_isCardNo = va.isCardNo();
+		let r_pswd = va.pswd();
+		let r_checkChinese = va.checkChinese();
 		return {
 			tableLoading: false, //表格加载loading
-			menuTreeLoading: false, //菜单树加载loading
+			treeLoading: false, //树加载loading
+			page: {
+				currentPage: 1,
+				pageSize: 20,
+				total: 0,
+				pageSizes: [1, 20, 50, 100, 200],
+			},
+			//二级面包屑
 			breadItems: [
 				{
 					name: "顶级菜单",
-					menuId: -1
-				}
-			], //二级面包屑
-			menuTypeLists: [
-				{
-					menuType: "C",
-					name: "菜单"
+					id: -1,
 				},
-				{
-					menuType: "F",
-					name: "按钮"
-				}
 			],
 			menus: [],
 			menuArray: [],
-			menuTree: [],
-			nowMenuID: -1
+			deptTree: [],
+			nowDeptID: -1,
+			roles: [],
+			// 表单信息
+			userDialog: {
+				top: "15vh",
+				width: "45%",
+				type: "add",
+				title: "新增",
+				visible: false,
+				span: 24,
+			},
+			userForm: {
+				dept_id: "",
+				role_ids: "",
+				name: "",
+				real_name: "",
+				pswd: "",
+				id_card: "",
+				phone: "",
+				email: "",
+				qq: "",
+				github: "",
+				image_url: "",
+			},
+			deptTreeProps: {
+				children: "children",
+				label: "abbreviation",
+			},
+			deptCascaderProps: {
+				filterable: true,
+				emitPath: false,
+				checkStrictly: true,
+				children: "children",
+				label: "name",
+				value: "id",
+			},
+			// 表单验证规则
+			userFormRules: {
+				name: [r_required, r_checkChinese],
+				real_name: [r_required],
+				pswd: [r_required, r_pswd],
+				_pswd: [r_pswd],
+				id_card: [r_required, r_isCardNo],
+				phone: [r_required, r_mobile],
+				email: [r_required, r_email],
+				dept_id: [r_required],
+				role_ids: [r_required],
+			},
 		};
 	},
 	created() {
-		this.getMenuTree(); //获取菜单树
+		this.getDeptTree(false, this.nowDeptID); //获取菜单树
+		getRole().then((res) => {
+			this.roles = res.data;
+		});
 	},
-	mounted() {
-		this.getMenuList(this.nowMenuID); //获取菜单列表
-	},
+	mounted() {},
 	filters: {},
-	computed: {},
-	methods: {
-		//添加菜单/按钮
-		addMenu(menuType) {
-			this.$refs.menuEdit.addMenu(menuType, this.nowMenuID);
+	computed: {
+		uploadHeader() {
+			const token = getToken() || localStorage.getItem("access_token"); //登录标示
+			return {
+				authorization: "Bearer " + token,
+			};
 		},
-		//删除菜单/按钮
-		delMenu(menuId) {
-			this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+		uploadAction() {
+			return process.env.VUE_APP_SERVER_API + "/api/upload";
+		},
+	},
+	methods: {
+		//
+		beforeClose(done) {
+			this.$refs["userForm"].resetFields();
+			done();
+		},
+		// 重置
+		resetForm(formName) {
+			this.$refs[formName].resetFields();
+			this.userDialog.visible = false;
+		},
+		// 保存
+		saveForm() {
+			this.$refs["userForm"].validate((valid) => {
+				if (valid) {
+					// 密码加密
+					if (
+						this.userForm.pswd != undefined &&
+						this.userForm.pswd.length > 0
+					) {
+						this.userForm.pswd = Encrypt(
+							this.userForm.pswd,
+							process.env.VUE_APP_aesKey,
+							process.env.VUE_APP_ivKey
+						);
+					}
+					if (this.userDialog.userForm == "add") {
+						addObj(this.userForm).then(() => {
+							this.userDialog.visible = false;
+							this.$message.success("添加成功");
+						});
+					} else {
+						putObj(this.userForm).then(() => {
+							this.userDialog.visible = false;
+							this.$message.success("修改成功");
+						});
+					}
+				} else {
+					return false;
+				}
+			});
+		},
+		//添加
+		add() {
+			this.userDialog.visible = true;
+			this.userDialog.userForm = "add";
+			this.userDialog.title = "新增";
+
+			this.userForm = {
+				dept_id: "",
+				role_ids: "",
+				name: "",
+				real_name: "",
+				pswd: "",
+				id_card: "",
+				phone: "",
+				email: "",
+				qq: "",
+				github: "",
+				image_url: "",
+			};
+		},
+		//删除
+		del(id) {
+			this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
-				type: "warning"
+				type: "warning",
 			})
 				.then(() => {
 					this.tableLoading = true;
-					this.$axios
-						.get(this.$api.meunDel, {
-							params: {
-								menuId: menuId
-							}
-						})
-						.then(res => {
-							if (res.code == this.$code.success) {
-								this.refreshMenu(this.nowMenuID); //删除成功后刷新菜单数据
-								this.successMessage("删除成功");
-							} else {
-								this.errorMessage(res.data);
-								this.tableLoading = false;
-							}
-						})
-						.catch(err => {
-							console.log(err);
-							this.tableLoading = false;
-						});
+					delObj(id).then((res) => {
+						console.log(res);
+						this.tableLoading = false;
+						this.getUserList(this.nowDeptID); //获取菜单列表
+						this.$message.success(`成功删除${res.data}条数据`);
+					});
 				})
 				.catch(() => {
 					this.$message({
 						type: "info",
-						message: "已取消删除"
+						message: "已取消删除",
 					});
 				});
 		},
-		//修改菜单/按钮
-		updateMenu(menu) {
-			this.$refs.menuEdit.updateMenu(menu, this.nowMenuID);
+		//修改
+		update(row) {
+			this.userDialog.visible = true;
+			this.userDialog.userForm = "update";
+			this.userDialog.title = "修改";
+			this.userForm = row;
 		},
 		//获取菜单列表
-		getMenuList(id) {
+		getUserList(id) {
 			this.tableLoading = true;
-			this.$axios
-				.get(this.$api.meunList, {
-					params: {
-						parentId: id
-					}
-				})
-				.then(res => {
-					this.menus = res;
-					this.tableLoading = false;
-				})
-				.catch(err => {
-					console.log(err);
-					this.tableLoading = false;
-				});
+			getUser({
+				parent_id: id,
+				currentPage: this.page.currentPage,
+				pageSize: this.page.pageSize,
+			}).then((res) => {
+				this.menus = res.data.rows;
+				this.page.total = res.data.count;
+				this.tableLoading = false;
+			});
 		},
 		//获取菜单树
-		getMenuTree() {
-			this.menuTreeLoading = true;
-			this.$axios
-				.get(this.$api.menuTree)
-				.then(res => {
-					let mentData = res;
-					this.menuArray = mentData;
-					let mentData2 = mentData.filter(item => {
-						return item.menuType == "C";
-					});
-					this.menuTree = translateDataToTree(
-						mentData2,
-						"menuId",
-						"parentId"
-					);
-					this.menuTreeLoading = false;
-				})
-				.catch(err => {
-					console.log(err);
-					this.menuTreeLoading = false;
-				});
+		getDeptTree(lazy, parent_id) {
+			this.treeLoading = true;
+			this.nowDeptID = parent_id;
+			this.getUserList(parent_id); //获取用户列表
+			fetchDeptTree(lazy, -1).then((res) => {
+				this.deptTree = res.data;
+				this.treeLoading = false;
+			});
 		},
 		//菜单树点击事件
-		menuTreeClick(index) {
-			if (index == -1) {
-				this.getMenuTree();
-			}
-			this.nowMenuID = Number(index);
-			this.getMenuList(index);
-			this.creatBread(index, []);
+		deptTreeClick(index) {
+			this.nowDeptID = index;
+			this.getUserList(index);
+			// this.creatBread(index, []);
 		},
 		//二级面包屑
 		creatBread(menuId, arr) {
 			if (menuId != -1) {
-				let obj = this.menuArray.filter(element => {
-					return element.menuId == menuId;
+				let obj = this.menuArray.filter((element) => {
+					return element.id == menuId;
 				})[0];
 				let params = {
 					name: obj.title,
-					menuId: obj.menuId
+					id: obj.id,
 				};
 				arr.push(params);
-				this.creatBread(obj.parentId, arr);
+				this.creatBread(obj.parent_id, arr);
 			} else {
 				arr.push(this.breadItems[0]);
 				this.breadItems = arr.reverse();
 				return false;
 			}
 		},
-		//刷新部门数据
-		refreshMenu(nowMenuID) {
-			this.getMenuTree();
-			this.getMenuList(nowMenuID);
-		}
-	}
+		// 分页
+		handleSizeChange(val) {
+			this.page.pageSize = val;
+			this.getRoleList(); //获取角色列表
+		},
+		handleCurrentChange(val) {
+			this.page.currentPage = val;
+			this.getRoleList(); //获取角色列表
+		},
+		handleAvatarSuccess(res, file) {
+			this.imageUrl = URL.createObjectURL(file.raw);
+		},
+		beforeAvatarUpload(file) {
+			const isJPG = file.type === "image/jpeg";
+			const isLt2M = file.size / 1024 / 1024 < 2;
+
+			if (!isJPG) {
+				this.$message.error("上传头像图片只能是 JPG 格式!");
+			}
+			if (!isLt2M) {
+				this.$message.error("上传头像图片大小不能超过 2MB!");
+			}
+			return isJPG && isLt2M;
+		},
+	},
 };
 </script>
 
 <style>
-.left-center .el-menu {
-	border-right: none;
+.avatar-uploader .el-upload {
+	border: 1px dashed #d9d9d9;
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
 }
-
-.el-table__body-wrapper {
-	height: calc(100% - 40px);
+.avatar-uploader .el-upload:hover {
+	border-color: #409eff;
 }
-
-.el-table--group::after,
-.el-table--border::after,
-.el-table::before {
-	background-color: #fff;
+.avatar-uploader-icon {
+	font-size: 28px;
+	color: #8c939d;
+	width: 94px;
+	height: 94px;
+	line-height: 94px;
+	text-align: center;
 }
-</style>
-
-<style scoped>
-.el-container {
-	height: 100%;
-}
-
-.el-aside {
-	box-sizing: border-box;
-	border-right: 2px solid #d4dde2;
-	background-color: #fff;
-	line-height: 1;
-}
-
-.left-center .icon {
-	margin-right: 15px;
-	font-size: 16px;
-}
-
-.left-top,
-.right-top,
-.right-bottom {
-	display: flex;
-	align-items: center;
-	/*垂直居中*/
-	box-sizing: border-box;
-	height: 50px;
-	padding: 5px 15px;
-}
-
-.left-top,
-.right-top {
-	justify-content: space-between;
-	border-bottom: 1px dashed #e7ecf3;
-}
-
-.left-center,
-.right-table {
-	height: calc(100% - 100px);
-}
-
-.right-bottom {
-	justify-content: space-between;
-	border-top: 1px dashed #e7ecf3;
-}
-
-.right-bottom .right-bottom-left,
-.right-bottom .right-bottom-right {
-	align-items: center;
-}
-
-.right-bottom .el-dropdown,
-.right-bottom .el-button + .el-button {
-	margin-left: 3px;
-}
-
-.right-bottom .el-dropdown .el-button {
-	height: 30px;
-}
-
-.el-breadcrumb {
-	line-height: 40px;
-}
-
-.el-main {
-	background-color: #fff;
-	padding: 0;
-}
-
-.table-box {
-	height: 100%;
-}
-
-.news-link {
-	display: inline;
-	color: inherit;
-	text-decoration: none;
-}
-
-.demo-table-expand {
-	font-size: 0;
-}
-
-.demo-table-expand label {
-	width: 90px;
-	color: #99a9bf;
-}
-
-.demo-table-expand .el-form-item {
-	margin-right: 0;
-	margin-bottom: 0;
-	width: 20%;
+.avatar {
+	width: 94px;
+	height: 94px;
+	display: block;
 }
 </style>

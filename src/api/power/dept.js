@@ -1,32 +1,32 @@
 /**
- * @description: 菜单接口
+ * @description: 部门接口
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 09:46:02
+ * @lastTime: 2020-08-13 09:16:08
  */
 
 import request from '@/utils/request'
 
-export function getMenu(params) {
+export function getDept(params) {
   return request({
-    url: '/api/menu',
+    url: '/api/dept',
     params,
     method: 'get'
   })
 }
 
-export function getTopMenu() {
+export function getTopDept() {
   return request({
-    url: '/api/menu',
+    url: '/api/dept',
     params: { type: 'top' },
     method: 'get'
   })
 }
 
-export function fetchMenuTree(lazy, parent_id) {
+export function fetchDeptTree(lazy, parent_id) {
   return request({
-    url: '/api/menu/tree',
+    url: '/api/dept/tree',
     method: 'get',
     params: { lazy, parent_id }
   })
@@ -34,7 +34,7 @@ export function fetchMenuTree(lazy, parent_id) {
 
 export function addObj(obj) {
   return request({
-    url: '/api/menu',
+    url: '/api/dept',
     method: 'post',
     data: obj
   })
@@ -42,21 +42,21 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/api/menu/' + id,
+    url: '/api/dept/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/api/menu/' + id,
+    url: '/api/dept/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(obj) {
   return request({
-    url: '/api/menu/' + obj.id,
+    url: '/api/dept/' + obj.id,
     method: 'put',
     data: obj
   })
