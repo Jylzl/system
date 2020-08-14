@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-06 15:51:45
+ * @lastTime: 2020-08-14 11:35:15
  -->
 <template>
 	<div class="land-box">
@@ -216,7 +216,7 @@ export default {
 			//密码登陆
 			landForm_password: {
 				user: "admin",
-				pswd: "123",
+				pswd: "long1234",
 				rememberPswd: 1,
 			},
 			// 手机登陆

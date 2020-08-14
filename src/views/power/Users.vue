@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-13 10:24:32
+ * @lastTime: 2020-08-14 11:56:26
  -->
 <template>
 	<el-container>
@@ -111,16 +111,16 @@
 			>
 				<el-row :gutter="20">
 					<el-col :span="userDialog.span">
-						<el-row :gutter="20">
-							<el-col :span="18">
+						<div class="form-first">
+							<div class="form-first-left">
 								<el-form-item label="用户名" prop="name">
 									<el-input v-model="userForm.name" maxlength="50"></el-input>
 								</el-form-item>
 								<el-form-item label="真实姓名" prop="real_name">
 									<el-input v-model="userForm.real_name" maxlength="50"></el-input>
 								</el-form-item>
-							</el-col>
-							<el-col :span="6">
+							</div>
+							<div class="form-first-right">
 								<el-upload
 									class="avatar-uploader"
 									:action="uploadAction"
@@ -133,8 +133,8 @@
 									<img v-if="userForm.image_url" :src="userForm.image_url" class="avatar" />
 									<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 								</el-upload>
-							</el-col>
-						</el-row>
+							</div>
+						</div>
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="密码" :prop="userDialog.type == 'add'? 'pswd':'_pswd'">
@@ -459,6 +459,19 @@ export default {
 </script>
 
 <style>
+.form-first {
+	display: flex;
+	justify-content: space-between;
+}
+
+.form-first-left {
+	width: calc(100% - 114px);
+}
+
+.form-first-right {
+	width: 94px;
+}
+
 .avatar-uploader .el-upload {
 	border: 1px dashed #d9d9d9;
 	border-radius: 6px;
@@ -466,9 +479,11 @@ export default {
 	position: relative;
 	overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
 	border-color: #409eff;
 }
+
 .avatar-uploader-icon {
 	font-size: 28px;
 	color: #8c939d;
@@ -477,6 +492,7 @@ export default {
 	line-height: 94px;
 	text-align: center;
 }
+
 .avatar {
 	width: 94px;
 	height: 94px;

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-11 08:47:13
+ * @lastTime: 2020-08-14 11:26:22
  */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -41,16 +41,13 @@ router.beforeEach((to, from, next) => {
             if (perms) {
                 next();
             } else {
+                console.log("a");
                 try {
-                    store.dispatch('setRouters').then((res) => {
-                        if (res.code != 200) {
-                            next('/login');
-                        } else {
-                            router.addRoutes(store.state.power.routes);
-                            next({ ...to, replace: true })
-                        }
-                    })
-
+                    store.dispatch('setRouters').then(() => {
+                        next()
+                    }).catch(() => {
+                        next("/login");
+                    });
                     // hack method to ensure that addRoutes is complete
                     // set the replace: true, so the navigation will not leave a history record
                 } catch (error) {
@@ -58,8 +55,6 @@ router.beforeEach((to, from, next) => {
                     next(`/login?redirect=${to.path}`)
                     NProgress.done()
                 }
-
-
             }
         }
     }

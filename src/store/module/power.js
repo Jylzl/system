@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 14:32:22
+ * @lastTime: 2020-08-14 11:35:36
  */
 
 import {
@@ -20,6 +20,8 @@ import code from '@/code/code';
 import {
     routes
 } from '@/router/routes'
+import router from '@/router/index' //路由
+
 //展示的用户信息
 const power = {
     //设置属性
@@ -33,6 +35,12 @@ const power = {
     mutations: {
         LEFT_ROUTERS: (state, data) => {
             state.leftRouters = data;
+            router.addRoutes(routes);
+        },
+        SET_PERMS: (state, params) => {
+            router.addRoutes(routes);
+            state.user = params.user;
+            state.perms = true;
         },
         LOGING_STATE: (state, params) => {
             localStorage.setItem('access_token', params.token); //将token存进localStorage
@@ -56,7 +64,6 @@ const power = {
             const remember = data.rememberPswd;
             const username = data.user;
             const password = Encrypt(data.pswd, process.env.VUE_APP_aesKey, process.env.VUE_APP_ivKey); //密码加密
-            console.log(password)
             return new Promise((resolve, reject) => {
                 userLogin({
                     username,
@@ -76,11 +83,12 @@ const power = {
         setRouters({ commit }) {
             return new Promise((resolve, reject) => {
                 getPerms().then(res => {
-                    console.log(res)
                     if (res.code == code.success) {
-                        // commit('LEFT_ROUTERS', res.data); //执行登陆成功的方法
+                        commit('SET_PERMS', res.data); //执行登陆成功的方法
+                        resolve(res)
+                    } else {
+                        reject(false);
                     }
-                    resolve(res)
                 }).catch(err => {
                     reject(false);
                     console.log(err)
