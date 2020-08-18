@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-14 11:26:22
+ * @lastTime: 2020-08-18 17:54:54
  */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -41,7 +41,6 @@ router.beforeEach((to, from, next) => {
             if (perms) {
                 next();
             } else {
-                console.log("a");
                 try {
                     store.dispatch('setRouters').then(() => {
                         next()
