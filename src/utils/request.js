@@ -11,7 +11,7 @@
  * @Author: lizlong<94648929@qq.com>
  * @Date: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-10 10:58:13
+ * @lastTime: 2020-08-19 10:13:31
  */
 
 import axios from 'axios'
@@ -90,7 +90,9 @@ service.interceptors.response.use(
 				if (getToken()) {
 					showMessage(res.code + ":" + "用户登陆超时");
 				}
+				// 清空token
 				removeToken();
+				localStorage.setItem('access_token', "");
 				router.push('/login');
 				break;
 			default:
