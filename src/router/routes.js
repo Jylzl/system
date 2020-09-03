@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description: routes静态路由，ansycRoutes动态路由
  * @Author: haoran
  * @Date: 2020-04-30 14:00:42
  * @LastEditors: Please set LastEditors
@@ -37,8 +37,8 @@ const routes = [
                     iconCls: "el-icon-data-analysis"
                 },
                 path: '/work',
-                name: 'Work',
-                component: () => import('@/views/work/Work.vue')
+                name: 'work',
+                component: ansycRoutes.get('work')
             }, {
                 meta: {
                     title: '个人中心',
@@ -47,8 +47,8 @@ const routes = [
                     iconCls: "el-icon-s-custom"
                 },
                 path: '/personal',
-                name: 'Personal',
-                component: () => import('@/views/work/Personal.vue')
+                name: 'personal',
+                component: ansycRoutes.get('personal')
             }
         ]
     }, {
@@ -70,8 +70,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/power/menu',
-                name: 'Menu',
-                component: () => import('@/views/power/Menu.vue')
+                name: 'menu',
+                component: ansycRoutes.get('menu')
             }, {
                 meta: {
                     title: '区域管理',
@@ -80,8 +80,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/power/region',
-                name: 'Region',
-                component: () => import('@/views/power/Dept.vue')
+                name: 'region',
+                component: ansycRoutes.get('region')
             }, {
                 meta: {
                     title: '部门管理',
@@ -90,8 +90,8 @@ const routes = [
                     iconCls: "el-icon-monitor"
                 },
                 path: '/power/dept',
-                name: 'Dept',
-                component: () => import('@/views/power/Dept.vue')
+                name: 'dept',
+                component: ansycRoutes.get('dept')
             }, {
                 meta: {
                     title: '角色管理',
@@ -100,8 +100,8 @@ const routes = [
                     iconCls: "el-icon-monitor"
                 },
                 path: '/power/roles',
-                name: 'Roles',
-                component: () => import('@/views/power/Roles.vue')
+                name: 'roles',
+                component: ansycRoutes.get('roles')
             }, {
                 meta: {
                     title: '用户管理',
@@ -110,8 +110,8 @@ const routes = [
                     iconCls: "el-icon-monitor"
                 },
                 path: '/power/users',
-                name: 'Users',
-                component: () => import('@/views/power/Users.vue')
+                name: 'users',
+                component: ansycRoutes.get('users')
             }
         ]
     }, {
@@ -122,7 +122,7 @@ const routes = [
             iconCls: "el-icon-odometer"
         },
         path: '/monitor',
-        name: 'Monitor',
+        name: 'monitor',
         component: Container,
         children: [
             {
@@ -133,8 +133,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/monitor/baidu',
-                name: 'Baidu',
-                component: () => import('@/views/monitor/Baidu.vue')
+                name: 'baidu',
+                component: ansycRoutes.get('baidu')
             }, {
                 meta: {
                     title: '系统监控',
@@ -143,8 +143,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/monitor/perf',
-                name: 'Perf',
-                component: () => import('@/views/monitor/Perf.vue')
+                name: 'perf',
+                component: ansycRoutes.get('perf')
             }]
     }, {
         meta: {
@@ -154,7 +154,7 @@ const routes = [
             iconCls: "el-icon-connection"
         },
         path: '/app',
-        name: 'App',
+        name: 'app',
         redirect: '/app/three',
         component: Container,
         children: [
@@ -166,8 +166,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/app/one',
-                name: 'AppOne',
-                component: () => import('@/views/app/AppOne.vue')
+                name: 'one',
+                component: ansycRoutes.get('one')
             }, {
                 meta: {
                     title: 'vscode编辑器',
@@ -176,8 +176,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/app/two',
-                name: 'AppTwo',
-                component: () => import('@/views/app/AppTwo.vue')
+                name: 'two',
+                component: ansycRoutes.get('two')
             }, {
                 meta: {
                     title: '动态表单',
@@ -186,8 +186,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/app/three',
-                name: 'AppThree',
-                component: () => import('@/views/app/AppThree.vue')
+                name: 'three',
+                component: ansycRoutes.get('three')
             }, {
                 meta: {
                     title: '视频播放',
@@ -196,8 +196,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/app/four',
-                name: 'AppFour',
-                component: () => import('@/views/app/AppFour.vue')
+                name: 'four',
+                component: ansycRoutes.get('four')
             }, {
                 meta: {
                     title: '图标选择器',
@@ -206,8 +206,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/app/five',
-                name: 'AppFive',
-                component: () => import('@/views/app/AppFive.vue')
+                name: 'five',
+                component: ansycRoutes.get('five')
             }, {
                 meta: {
                     title: '拼图验证码',
@@ -216,8 +216,8 @@ const routes = [
                     iconCls: "el-icon-place"
                 },
                 path: '/app/six',
-                name: 'AppSix',
-                component: () => import('@/views/app/AppSix.vue')
+                name: 'six',
+                component: ansycRoutes.get('six')
             }]
     },
     {
@@ -227,7 +227,7 @@ const routes = [
             open: true
         },
         path: '/login',
-        name: 'Login',
+        name: 'login',
         component: Login
     },
     {
@@ -237,7 +237,7 @@ const routes = [
             open: true
         },
         path: '/lock',
-        name: 'Lock',
+        name: 'lock',
         component: Lock
     },
     {
@@ -247,7 +247,7 @@ const routes = [
             open: true
         },
         path: '/register',
-        name: 'Register',
+        name: 'register',
         component: Register
     },
     {

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 09:51:23
+ * @lastTime: 2020-09-03 18:29:13
  -->
 <template>
 	<div>
@@ -34,7 +34,7 @@ import "tinymce/plugins/colorpicker";
 import "tinymce/plugins/contextmenu";
 import "tinymce/plugins/directionality"; // 设置编写方向
 import "tinymce/plugins/emoticons"; // 表情
-import "tinymce/plugins/fullpage"; // 完整页面的文档属性
+// import "tinymce/plugins/fullpage"; // 完整页面的文档属性
 import "tinymce/plugins/fullscreen"; // 全屏
 import "tinymce/plugins/help"; // 帮助
 import "tinymce/plugins/hr"; // 水平线
@@ -42,7 +42,7 @@ import "tinymce/plugins/image"; // 插入上传图片插件
 import "tinymce/plugins/imagetools"; // 图片工具
 import "tinymce/plugins/importcss";
 import "tinymce/plugins/insertdatetime"; // 插入时间
-import "tinymce/plugins/legacyoutput";
+// import "tinymce/plugins/legacyoutput"; // 输出HTML4
 import "tinymce/plugins/link"; // 添加和修改链接
 import "tinymce/plugins/lists"; // 列表插件
 import "tinymce/plugins/media"; // 插入视频插件
@@ -65,7 +65,6 @@ import "tinymce/plugins/toc"; // 插入目录
 import "tinymce/plugins/visualblocks"; // 隐藏块级区域开关
 import "tinymce/plugins/visualchars"; // 隐藏字符串开关
 import "tinymce/plugins/wordcount"; // 字数统计插件
-// import "tinymce/plugins/powerpaste"; // 字数统计插件
 
 export default {
 	name: "cms-tinymce",
@@ -115,7 +114,6 @@ export default {
 			html: "",
 			init: {
 				cache_suffix: "?v=5.4.1",
-				readonly: true, //只读
 				language_url: "/tinymce/langs/zh_CN.min.js", // 语言包的路径
 				language: "zh_CN", // 语言
 				skin_url: "/tinymce/skins/ui/oxide", // skin路径
@@ -133,12 +131,10 @@ export default {
 				height: 240, // 编辑器高度(autoresize开启后无效)
 				max_height: 800, // 编辑器初始化最大高度
 				min_height: 360, // 编辑器初始化最小高度
+				readonly: true, //只读
 				branding: false, // 是否禁用“Powered by TinyMCE”
-				images_upload_url: "postAcceptor.php", // 图片上传地址
-				images_upload_base_path: "http://127.0.0.1:7001", // 图片地址基本目录
-				imagetools_cors_hosts: ["mydomain.com", "otherdomain.com"],
-				imagetools_proxy: "proxy.php",
-				file_picker_types: "media,image,file", // 想要哪一个图标提供本地文件选择功能，参数可为media(媒体)、image(图片)、file(文件)
+				image_caption: false,
+				// file_picker_types: "media,image,file", // 想要哪一个图标提供本地文件选择功能，参数可为media(媒体)、image(图片)、file(文件)
 				//be used to add custom file picker to those dialogs that have it.
 				nonbreaking_force_tab: true, // 不间断空格
 				paste_as_text: false, //粘贴为文本
@@ -146,8 +142,68 @@ export default {
 					"bold italic | link h2 h3 blockquote", //选中快捷工具栏
 				quickbars_insert_toolbar: "quickimage quicktable", //快捷插入工具类
 				powerpaste_html_import: prompt, //clean - 保留内容的结构,merge保留原始文档的内联格式和结构,prompt清除和合并选项之间进行选择。
+				convert_fonts_to_spans: true,
+				extended_valid_elements: "span",
 				font_formats:
 					"微软雅黑=Microsoft YaHei; 宋体=SimSun; 新宋体=NSimSun; 仿宋=FangSong; 楷体=KaiTi;  黑体=SimHei; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Times New Roman=times new roman,times; Verdana=verdana,geneva;",
+				fontsize_formats: "12px 14px 16px 18px 24px 36px 48px",
+				formats: {
+					alignleft: {
+						selector:
+							"p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img",
+						classes: "text-align-left",
+						styles: { "text-align": "left" },
+					},
+					aligncenter: {
+						selector:
+							"p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img",
+						classes: "text-align-center",
+						styles: { "text-align": "center" },
+					},
+					alignright: {
+						selector:
+							"p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img",
+						classes: "text-align-right",
+						styles: { "text-align": "right" },
+					},
+					alignjustify: {
+						selector:
+							"p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img",
+						classes: "text-align-justify",
+						styles: {
+							"text-align": "justify",
+							"text-align-last": "justify",
+							"text-justify": "distribute-all-lines",
+						},
+					},
+					bold: {
+						inline: "span",
+						classes: "font-weight-bold",
+						styles: { "font-weight": "bold" },
+					},
+					italic: {
+						inline: "span",
+						classes: "font-style-italic",
+						styles: { "font-style": "italic" },
+					},
+					underline: {
+						inline: "span",
+						classes: "text-decoration-underline",
+						styles: { "text-decoration": "underline" },
+						exact: true,
+					},
+					strikethrough: { inline: "del" },
+					forecolor: {
+						inline: "span",
+						classes: "forecolor",
+						styles: { color: "%value" },
+					},
+					hilitecolor: {
+						inline: "span",
+						classes: "hilitecolor",
+						styles: { backgroundColor: "%value" },
+					},
+				},
 				menubar: "file edit insert view format table tools help", //顶部菜单栏显示
 				menu: {
 					file: {
@@ -161,7 +217,7 @@ export default {
 					view: {
 						title: "View",
 						items:
-							"code | visualaid visualchars visualblocks | spellchecker | preview fullscreen",
+							"code | visualaid visualchars visualblocks | preview fullscreen",
 					},
 					insert: {
 						title: "Insert",
@@ -171,12 +227,12 @@ export default {
 					format: {
 						title: "Format",
 						items:
-							"bold italic underline strikethrough superscript subscript codeformat | formats blockformats fontformats fontsizes align | forecolor backcolor | removeformat",
+							"bold italic underline strikethrough superscript subscript codeformat | formats blockformats fontformats fontsizes align | forecolor backcolor | formatpainter removeformat",
 					},
 					tools: {
 						title: "Tools",
 						items:
-							"spellcheckerlanguage | wordcount | fullpage | searchreplace",
+							"spellcheckerlanguage | spellchecker | wordcount | searchreplace",
 					},
 					table: {
 						title: "Table",
@@ -189,9 +245,9 @@ export default {
 					},
 				},
 				plugins:
-					"enclosure a11ychecker bdmap indent2em lineheight formatpainter powerpaste advlist anchor autolink autoresize autosave charmap code codesample directionality emoticons fullpage fullscreen help hr image imagetools importcss insertdatetime legacyoutput link lists media nonbreaking noneditable pagebreak preview print quickbars save searchreplace spellchecker tabfocus table template textpattern toc visualblocks visualchars wordcount",
+					"enclosure a11ychecker bdmap indent2em lineheight formatpainter powerpaste advlist anchor autolink autoresize autosave charmap code codesample directionality emoticons fullscreen help hr image imagetools importcss insertdatetime link lists media nonbreaking noneditable pagebreak preview print quickbars save searchreplace spellchecker tabfocus table template textpattern toc visualblocks visualchars wordcount",
 				toolbar:
-					"undo redo | formatselect | formatpainter a11ycheck | fontselect | fontsizeselect | bold italic underline strikethrough subscript superscript removeformat | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent indent2em | lists image media emoticons link charmap codesample table | bdmap lineheight enclosure | fullscreen",
+					"undo redo | formatselect | formatpainter a11ycheck | fontselect | fontsizeselect | bold italic underline strikethrough subscript superscript removeformat | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent indent2em  lineheight | lists image media emoticons link charmap codesample table | bdmap enclosure | fullscreen",
 				setup: function (editor) {
 					console.log(`ID为:${editor.id}的编辑器即将初始化.`);
 				},
@@ -203,7 +259,24 @@ export default {
 			},
 		};
 	},
+	watch: {
+		value() {
+			this.html = this.value;
+		},
+		html(newValues) {
+			this.$emit("input", newValues);
+			this.$emit("change", newValues);
+		},
+	},
+	created() {
+		this.setInt();
+	},
 	methods: {
+		setInt() {
+			this.html = this.value;
+			this.init.readonly = this.readonly || this.disabled;
+			this.init.height = this.height;
+		},
 		imagesUploadHandlerfunction() {
 			// eslint-disable-next-line no-unused-vars
 			// return function(blobInfo, success, failure) {

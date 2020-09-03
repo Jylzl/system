@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-13 11:20:24
+ * @lastTime: 2020-09-03 09:03:16
  -->
 <template>
 	<el-container>
@@ -248,6 +248,11 @@
 							<el-input v-model="menuForm.url" maxlength="200" placeholder="请输入路由路径"></el-input>
 						</el-form-item>
 					</el-col>
+					<el-col :span="menuDialog.span" v-if="menuForm.type == 1 || menuForm.type == 2">
+						<el-form-item label="重定向路径">
+							<el-input v-model="menuForm.rurl" maxlength="200" placeholder="请输入重定向路径"></el-input>
+						</el-form-item>
+					</el-col>
 					<el-col :span="menuDialog.span" v-if="menuForm.type == 3">
 						<el-form-item label="权限标识" prop="perms">
 							<el-input v-model="menuForm.perms" maxlength="200" placeholder="请输入权限标识"></el-input>
@@ -363,6 +368,7 @@ export default {
 				name: "",
 				title: "",
 				url: "",
+				rurl: "",
 				perms: "",
 				visible: 1,
 				display: 1,
@@ -445,6 +451,7 @@ export default {
 				name: "",
 				title: "",
 				url: "",
+				rurl: "",
 				perms: "",
 				visible: 1,
 				display: 1,

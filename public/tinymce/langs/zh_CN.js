@@ -386,5 +386,9 @@ tinymce.addI18n('zh_CN', {
     "Whole words": "\u5168\u5b57\u5339\u914d",
     "Spellcheck": "\u62fc\u5199\u68c0\u67e5",
     "Caption": "\u6807\u9898",
-    "Insert template": "\u63d2\u5165\u6a21\u677f"
+    "Insert template": "\u63d2\u5165\u6a21\u677f",
+    "Repair": "\u4fee\u6539",
+    "Accessibility Checker": "\u8f85\u52a9\u529f\u80fd\u68c0\u67e5\u5668",
+    "No accessibility issues detected": "\u672a\u68c0\u6d4b\u5230\u8f85\u52a9\u529f\u80fd\u95ee\u9898",
+    "Alternative description": "\u66ff\u4ee3\u8bf4\u660e\u6587\u5b57"
 });
