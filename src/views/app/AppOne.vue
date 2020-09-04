@@ -3,11 +3,11 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-10 14:05:07
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-03 18:14:58
+ * @lastTime: 2020-09-04 18:19:14
 --> 
 <template>
 	<div>
-		<cms-tinymce v-model="value"></cms-tinymce>
+		<cms-tinymce v-model="value" :options="options"></cms-tinymce>
 	</div>
 </template>
 
@@ -20,6 +20,9 @@ export default {
 	data() {
 		return {
 			value: "<p>111111</p>",
+			options: {
+				height: 600,
+			},
 		};
 	},
 };

@@ -549,6 +549,24 @@ htmledit_views img.mathcode {
   text-align-last: justify;
 }
 
+.htmledit_views img.text-align-left,
+.htmledit_views video.text-align-left {
+  display: block;
+  float: left;
+}
+
+.htmledit_views img.text-align-center,
+.htmledit_views video.text-align-center {
+  display: block;
+  margin: 0 auto;
+}
+
+.htmledit_views img.text-align-right,
+.htmledit_views video.text-align-right {
+  display: block;
+  float: right;
+}
+
 .htmledit_views .font-weight-bold {
   font-weight: bold;
 }
@@ -559,4 +577,8 @@ htmledit_views img.mathcode {
 
 .htmledit_views .text-decoration-underline {
   text-decoration: underline;
+}
+
+.htmledit_views .text-decoration-line-through {
+  text-decoration: line-through;
 }

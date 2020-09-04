@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-09-17 11:46:15
  * @LastAuthor: lizlong
- * @lastTime: 2019-09-18 11:33:11
+ * @lastTime: 2020-09-04 17:07:24
  */
 tinymce.PluginManager.add('bdmap', function (editor, url) {
 	var pluginName = '插入百度地图';
@@ -25,20 +25,20 @@ tinymce.PluginManager.add('bdmap', function (editor, url) {
 			//height: 500,
 			url: iframe1,
 			buttons: [{
-					type: 'cancel',
-					text: 'Close'
-				},
-				{
-					type: 'custom',
-					text: 'Save',
-					name: 'save',
-					primary: true
-				},
+				type: 'cancel',
+				text: 'Close'
+			},
+			{
+				type: 'custom',
+				text: 'Save',
+				name: 'save',
+				primary: true
+			},
 			],
 			onAction: function (api, details) {
 				switch (details.name) {
 					case 'save':
-						html = '<iframe src="' + baseURL + '/plugins/bdmap/bd.html?center=' + tinymceLng + '%2C' + tinymceLat + '&zoom=14&width=' + (bdmap_width(editor) - 2) + '&height=' + (bdmap_height(editor) - 2) + '" frameborder="0" style="width:' + bdmap_width(editor) + 'px;height:' + bdmap_height(editor) + 'px;">';
+						html = '<iframe src="' + baseURL + '/plugins/bdmap/bd.html?center=' + tinymceLng + '%2C' + tinymceLat + '&zoom=14&width=' + (bdmap_width(editor) - 2) + '&height=' + (bdmap_height(editor) - 2) + '" frameborder="0" style="width:' + bdmap_width(editor) + 'px;height:' + bdmap_height(editor) + 'px; display:block; margin: 0 auto;">';
 						editor.insertContent(html);
 						api.close();
 						break;
