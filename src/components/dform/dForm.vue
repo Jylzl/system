@@ -1,9 +1,9 @@
 <!--
- * @description: Description
+ * @description: 动态表单设计器
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-16 17:18:15
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-04 21:44:04
+ * @lastTime: 2020-09-08 09:50:51
  -->
 <template>
 	<el-form
@@ -23,7 +23,6 @@
 		</el-row>
 	</el-form>
 </template>
-
 
 <script>
 import dCascader from "@/components/dform/field/dCascader.vue";

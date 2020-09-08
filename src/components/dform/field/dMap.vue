@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-16 09:13:01
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-17 16:19:43
+ * @lastTime: 2020-09-08 09:49:44
  -->
 <template>
 	<div>
@@ -65,14 +65,14 @@ export default {
 			place: {
 				lng: 114.304774,
 				lat: 30.592376,
-				address: "湖北省武汉市江岸区一元街街道洞庭街武汉市人民政府"
+				address: "湖北省武汉市江岸区一元街街道洞庭街武汉市人民政府",
 			},
 			dialogVisible: false,
 			center: [114.304774, 30.592376],
 			zoom: 12,
 			searchOption: {
 				city: "",
-				citylimit: true
+				citylimit: true,
 			},
 			address: "",
 			loaded: false,
@@ -80,22 +80,22 @@ export default {
 			markers: [
 				{
 					position: [114.304774, 30.592376],
-					address: "湖北省武汉市江岸区一元街街道洞庭街武汉市人民政府"
-				}
+					address: "湖北省武汉市江岸区一元街街道洞庭街武汉市人民政府",
+				},
 			],
 			events: {
 				// eslint-disable-next-line no-unused-vars
-				init: o => {
+				init: (o) => {
 					// eslint-disable-next-line no-undef
-					AMap.service("AMap.Autocomplete", function() {});
+					AMap.service("AMap.Autocomplete", function () {});
 					// eslint-disable-next-line no-undef
-					AMap.service("AMap.ToolBar", function() {});
+					AMap.service("AMap.ToolBar", function () {});
 					// eslint-disable-next-line no-undef
-					AMap.service("AMap.Geolocation", function() {});
+					AMap.service("AMap.Geolocation", function () {});
 				},
 				moveend: () => {},
 				zoomchange: () => {},
-				click: e => {
+				click: (e) => {
 					let { lng, lat } = e.lnglat;
 					self.place.lng = lng;
 					self.place.lat = lat;
@@ -103,21 +103,21 @@ export default {
 					this.center = [lng, lat];
 
 					// eslint-disable-next-line no-undef
-					AMap.service("AMap.Geocoder", function() {
+					AMap.service("AMap.Geocoder", function () {
 						// eslint-disable-next-line no-undef
 						var geocoder = new AMap.Geocoder({
 							radius: 1000,
 							extensions: "all",
-							city: "010"
+							city: "010",
 						});
-						geocoder.getAddress([lng, lat], function(
+						geocoder.getAddress([lng, lat], function (
 							status,
 							result
 						) {
 							if (status === "complete" && result.info === "OK") {
 								self.markers.push({
 									position: [lng, lat],
-									address: result.regeocode.formattedAddress
+									address: result.regeocode.formattedAddress,
 								});
 
 								self.place.address =
@@ -126,7 +126,7 @@ export default {
 							}
 						});
 					});
-				}
+				},
 			},
 			plugin: [
 				"ToolBar",
@@ -135,8 +135,8 @@ export default {
 					events: {
 						init(instance) {
 							console.log(instance);
-						}
-					}
+						},
+					},
 				},
 				{
 					pName: "Geolocation",
@@ -152,10 +152,10 @@ export default {
 									self.$nextTick();
 								}
 							});
-						}
-					}
-				}
-			]
+						},
+					},
+				},
+			],
 		};
 	},
 	methods: {
@@ -163,24 +163,24 @@ export default {
 			let latSum = 0;
 			let lngSum = 0;
 			if (pois.length > 0) {
-				pois.forEach(poi => {
+				pois.forEach((poi) => {
 					let { lng, lat } = poi;
 					lngSum += lng;
 					latSum += lat;
 					this.markers.push({
 						position: [poi.lng, poi.lat],
-						address: poi.address
+						address: poi.address,
 					});
 				});
 				let center = {
 					lng: lngSum / pois.length,
-					lat: latSum / pois.length
+					lat: latSum / pois.length,
 				};
 				this.center = [center.lng, center.lat];
 				this.zoom = 19;
 			}
-		}
-	}
+		},
+	},
 };
 </script>
 

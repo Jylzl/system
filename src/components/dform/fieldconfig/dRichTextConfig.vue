@@ -141,20 +141,20 @@ export default {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		formConfig: {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		components: {
 			type: Array,
 			default() {
 				return [];
-			}
-		}
+			},
+		},
 	},
 	data() {
 		return {
@@ -165,61 +165,61 @@ export default {
 			regexOptions: [
 				{
 					value: "notRequired",
-					label: "标识必填字段"
+					label: "标识必填字段",
 				},
 				{
 					value: "required",
-					label: "普通文本"
+					label: "普通文本",
 				},
 				{
 					value: "checkChinese",
-					label: "非中文字符串"
+					label: "非中文字符串",
 				},
 				{
 					value: "englishStr",
-					label: "英文字符串"
+					label: "英文字符串",
 				},
 				{
 					value: "string",
-					label: "数字或英文"
+					label: "数字或英文",
 				},
 				{
 					value: "number",
-					label: "整数"
+					label: "整数",
 				},
 				{
 					value: "double",
-					label: "浮点数"
+					label: "浮点数",
 				},
 				{
 					value: "email",
-					label: "邮箱"
+					label: "邮箱",
 				},
 				{
 					value: "mobile",
-					label: "手机号码"
+					label: "手机号码",
 				},
 				{
 					value: "isURL",
-					label: "url地址"
+					label: "url地址",
 				},
 				{
 					value: "pswd",
-					label: "8-16位英文数字密码"
+					label: "8-16位英文数字密码",
 				},
 				{
 					value: "0",
-					label: "其他"
-				}
-			]
+					label: "其他",
+				},
+			],
 		};
 	},
 	computed: {
 		componentType() {
 			let components = [];
-			this.components.map(items => {
+			this.components.map((items) => {
 				if (items.children) {
-					items.children.map(item => {
+					items.children.map((item) => {
 						components.push(item);
 					});
 				}
@@ -234,16 +234,16 @@ export default {
 				typeOptions = [
 					{
 						label: "Tinymce编辑器",
-						value: "cms-tinymce"
+						value: "cms-tinymce",
 					},
 					{
 						label: "Neditor编辑器",
-						value: "cms-neditor"
-					}
+						value: "cms-neditor",
+					},
 				];
 			}
 			return typeOptions;
-		}
+		},
 	},
 	watch: {
 		config: {
@@ -252,8 +252,8 @@ export default {
 				this.o_config = val;
 			},
 			immediate: true,
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	filters: {},
 	methods: {
@@ -264,7 +264,7 @@ export default {
 		componentChange() {
 			delete this.o_config.type;
 			this.$emit("change", this.o_config);
-		}
-	}
+		},
+	},
 };
 </script>

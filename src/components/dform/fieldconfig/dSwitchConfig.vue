@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-12 22:47:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-21 08:44:10
+ * @lastTime: 2020-09-08 09:39:07
  -->
 <template>
 	<div class="field-attribute">
@@ -26,11 +26,6 @@
 						:label="item.label"
 						:value="item.component"
 					></el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item label="可选组件" v-if="a_type.length">
-				<el-select v-model="o_config.type" placeholder="请选择可选类型" @change="$emit('change', o_config)">
-					<el-option v-for="(item,index) in a_type" :key="index" :label="item.label" :value="item.value"></el-option>
 				</el-select>
 			</el-form-item>
 			<el-form-item label="字段标题">
@@ -145,20 +140,20 @@ export default {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		formConfig: {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		components: {
 			type: Array,
 			default() {
 				return [];
-			}
-		}
+			},
+		},
 	},
 	data() {
 		return {
@@ -169,93 +164,67 @@ export default {
 			regexOptions: [
 				{
 					value: "notRequired",
-					label: "标识必填字段"
+					label: "标识必填字段",
 				},
 				{
 					value: "required",
-					label: "普通文本"
+					label: "普通文本",
 				},
 				{
 					value: "checkChinese",
-					label: "非中文字符串"
+					label: "非中文字符串",
 				},
 				{
 					value: "englishStr",
-					label: "英文字符串"
+					label: "英文字符串",
 				},
 				{
 					value: "string",
-					label: "数字或英文"
+					label: "数字或英文",
 				},
 				{
 					value: "number",
-					label: "整数"
+					label: "整数",
 				},
 				{
 					value: "double",
-					label: "浮点数"
+					label: "浮点数",
 				},
 				{
 					value: "email",
-					label: "邮箱"
+					label: "邮箱",
 				},
 				{
 					value: "mobile",
-					label: "手机号码"
+					label: "手机号码",
 				},
 				{
 					value: "isURL",
-					label: "url地址"
+					label: "url地址",
 				},
 				{
 					value: "pswd",
-					label: "8-16位英文数字密码"
+					label: "8-16位英文数字密码",
 				},
 				{
 					value: "0",
-					label: "其他"
-				}
-			]
+					label: "其他",
+				},
+			],
 		};
 	},
 	computed: {
 		componentType() {
 			let components = [];
-			this.components.map(items => {
+			this.components.map((items) => {
 				if (items.children) {
-					items.children.map(item => {
+					items.children.map((item) => {
 						components.push(item);
 					});
 				}
 			});
 			return components;
 		},
-		a_type() {
-			let typeOptions = [];
-			if (this.o_config.typeOptions) {
-				typeOptions = this.o_config.typeOptions;
-			} else {
-				typeOptions = [
-					{
-						label: "单行文本框",
-						value: "text"
-					},
-					{
-						label: "多行文本框",
-						value: "textarea"
-					},
-					{
-						label: "邮箱文本框",
-						value: "email"
-					},
-					{
-						label: "密码文本框",
-						value: "password"
-					}
-				];
-			}
-			return typeOptions;
-		}
 	},
 	watch: {
 		config: {
@@ -264,15 +233,15 @@ export default {
 				this.o_config = val;
 			},
 			immediate: true,
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	filters: {},
 	methods: {
 		checkTypeChange() {
 			this.o_config.rules = [va[this.s_checkType](this.o_config.label)];
 			this.$emit("change", this.o_config);
-		}
-	}
+		},
+	},
 };
 </script>

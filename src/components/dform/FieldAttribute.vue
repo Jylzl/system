@@ -1,9 +1,9 @@
 <!--
- * @description: Description
+ * @description: 字段属性配置
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-19 08:30:41
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-25 11:25:35
+ * @lastTime: 2020-09-08 09:51:39
  -->
 <template>
 	<component
@@ -52,21 +52,21 @@ export default {
 		"d-switch-config": dSwitchConfig,
 		"d-time-config": dTimeConfig,
 		"d-upload-config": dUploadConfig,
-		"d-config": dConfig
+		"d-config": dConfig,
 	},
 	props: {
 		config: {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		components: {
 			type: Array,
 			default() {
 				return [];
-			}
-		}
+			},
+		},
 	},
 	watch: {
 		config: {
@@ -74,8 +74,8 @@ export default {
 				this.o_config = val;
 			},
 			immediate: true,
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	created() {},
 	data() {
@@ -86,14 +86,14 @@ export default {
 				labelPosition: "right",
 				labelWidth: "84px",
 				labelSuffix: "：",
-				size: "small"
-			}
+				size: "small",
+			},
 		};
 	},
 	methods: {
 		change() {
 			this.$emit("change", this.o_config);
-		}
-	}
+		},
+	},
 };
 </script>

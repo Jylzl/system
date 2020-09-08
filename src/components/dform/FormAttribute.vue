@@ -1,3 +1,10 @@
+<!--
+ * @description: 表单属性配置
+ * @author: lizlong<94648929@qq.com>
+ * @since: 2020-06-12 08:42:21
+ * @LastAuthor: lizlong
+ * @lastTime: 2020-09-08 10:24:36
+-->
 <template>
 	<div class="form-attribute">
 		<el-form label-position="left" label-width="84px" :model="o_config" size="small" label-suffix="：">
@@ -23,14 +30,6 @@
 						:value="item.value"
 					></el-option>
 				</el-select>
-			</el-form-item>
-			<el-form-item label="字段前缀">
-				<el-input
-					v-model="o_config.fieldPrefix"
-					placeholder="请输入字段前缀"
-					@input="$emit('input', o_config)"
-					clearable
-				></el-input>
 			</el-form-item>
 			<el-form-item label="标签位置">
 				<el-select
@@ -132,7 +131,6 @@ export default {
 					formSize: "medium", //表单尺寸
 					formCheck: true, //表单校验
 					fieldFormat: "other", //字段格式
-					fieldPrefix: "attr_", //字段前缀
 					labelPosition: "right", //标签位置
 					labelWidth: "120", //标签宽度
 					labelSuffix: ":", //标签后缀
@@ -142,10 +140,10 @@ export default {
 					resetShow: true, //按钮显示
 					btnPosition: "left", //按钮位置
 					submitText: "提交", //提交文字
-					resetText: "重置" //重置文字
+					resetText: "重置", //重置文字
 				};
-			}
-		}
+			},
+		},
 	},
 	data() {
 		return {
@@ -154,63 +152,63 @@ export default {
 			positionOptions: [
 				{
 					value: "left",
-					label: "居左"
+					label: "居左",
 				},
 				{
 					value: "center",
-					label: "居中"
+					label: "居中",
 				},
 				{
 					value: "right",
-					label: "居右"
-				}
+					label: "居右",
+				},
 			],
 			sizeOptions: [
 				{
 					value: "large",
-					label: "大"
+					label: "大",
 				},
 				{
 					value: "medium",
-					label: "中"
+					label: "中",
 				},
 				{
 					value: "small",
-					label: "小"
+					label: "小",
 				},
 				{
 					value: "mini",
-					label: "超小"
-				}
+					label: "超小",
+				},
 			],
 			alignmentOptions: [
 				{
 					value: "left",
-					label: "左对齐"
+					label: "左对齐",
 				},
 				{
 					value: "right",
-					label: "右对齐"
+					label: "右对齐",
 				},
 				{
 					value: "top",
-					label: "顶部对齐"
-				}
+					label: "顶部对齐",
+				},
 			],
 			fieldFormatOptions: [
 				{
 					value: "hump",
-					label: "驼峰式"
+					label: "驼峰式",
 				},
 				{
 					value: "underline",
-					label: "下划线式"
+					label: "下划线式",
 				},
 				{
 					value: "other",
-					label: "自定义格式"
-				}
-			]
+					label: "自定义格式",
+				},
+			],
 		};
 	},
 	watch: {
@@ -219,13 +217,13 @@ export default {
 				this.o_config = val;
 			},
 			immediate: true,
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	methods: {
 		fieldFormatChange() {
 			let txt = "";
-			this.fieldFormatOptions.map(item => {
+			this.fieldFormatOptions.map((item) => {
 				if (item.value == this.o_config.fieldFormat) {
 					txt = item.label;
 				}
@@ -233,7 +231,7 @@ export default {
 			this.$confirm(`是否将所有字段名称转换成${txt}, 继续?`, "提示", {
 				confirmButtonText: "确定",
 				cancelButtonText: "取消",
-				type: "warning"
+				type: "warning",
 			})
 				.then(() => {
 					// 成功的时候更新备份
@@ -241,7 +239,7 @@ export default {
 					this.$emit("change", this.o_config);
 					this.$message({
 						type: "success",
-						message: "换成成功!"
+						message: "换成成功!",
 					});
 				})
 				.catch(() => {
@@ -249,10 +247,10 @@ export default {
 					this.o_config.fieldFormat = this.s_fieldFormat;
 					this.$message({
 						type: "info",
-						message: "已取消换成"
+						message: "已取消换成",
 					});
 				});
-		}
-	}
+		},
+	},
 };
 </script>

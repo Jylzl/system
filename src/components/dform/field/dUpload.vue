@@ -70,51 +70,51 @@ export default {
 	props: {
 		action: {
 			type: String,
-			default: ""
+			default: "",
 		},
 		multiple: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		name: {
 			type: String,
-			default: "file"
+			default: "file",
 		},
 		withCredentials: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		showFileList: {
 			type: Boolean,
-			default: true
+			default: true,
 		},
 		drag: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		accept: {
 			type: String,
-			default: "*"
+			default: "*",
 		},
 		size: {
 			type: Number,
-			default: 1
+			default: 1,
 		},
 		listType: {
 			type: String,
-			default: "picture-card"
+			default: "picture-card",
 		},
 		autoUpload: {
 			type: Boolean,
-			default: true
+			default: true,
 		},
 		limit: {
 			type: Number,
-			default: 10
+			default: 10,
 		},
 		disabled: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		fileList: {
 			type: Array,
@@ -123,16 +123,16 @@ export default {
 					{
 						name: "food.jpeg",
 						url:
-							"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+							"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
 					},
 					{
 						name: "food2.jpeg",
 						url:
-							"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-					}
+							"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+					},
 				];
-			}
-		}
+			},
+		},
 	},
 	data() {
 		return {
@@ -153,8 +153,8 @@ export default {
 			dialogVisible: false,
 			srcList: [
 				"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-				"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-			]
+				"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
+			],
 		};
 	},
 	methods: {
@@ -208,25 +208,25 @@ export default {
 				{
 					confirmButtonText: "确定",
 					cancelButtonText: "取消",
-					type: "warning"
+					type: "warning",
 				}
 			)
 				.then(() => {
 					this.$message({
 						type: "success",
-						message: "移除成功!"
+						message: "移除成功!",
 					});
 				})
 				.catch(() => {
 					this.$message({
 						type: "info",
-						message: "已取消移除"
+						message: "已取消移除",
 					});
 				});
 		},
 		// 覆盖默认的上传行为，可以自定义上传的实现
-		fu_httpRequest() {}
-	}
+		fu_httpRequest() {},
+	},
 };
 </script>
 

@@ -29,23 +29,23 @@ export default {
 			type: Object,
 			default() {
 				return {};
-			}
-		}
+			},
+		},
 	},
 	watch: {
 		data: {
 			handler(value) {
 				this.o_data = value;
 			},
-			immediate: true
-		}
+			immediate: true,
+		},
 	},
 	data() {
 		return {
-			o_data: this.data
+			o_data: this.data,
 		};
 	},
-	methods: {}
+	methods: {},
 };
 </script>
 

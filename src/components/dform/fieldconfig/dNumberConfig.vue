@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-12 22:47:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-21 08:46:17
+ * @lastTime: 2020-09-08 09:47:50
  -->
 <template>
 	<div class="field-attribute">
@@ -176,20 +176,20 @@ export default {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		formConfig: {
 			type: Object,
 			default() {
 				return {};
-			}
+			},
 		},
 		components: {
 			type: Array,
 			default() {
 				return [];
-			}
-		}
+			},
+		},
 	},
 	data() {
 		return {
@@ -200,39 +200,39 @@ export default {
 			regexOptions: [
 				{
 					value: "required",
-					label: "必填字段"
+					label: "必填字段",
 				},
 				{
 					value: "notRequired",
-					label: "假必填字段"
+					label: "假必填字段",
 				},
 				{
 					value: "number",
-					label: "整数"
+					label: "整数",
 				},
 				{
 					value: "double",
-					label: "浮点数"
+					label: "浮点数",
 				},
 				{
 					value: "0",
-					label: "其他"
-				}
-			]
+					label: "其他",
+				},
+			],
 		};
 	},
 	computed: {
 		componentType() {
 			let components = [];
-			this.components.map(items => {
+			this.components.map((items) => {
 				if (items.children) {
-					items.children.map(item => {
+					items.children.map((item) => {
 						components.push(item);
 					});
 				}
 			});
 			return components;
-		}
+		},
 	},
 	watch: {
 		config: {
@@ -241,8 +241,8 @@ export default {
 				this.o_config = val;
 			},
 			immediate: true,
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	filters: {},
 	created() {},
@@ -254,7 +254,7 @@ export default {
 		componentChange() {
 			delete this.o_config.type;
 			this.$emit("change", this.o_config);
-		}
-	}
+		},
+	},
 };
 </script>
