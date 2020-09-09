@@ -3,14 +3,17 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-06 11:02:30
+ * @lastTime: 2020-09-09 11:38:39
 -->
 <template>
 	<div class="perf">
 		<div>
 			<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
 				<div slot="header" class="clearfix w100">
-					<span>服务状态(2020-08-06 09:07)</span>
+					<span>
+						服务状态
+						<span style="font-size:12px; color:#999;">(2020-08-06 09:07)</span>
+					</span>
 					<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
 				</div>
 				<div class="canvas-box">

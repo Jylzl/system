@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-07-02 10:11:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-08 15:20:34
+ * @lastTime: 2020-09-09 09:13:41
 --> 
 
 <template>
@@ -12,7 +12,18 @@
 			<el-col :span="6" class="h100">
 				<div class="grid-content bg-purple h100">
 					<el-card class="box-card h100">
-						<div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
+						<div class="user-header">
+							<div class="user-header-left">
+								<el-avatar
+									src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+									:size="100"
+								></el-avatar>
+							</div>
+							<div class="user-header-right">
+								<h2>张三</h2>
+								<p>我是一个前端小白</p>
+							</div>
+						</div>
 					</el-card>
 				</div>
 			</el-col>
@@ -49,7 +60,7 @@ export default {
 	data() {
 		return {
 			value: new Date(),
-			activeName: "schedule"
+			activeName: "schedule",
 		};
 	},
 	created() {},
@@ -57,12 +68,35 @@ export default {
 		if (this.$route.query.type && this.$route.query.type != undefined) {
 			this.activeName = this.$route.query.type;
 		}
-	}
+	},
 };
 </script>
 
 <style scoped>
 .personal-box {
 	background-color: #f7f7f9;
+}
+
+.user-header {
+	display: flex;
+	justify-items: center;
+	justify-content: flex-start;
+}
+
+.user-header .user-header-right {
+	box-sizing: border-box;
+	padding: 10px 0 10px 40px;
+}
+
+.user-header .user-header-right h2 {
+	line-height: 48px;
+	font-size: 28px;
+	color: #666;
+}
+
+.user-header .user-header-right p {
+	line-height: 32px;
+	font-size: 18px;
+	color: #999;
 }
 </style>
