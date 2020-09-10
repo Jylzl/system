@@ -218,6 +218,16 @@ const routes = [
                 path: '/app/six',
                 name: 'six',
                 component: ansycRoutes.get('six')
+            }, {
+                meta: {
+                    title: 'PDF生成',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/seven',
+                name: 'seven',
+                component: ansycRoutes.get('seven')
             }]
     },
     {
