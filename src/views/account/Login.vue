@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-14 11:35:15
+ * @lastTime: 2020-09-11 18:30:57
  -->
 <template>
 	<div class="land-box">
@@ -526,7 +526,7 @@ export default {
 						this.restLand();
 						// 登录成功跳转主页
 						this.$router.push({
-							name: "Work",
+							name: "work",
 						});
 					} else {
 						this.landFail();

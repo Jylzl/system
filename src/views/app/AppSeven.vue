@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-09-10 19:59:33
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-11 00:48:54
+ * @lastTime: 2020-09-11 09:52:45
 -->
 <template>
 	<div>
@@ -20,9 +20,9 @@ export default {
 		return {
 			docDefinition: {
 				pageSize: "A4",
-				defaultStyle: {
-					font: "方正姚体",
-				},
+				// defaultStyle: {
+				// 	font: "",
+				// },
 				content: [
 					{
 						layout: "lightHorizontalLines", // optional
@@ -76,12 +76,6 @@ export default {
 					bold: "Roboto-Medium.ttf",
 					italics: "Roboto-Italic.ttf",
 					bolditalics: "Roboto-Italic.ttf",
-				},
-				方正姚体: {
-					normal: "FZYTK.TTF",
-					bold: "FZYTK.TTF",
-					italics: "FZYTK.TTF",
-					bolditalics: "FZYTK.TTF",
 				},
 			};
 			pdfMake.createPdf(this.docDefinition).open();

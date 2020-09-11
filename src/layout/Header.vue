@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 10:48:45
+ * @lastTime: 2020-09-11 18:30:18
  -->
 <template>
 	<div class="header-box">
@@ -200,7 +200,7 @@ export default {
 						if (res.code == this.$code.success) {
 							this.successMessage("退出成功");
 							this.$router.push({
-								name: "Login",
+								name: "login",
 							});
 						} else {
 							this.errorMessage("退出失败");
@@ -290,7 +290,7 @@ export default {
 		//前往消息中心
 		toNews() {
 			this.$router.push({
-				name: "Personal",
+				name: "personal",
 				query: {
 					type: "news",
 				},
