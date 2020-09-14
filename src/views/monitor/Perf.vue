@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-09 11:38:39
+ * @lastTime: 2020-09-14 10:23:04
 -->
 <template>
 	<div class="perf">
@@ -55,20 +55,49 @@
 		<div class="m-t-20">
 			<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
 				<div slot="header" class="clearfix w100">
-					<span>服务状态</span>
+					<span>访问量</span>
 					<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
 				</div>
-				<div class="charts-box">1</div>
+				<div class="charts-box">
+					<div id="container7"></div>
+				</div>
 			</el-card>
 		</div>
 	</div>
 </template>
 
 <script>
-import { Gauge } from "@antv/g2plot";
+import { Line, Gauge } from "@antv/g2plot";
 export default {
 	data() {
-		return {};
+		return {
+			data7: [
+				{ year: "00:00", value: 3 },
+				{ year: "01:00", value: 4 },
+				{ year: "02:00", value: 5 },
+				{ year: "03:00", value: 5 },
+				{ year: "04:00", value: 4 },
+				{ year: "05:00", value: 6 },
+				{ year: "06:00", value: 7 },
+				{ year: "07:00", value: 9 },
+				{ year: "08:00", value: 9 },
+				{ year: "09:00", value: 5 },
+				{ year: "10:00", value: 6 },
+				{ year: "11:00", value: 4 },
+				{ year: "12:00", value: 7 },
+				{ year: "13:00", value: 9 },
+				{ year: "14:00", value: 5 },
+				{ year: "15:00", value: null },
+				{ year: "16:00", value: null },
+				{ year: "17:00", value: null },
+				{ year: "18:00", value: 4 },
+				{ year: "19:00", value: 7 },
+				{ year: "20:00", value: 4 },
+				{ year: "21:00", value: 9 },
+				{ year: "22:00", value: 4 },
+				{ year: "23:00", value: 6 },
+			],
+		};
 	},
 	mounted() {
 		this.chart1();
@@ -77,6 +106,7 @@ export default {
 		this.chart4();
 		this.chart5();
 		this.chart6();
+		this.chart7();
 	},
 	methods: {
 		chart1() {
@@ -142,7 +172,7 @@ export default {
 				title: {
 					visible: true,
 					alignTo: "middle",
-					text: "内存使用率",
+					text: "内存使用量",
 					style: {
 						fill: "#666",
 						fontSize: 15,
@@ -152,7 +182,7 @@ export default {
 				statistic: {
 					visible: true,
 					position: ["50%", "100%"],
-					text: "内存使用率",
+					text: "内存使用量",
 					color: "#999",
 					size: 12,
 				},
@@ -171,7 +201,7 @@ export default {
 				title: {
 					visible: true,
 					alignTo: "middle",
-					text: "磁盘使用率",
+					text: "磁盘使用量",
 					style: {
 						fill: "#666",
 						fontSize: 15,
@@ -181,7 +211,7 @@ export default {
 				statistic: {
 					visible: true,
 					position: ["50%", "100%"],
-					text: "磁盘使用率",
+					text: "磁盘使用量",
 					color: "#999",
 					size: 12,
 				},
@@ -198,7 +228,7 @@ export default {
 				title: {
 					visible: true,
 					alignTo: "middle",
-					text: "磁盘使用率",
+					text: "磁盘使用量",
 					style: {
 						fill: "#666",
 						fontSize: 15,
@@ -208,7 +238,7 @@ export default {
 				statistic: {
 					visible: true,
 					position: ["50%", "100%"],
-					text: "磁盘使用率",
+					text: "磁盘使用量",
 					color: "#999",
 					size: 12,
 				},
@@ -225,7 +255,7 @@ export default {
 				title: {
 					visible: true,
 					alignTo: "middle",
-					text: "磁盘使用率",
+					text: "磁盘使用量",
 					style: {
 						fill: "#666",
 						fontSize: 15,
@@ -235,7 +265,7 @@ export default {
 				statistic: {
 					visible: true,
 					position: ["50%", "100%"],
-					text: "磁盘使用率",
+					text: "磁盘使用量",
 					color: "#999",
 					size: 12,
 				},
@@ -246,6 +276,34 @@ export default {
 				rangeSize: 6,
 			});
 			gaugePlot.render();
+		},
+		chart7() {
+			const data = this.data7;
+			const linePlot = new Line("container7", {
+				title: {
+					visible: false,
+					text: "访问量",
+					style: {
+						fill: "#666",
+						fontSize: 15,
+					},
+				},
+				data,
+				xField: "year",
+				yField: "value",
+				lineStyle: {
+					stroke: "#1476d1",
+					lineWidth: 2,
+					lineDash: [4, 5],
+					strokeOpacity: 0.7,
+					shadowColor: "#1476d1",
+					shadowBlur: 10,
+					shadowOffsetX: 5,
+					shadowOffsetY: 5,
+					cursor: "pointer",
+				},
+			});
+			linePlot.render();
 		},
 	},
 };
@@ -264,5 +322,9 @@ export default {
 
 .canvas-chart {
 	height: 200px;
+}
+
+.canvas-chart7 {
+	height: 480px;
 }
 </style>

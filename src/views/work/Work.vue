@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-05 12:51:04
+ * @lastTime: 2020-09-14 12:37:34
  -->
 <template>
 	<div class="work h100">
@@ -283,7 +283,6 @@ export default {
 					cursor: "pointer",
 				},
 			});
-
 			linePlot.render();
 		},
 		chart1() {

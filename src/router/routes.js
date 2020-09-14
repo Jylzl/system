@@ -21,7 +21,7 @@ const routes = [
         meta: {
             title: '欢迎页',
             hidden: false,
-            leaf: false,
+            leaf: true,
             iconCls: "el-icon-data-analysis"
         },
         path: '/',
