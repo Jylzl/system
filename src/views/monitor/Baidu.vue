@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-12 14:35:17
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-14 15:23:01
+ * @lastTime: 2020-09-15 14:12:06
 --> 
 <template>
 	<div class="baidu">
@@ -142,7 +142,7 @@
 					</el-col>
 					<el-col :span="12" class="m-t-10">
 						<el-card class="custom-card table-grid-item" shadow="never" :body-style="{ padding: '0px' }">
-							<div slot="header" class="clearfix w100">Top10来源网站</div>
+							<div slot="header" class="clearfix w100">Top10搜索词</div>
 							<div class="table-data clearfix">
 								<table cellpadding="0" cellspacing="0" class="table-layout-01">
 									<thead>
@@ -722,7 +722,9 @@
 					<el-col :span="12" class="m-t-10">
 						<el-card class="custom-card table-grid-item" shadow="never" :body-style="{ padding: '0px' }">
 							<div slot="header" class="clearfix w100">访客属性-年龄分布</div>
-							<div class="table-data clearfix"></div>
+							<div class="canvas-box">
+								<div id="canvas2"></div>
+							</div>
 						</el-card>
 					</el-col>
 					<el-col :span="12" class="m-t-10">
@@ -742,7 +744,7 @@
 	</div>-->
 </template>
 <script>
-import { Area } from "@antv/g2plot";
+import { Area, Column } from "@antv/g2plot";
 export default {
 	data() {
 		return {
@@ -780,10 +782,37 @@ export default {
 				{ year: "22:00", value: 4 },
 				{ year: "23:00", value: 6 },
 			],
+			data2: [
+				{
+					type: "18岁以下",
+					sales: 38,
+				},
+				{
+					type: "18-24岁",
+					sales: 52,
+				},
+				{
+					type: "25-34岁",
+					sales: 61,
+				},
+				{
+					type: "35-44岁",
+					sales: 145,
+				},
+				{
+					type: "45-54岁",
+					sales: 48,
+				},
+				{
+					type: "55岁以上",
+					sales: 38,
+				},
+			],
 		};
 	},
 	mounted() {
 		this.chart1();
+		this.chart2();
 	},
 	methods: {
 		chart1() {
@@ -813,6 +842,30 @@ export default {
 			});
 			areaPlot.render();
 		},
+		chart2() {
+			const data = this.data2;
+			const columnPlot = new Column("canvas2", {
+				title: {
+					visible: false,
+					text: "访客属性-年龄分布 ",
+				},
+				color: "#4fa8f9",
+				forceFit: true,
+				data,
+				padding: "auto",
+				xField: "type",
+				yField: "sales",
+				meta: {
+					type: {
+						alias: "年龄段",
+					},
+					sales: {
+						alias: "占比",
+					},
+				},
+			});
+			columnPlot.render();
+		},
 	},
 };
 </script>
@@ -837,5 +890,12 @@ export default {
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
+}
+.canvas-box {
+	height: 333px;
+}
+.canvas-box #canvas1,
+.canvas-box #canvas2 {
+	height: 333px;
 }
 </style>

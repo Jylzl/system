@@ -745,7 +745,7 @@ div.title-bar span.normal {
 .table-grid .table-grid-item .table-data {
   box-sizing: border-box;
   padding: 16px 20px;
-  height: 400px;
+  height: 333px;
 }
 
 .table-grid .table-grid-item .table-layout-01 thead .td {
@@ -859,8 +859,8 @@ div.title-bar span.normal {
 }
 
 .visit-type-summary {
-  margin-top: 18px;
-  margin-bottom: 33px
+  margin-top: 12px;
+  margin-bottom: 16px
 }
 
 .visit-type-icon {

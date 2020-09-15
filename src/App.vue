@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 13:48:12
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 08:39:33
+ * @lastTime: 2020-09-15 11:43:58
  -->
 <template>
 	<div id="app">
@@ -64,5 +64,9 @@ body,
 
 .m-l-10 {
 	margin-left: 10px;
+}
+
+.mr-20 {
+	margin-right: 20px;
 }
 </style>

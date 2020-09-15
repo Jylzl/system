@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-14 11:35:36
+ * @lastTime: 2020-09-15 15:58:10
  */
 
 import {
@@ -20,7 +20,7 @@ import code from '@/code/code';
 import {
     routes
 } from '@/router/routes'
-import router from '@/router/index' //路由
+import router from '@/router' //路由
 
 //展示的用户信息
 const power = {

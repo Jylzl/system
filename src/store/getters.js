@@ -3,17 +3,12 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-06 15:54:05
- */
-/*
- * @Description: 
- * @Author: haoran
- * @Date: 2020-04-20 23:02:06
- * @LastEditors: OBKoro1
- * @LastEditTime: 2020-04-30 15:36:23
+ * @lastTime: 2020-09-15 15:59:19
  */
 
 const getters = {
+	visitedViews: state => state.tagsView.visitedViews,
+	cachedViews: state => state.tagsView.cachedViews,
 	getUser: state => state.power.user,
 	getRoutes: state => state.power.routes,
 	getLeftRouters: state => state.power.leftRouters,

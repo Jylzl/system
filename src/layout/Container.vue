@@ -3,7 +3,7 @@
  * @Author: lihaoran<94648929@qq.com>
  * @Date: 2020-04-30 14:53:22
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-09 17:13:45
+ * @lastTime: 2020-09-15 16:04:40
  -->
 <template>
 	<el-container class="h100">
@@ -30,7 +30,7 @@ export default {
 	components: {
 		Header,
 		Aside,
-		Main
+		Main,
 	},
 	data() {
 		return {};
@@ -40,9 +40,9 @@ export default {
 			return this.$store.getters.getLeftRouters.length > 0
 				? this.$store.getters.getCollapse.width + "px"
 				: "0px";
-		}
+		},
 	},
-	methods: {}
+	methods: {},
 };
 </script>
 <style>

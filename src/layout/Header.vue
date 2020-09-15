@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-11 18:30:18
+ * @lastTime: 2020-09-15 11:43:39
  -->
 <template>
 	<div class="header-box">
@@ -60,7 +60,7 @@
 				</el-popover>
 			</div>
 			<div class="message mr-20">
-				<el-button @click="toNews" type="text">
+				<el-button @click="$router.push({	name: 'personal', query: {type: 'news'}})" type="text">
 					<el-badge is-dot class="user-name">
 						<svg width="26" height="26">
 							<image xlink:href="@/assets/svg/news.svg" src="svg.png" width="26" height="26" />
@@ -81,7 +81,7 @@
 					</div>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item>
-							<el-link :underline="false">个人主页</el-link>
+							<el-link :underline="false" @click="$router.push({name:'personal'})">个人主页</el-link>
 						</el-dropdown-item>
 						<el-dropdown-item>
 							<el-button type="text" @click="loginOut">切换用户</el-button>
@@ -287,24 +287,11 @@ export default {
 				this.options = [];
 			}
 		},
-		//前往消息中心
-		toNews() {
-			this.$router.push({
-				name: "personal",
-				query: {
-					type: "news",
-				},
-			});
-		},
 	},
 };
 </script>
 
 <style  lang="scss" scoped>
-.mr-20 {
-	margin-right: 20px;
-}
-
 .header-box {
 	display: flex;
 	flex-direction: row;

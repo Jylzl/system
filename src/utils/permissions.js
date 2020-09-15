@@ -3,15 +3,13 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-18 17:54:54
+ * @lastTime: 2020-09-15 15:58:41
  */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import getPageTitle from '@/utils/get-page-title'
 import router from '@/router/index' //路由
-import {
-    store
-} from "@/store/index.js"; //存储仓库
+import store from "@/store/index.js"; //存储仓库
 import {
     setToken,
     getToken

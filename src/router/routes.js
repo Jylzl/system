@@ -229,6 +229,60 @@ const routes = [
                 name: 'seven',
                 component: ansycRoutes.get('seven')
             }]
+    }, {
+        meta: {
+            title: '特殊页面',
+            hidden: false,
+            leaf: false,
+            iconCls: "el-icon-star-off"
+        },
+        path: '/page',
+        name: 'page',
+        component: Container,
+        children: [
+            {
+                meta: {
+                    title: '内容列表',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/page/content',
+                name: 'content',
+                component: ansycRoutes.get('content')
+            }]
+    }, {
+        meta: {
+            title: '错误页',
+            hidden: false,
+            leaf: false,
+            iconCls: "el-icon-brush"
+        },
+        path: '/errs',
+        name: 'errs',
+        component: Container,
+        children: [
+            {
+                meta: {
+                    title: '404错误',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/errs/404',
+                name: 'errs404',
+                component: () => import('@/views/error/404.vue')
+            }, {
+                meta: {
+                    title: '401错误',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/errs/401',
+                name: 'errs401',
+                component: () => import('@/views/error/401.vue')
+            }]
     },
     {
         meta: {
