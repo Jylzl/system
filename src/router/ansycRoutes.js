@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-15 15:38:01
+ * @lastTime: 2020-09-16 11:32:01
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -24,7 +24,7 @@ const seven = r => require.ensure([], () => r(require('@/views/app/AppSeven.vue'
 const baidu = r => require.ensure([], () => r(require('@/views/monitor/Baidu.vue')), 'baidu') // 机构
 const perf = r => require.ensure([], () => r(require('@/views/monitor/Perf.vue')), 'perf') // 菜单
 // page-页面
-const content = r => require.ensure([], () => r(require('@/views/page/Content.vue')), 'content') // 内容
+const content = r => require.ensure([], () => r(require('@/views/page/content/Index.vue')), 'content') // 内容
 
 let ansycRoutes = new Map()
 
