@@ -250,7 +250,19 @@ const routes = [
                 path: '/page/content',
                 name: 'content',
                 component: ansycRoutes.get('content')
-            }]
+            },
+            {
+                meta: {
+                    title: '栏目列表',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/page/column',
+                name: 'column',
+                component: ansycRoutes.get('column')
+            }
+        ]
     }, {
         meta: {
             title: '错误页',

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-08 12:53:26
  * @LastAuthor: lizlong
- * @lastTime: 2019-11-24 16:31:06
+ * @lastTime: 2020-09-17 18:35:12
  */
 let components = [{
   id: 1,
@@ -16,6 +16,7 @@ let components = [{
     component: "d-input",
     type: "text",
     dataType: "string",
+    valueDefault: null
   }, {
     id: 102,
     label: "富文本",
@@ -24,6 +25,7 @@ let components = [{
     component: "d-richText",
     type: "cms-tinymce",
     dataType: "string",
+    valueDefault: null
   }, {
     id: 103,
     label: "计数器",
@@ -31,7 +33,8 @@ let components = [{
     icon: "icon-number",
     component: "d-number",
     dataType: "number",
-    controls: true
+    controls: true,
+    valueDefault: null
   }]
 }, {
   id: 20,
@@ -43,6 +46,7 @@ let components = [{
     icon: "icon-radio",
     component: "d-radio",
     dataType: "array",
+    valueDefault: null
   }, {
     id: 202,
     label: "多选框组",
@@ -50,6 +54,7 @@ let components = [{
     icon: "icon-checkbox",
     component: "d-checkbox",
     dataType: "array",
+    valueDefault: null
   }, {
     id: 203,
     label: "下拉选择器",
@@ -57,6 +62,7 @@ let components = [{
     icon: "icon-select",
     component: "d-select",
     dataType: "array",
+    valueDefault: null
   }, {
     id: 204,
     label: "级联选择器",
@@ -64,6 +70,7 @@ let components = [{
     icon: "icon-link",
     component: "d-cascader",
     dataType: "array",
+    valueDefault: null
   }, {
     id: 205,
     label: "开关选择器",
@@ -71,6 +78,7 @@ let components = [{
     icon: "icon-switch",
     component: "d-switch",
     dataType: "boolean",
+    valueDefault: null
   }, {
     id: 206,
     label: "颜色选择器",
@@ -78,6 +86,7 @@ let components = [{
     icon: "icon-color",
     component: "d-colorPicker",
     dataType: "string",
+    valueDefault: null
   }, {
     id: 207,
     label: "滑块选择器",
@@ -85,6 +94,7 @@ let components = [{
     icon: "icon-slider",
     component: "d-slider",
     dataType: "array",
+    valueDefault: null
   }, {
     id: 208,
     label: "评分选择器",
@@ -92,6 +102,7 @@ let components = [{
     icon: "icon-star",
     component: "d-rate",
     dataType: "number",
+    valueDefault: null
   }]
 }, {
   id: 3,
@@ -103,6 +114,7 @@ let components = [{
     icon: "icon-upload",
     component: "d-upload",
     dataType: "array",
+    valueDefault: null
   }]
 }, {
   id: 4,
@@ -114,6 +126,7 @@ let components = [{
     icon: "icon-time",
     component: "d-time",
     dataType: "array",
+    valueDefault: null
   }, {
     id: 402,
     label: "日期选择器",
@@ -121,6 +134,7 @@ let components = [{
     icon: "icon-date",
     component: "d-date",
     dataType: "array",
+    valueDefault: null
   }, {
     id: 403,
     label: "日期时间选择器",
@@ -128,6 +142,7 @@ let components = [{
     icon: "icon-datetime",
     component: "d-dateTime",
     dataType: "array",
+    valueDefault: null
   }]
 }, {
   id: 5,
@@ -139,6 +154,7 @@ let components = [{
     icon: "icon-map",
     component: "d-map",
     dataType: "string",
+    valueDefault: null
   }]
 }, {
   id: 6,

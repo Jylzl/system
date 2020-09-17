@@ -3,10 +3,12 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-16 17:18:15
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-08 09:50:51
+ * @lastTime: 2020-09-17 16:01:45
  -->
 <template>
 	<el-form
+		ref="form"
+		:model="form"
 		:label-position="o_formAttribute.labelPosition"
 		:label-width="o_formAttribute.labelWidth + 'px'"
 		:label-suffix="o_formAttribute.labelSuffix"
@@ -17,7 +19,22 @@
 		<el-row :gutter="o_formAttribute.colSpacing">
 			<el-col v-for="(item) in a_myArray" :span="item.span" :key="item.id" :data-id="item.id">
 				<el-form-item :label="item.label" :required="item.check" :rules="item.rules">
-					<component :is="item.component" :data="item"></component>
+					<component :is="item.component" :data="item" :value="form[item.prop]"></component>
+				</el-form-item>
+			</el-col>
+			<el-col :span="24">
+				<el-form-item>
+					<el-button
+						type="primary"
+						:size="o_formAttribute.formSize"
+						icon="el-icon-circle-check"
+						@click="saveForm()"
+					>{{o_formAttribute.submitText|| '保 存'}}</el-button>
+					<el-button
+						:size="o_formAttribute.formSize"
+						icon="el-icon-circle-close"
+						@click="resetForm('form')"
+					>{{o_formAttribute.resetText|| '重 置'}}</el-button>
 				</el-form-item>
 			</el-col>
 		</el-row>
@@ -75,12 +92,35 @@ export default {
 			},
 		},
 	},
+	created() {
+		this.myArray.map((item) => {
+			this.form[item.prop] = item.defaultVal;
+		});
+	},
 	data() {
 		return {
 			a_myArray: this.myArray,
 			o_formAttribute: this.formAttribute,
 			rules: {},
+			form: {},
 		};
+	},
+	methods: {
+		// 重置
+		resetForm(formName) {
+			this.$refs[formName].resetFields();
+			this.menuDialog.visible = false;
+		},
+		// 保存
+		saveForm() {
+			this.$refs["form"].validate((valid) => {
+				if (valid) {
+					this.$message(JSON.stringify(this.form));
+				} else {
+					return false;
+				}
+			});
+		},
 	},
 };
 </script>

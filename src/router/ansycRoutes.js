@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-16 11:32:01
+ * @lastTime: 2020-09-17 10:11:21
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -25,6 +25,7 @@ const baidu = r => require.ensure([], () => r(require('@/views/monitor/Baidu.vue
 const perf = r => require.ensure([], () => r(require('@/views/monitor/Perf.vue')), 'perf') // 菜单
 // page-页面
 const content = r => require.ensure([], () => r(require('@/views/page/content/Index.vue')), 'content') // 内容
+const column = r => require.ensure([], () => r(require('@/views/page/column/Index.vue')), 'column') // 栏目
 
 let ansycRoutes = new Map()
 
@@ -48,6 +49,7 @@ ansycRoutes.set("baidu", baidu)
 ansycRoutes.set("perf", perf)
 // page-页面
 ansycRoutes.set("content", content)
+ansycRoutes.set("column", column)
 
 export {
     ansycRoutes

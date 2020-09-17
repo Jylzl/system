@@ -3,13 +3,13 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-11-15 11:39:57
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-27 18:06:05
+ * @lastTime: 2020-09-17 18:40:36
  -->
 <template>
 	<div>
 		<el-autocomplete
 			v-if="o_data.type == 'email'"
-			v-model="o_data.valueDefault"
+			v-model="o_data[o_data.prop]"
 			:name="o_data.prop"
 			:type="o_data.type"
 			:placeholder="o_data.placeholder || defPlaceholder"
@@ -22,10 +22,11 @@
 			:fetch-suggestions="querySearch"
 			:trigger-on-focus="false"
 			class="w100"
+			@change="$emit('input', o_data[o_data.prop])"
 		></el-autocomplete>
 		<el-input
 			v-else
-			v-model="o_data.valueDefault"
+			v-model="o_data[o_data.prop]"
 			:name="o_data.prop"
 			:type="o_data.type"
 			:placeholder="o_data.placeholder || defPlaceholder"
@@ -42,6 +43,7 @@
 					}"
 			:resize="o_data.resize?'vertical':'none'"
 			class="w100"
+			@change="$emit('input', o_data[o_data.prop])"
 		></el-input>
 	</div>
 </template>

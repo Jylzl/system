@@ -6,7 +6,25 @@
 		</div>
 		<div class="left-center" v-loading="treeLoading">
 			<el-scrollbar wrap-class="scrollbar-wrapper">
-				<el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+				<el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick">
+					<span class="custom-tree-node" slot-scope="{ node, data }">
+						<span>{{ node.label }}</span>
+						<span v-if="edit">
+							<el-button
+								type="text"
+								size="mini"
+								@click.stop.prevent="() => append(data)"
+								icon="el-icon-caret-top"
+							></el-button>
+							<el-button
+								type="text"
+								size="mini"
+								@click.stop.prevent="() => remove(node, data)"
+								icon="el-icon-caret-bottom"
+							></el-button>
+						</span>
+					</span>
+				</el-tree>
 			</el-scrollbar>
 		</div>
 	</div>
@@ -14,6 +32,12 @@
 <script>
 export default {
 	name: "ColumnTree",
+	props: {
+		edit: {
+			type: Boolean,
+			default: false,
+		},
+	},
 	data() {
 		return {
 			nowColumnID: -1,
@@ -102,6 +126,24 @@ export default {
 			console.log(type);
 			console.log(id);
 		},
+		append(data) {
+			this.$message("上移");
+		},
+
+		remove(node, data) {
+			this.$message("下移");
+		},
 	},
 };
 </script>
+
+<style scoped>
+.custom-tree-node {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 14px;
+	padding-right: 8px;
+}
+</style>

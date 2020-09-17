@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-10-29 17:59:02
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-04 21:53:22
+ * @lastTime: 2020-09-17 15:31:49
  -->
 <template>
 	<el-container
@@ -160,13 +160,13 @@
 						</el-button>
 					</div>
 					<div class="form-box-footer-body" v-if="codeViewKey">
-						<d-form :myArray="obj.column" :formAttribute="obj.formAttribute"></d-form>
-						<!-- <MyEditor
+						<!-- <d-form :myArray="obj.column" :formAttribute="obj.formAttribute"></d-form> -->
+						<MyEditor
 							:language="language"
 							:codes="htmlCodes"
 							@onMounted="htmlOnMounted"
 							@onCodeChange="htmlOnCodeChange"
-						/>-->
+						/>
 					</div>
 				</el-footer>
 			</el-container>
@@ -208,7 +208,7 @@
 <script>
 import { components } from "@/components/dform/components.js";
 import { deepClone } from "@/components/dform/util.js";
-// import MyEditor from "@/components/Monaco.vue";
+import MyEditor from "@/components/Monaco.vue";
 import draggable from "vuedraggable";
 import dForm from "@/components/dform/dForm.vue";
 import widgetForm from "@/components/dform/WidgetForm.vue";
@@ -221,7 +221,7 @@ export default {
 		"widget-form": widgetForm, //表单设计
 		"field-attribute": fieldAttribute, // 字段属性
 		"form-attribute": formAttribute, // 表单属性
-		// MyEditor
+		MyEditor,
 	},
 	data() {
 		return {

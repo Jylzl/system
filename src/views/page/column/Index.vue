@@ -1,9 +1,9 @@
 <!--
- * @description: 内容管理
+ * @description: 栏目管理
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-17 12:02:43
+ * @lastTime: 2020-09-17 14:05:23
  -->
 <template>
 	<el-container>
@@ -14,30 +14,29 @@
 			<div class="right-top">
 				<div class="right-top-left">
 					<el-radio-group v-model="radio3" size="mini">
-						<el-radio-button label="1">内容列表</el-radio-button>
-						<el-radio-button label="2">回收站</el-radio-button>
-						<el-radio-button label="3">已归档</el-radio-button>
+						<el-radio-button label="1">基本信息</el-radio-button>
+						<el-radio-button label="2">扩展配置</el-radio-button>
+						<el-radio-button label="3">SEO信息</el-radio-button>
 					</el-radio-group>
 				</div>
 				<div class="right-top-right">
+					<el-button type="primary" icon="el-icon-camera" size="mini">预览</el-button>
+					<el-button type="primary" icon="el-icon-view" size="mini">浏览</el-button>
+					<el-button type="primary" icon="el-icon-delete" size="mini">删除</el-button>
 					<el-button type="primary" icon="el-icon-edit" size="mini">添加</el-button>
 				</div>
 			</div>
 			<div class="right-table-50">
-				<el-scrollbar wrap-class="scrollbar-wrapper">
-					<Content></Content>
-				</el-scrollbar>
+				<el-scrollbar wrap-class="scrollbar-wrapper">11</el-scrollbar>
 			</div>
 		</el-main>
 	</el-container>
 </template>
 <script>
 import ColumnTree from "@/components/cms/column/ColumnTree.vue";
-import Content from "./components/Content.vue";
 export default {
-	name: "contentList",
+	name: "columnList",
 	components: {
-		Content,
 		ColumnTree,
 	},
 	data() {
