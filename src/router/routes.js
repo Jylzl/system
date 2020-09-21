@@ -294,6 +294,16 @@ const routes = [
                 path: '/errs/401',
                 name: 'errs401',
                 component: () => import('@/views/error/401.vue')
+            }, {
+                meta: {
+                    title: '开发中',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/errs/developing',
+                name: 'developing',
+                component: () => import('@/views/error/developing.vue')
             }]
     },
     {
