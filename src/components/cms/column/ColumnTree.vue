@@ -126,10 +126,11 @@ export default {
 			console.log(type);
 			console.log(id);
 		},
+		// eslint-disable-next-line no-unused-vars
 		append(data) {
 			this.$message("上移");
 		},
-
+		// eslint-disable-next-line no-unused-vars
 		remove(node, data) {
 			this.$message("下移");
 		},

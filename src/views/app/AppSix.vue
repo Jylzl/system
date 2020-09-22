@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-07-20 09:31:27
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-21 14:53:14
+ * @lastTime: 2020-09-22 10:56:32
 --> 
 <template>
 	<div id="login">
@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import cmsPuzzle from "@/components/cms/cmsPuzzle.vue";
+import cmsPuzzle from "@/components/module/cmsPuzzle.vue";
 export default {
 	components: {
-		"cms-puzzle": cmsPuzzle
+		"cms-puzzle": cmsPuzzle,
 	},
 	data() {
 		return {
@@ -33,16 +33,16 @@ export default {
 			config: {
 				width: 286,
 				height: 170,
-				accuracy: 5
-			}
+				accuracy: 5,
+			},
 		};
 	},
 	methods: {
 		// 关闭验证码
 		close() {
 			this.visible = false;
-		}
-	}
+		},
+	},
 };
 </script>
 

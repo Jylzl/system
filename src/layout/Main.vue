@@ -3,11 +3,15 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:54:28
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-08 18:29:56
+ * @lastTime: 2020-09-22 17:08:36
  -->
 <template>
 	<div class="h100 router-box">
-		<router-view></router-view>
+		<keep-alive>
+			<router-view v-if="$route.meta.keepAlive"></router-view>
+		</keep-alive>
+		<router-view v-if="!$route.meta.keepAlive"></router-view>
+		<!-- <router-view></router-view> -->
 	</div>
 </template>
 

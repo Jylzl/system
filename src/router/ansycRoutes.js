@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-17 10:11:21
+ * @lastTime: 2020-09-22 10:46:18
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -20,6 +20,7 @@ const four = r => require.ensure([], () => r(require('@/views/app/AppFour.vue'))
 const five = r => require.ensure([], () => r(require('@/views/app/AppFive.vue')), 'five') // 菜单
 const six = r => require.ensure([], () => r(require('@/views/app/AppSix.vue')), 'six') // 菜单
 const seven = r => require.ensure([], () => r(require('@/views/app/AppSeven.vue')), 'seven') // 菜单
+const eight = r => require.ensure([], () => r(require('@/views/app/AppEight.vue')), 'eight') // 右键
 // monitor-监控
 const baidu = r => require.ensure([], () => r(require('@/views/monitor/Baidu.vue')), 'baidu') // 机构
 const perf = r => require.ensure([], () => r(require('@/views/monitor/Perf.vue')), 'perf') // 菜单
@@ -44,6 +45,7 @@ ansycRoutes.set("four", four)
 ansycRoutes.set("five", five)
 ansycRoutes.set("six", six)
 ansycRoutes.set("seven", seven)
+ansycRoutes.set("eight", eight)
 // monitor-监控
 ansycRoutes.set("baidu", baidu)
 ansycRoutes.set("perf", perf)

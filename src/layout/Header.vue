@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-15 11:43:39
+ * @lastTime: 2020-09-22 18:06:24
  -->
 <template>
 	<div class="header-box">
@@ -159,6 +159,7 @@ export default {
 		this.searchPool = this.generateRoutes(this.routes);
 	},
 	methods: {
+		// eslint-disable-next-line no-unused-vars
 		menuSelect(index, indexPath) {
 			// if (this.$route.name == "Work") {
 			// 	this.$store.dispatch("setLeftRouters", this.routes);

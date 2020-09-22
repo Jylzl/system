@@ -183,7 +183,8 @@ const routes = [
                     title: '动态表单',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    keepAlive: true
                 },
                 path: '/app/three',
                 name: 'three',
@@ -228,6 +229,16 @@ const routes = [
                 path: '/app/seven',
                 name: 'seven',
                 component: ansycRoutes.get('seven')
+            }, {
+                meta: {
+                    title: '右键',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-place"
+                },
+                path: '/app/eight',
+                name: 'eight',
+                component: ansycRoutes.get('eight')
             }]
     }, {
         meta: {
