@@ -22,7 +22,8 @@ const routes = [
             title: '欢迎页',
             hidden: false,
             leaf: true,
-            iconCls: "el-icon-data-analysis"
+            iconCls: "el-icon-data-analysis",
+            topPath: '/'
         },
         path: '/',
         name: 'Layout',
@@ -34,7 +35,8 @@ const routes = [
                     title: '工作台',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-data-analysis"
+                    iconCls: "el-icon-data-analysis",
+                    topPath: '/'
                 },
                 path: '/work',
                 name: 'work',
@@ -44,7 +46,8 @@ const routes = [
                     title: '个人中心',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-s-custom"
+                    iconCls: "el-icon-s-custom",
+                    topPath: '/'
                 },
                 path: '/personal',
                 name: 'personal',
@@ -56,7 +59,8 @@ const routes = [
             title: '权限管理',
             hidden: false,
             leaf: false,
-            iconCls: "el-icon-lock"
+            iconCls: "el-icon-lock",
+            topPath: '/power'
         },
         path: '/power',
         name: 'power',
@@ -67,7 +71,8 @@ const routes = [
                     title: '菜单管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/power'
                 },
                 path: '/power/menu',
                 name: 'menu',
@@ -77,7 +82,8 @@ const routes = [
                     title: '区域管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/power'
                 },
                 path: '/power/region',
                 name: 'region',
@@ -87,7 +93,8 @@ const routes = [
                     title: '部门管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-monitor"
+                    iconCls: "el-icon-monitor",
+                    topPath: '/power'
                 },
                 path: '/power/dept',
                 name: 'dept',
@@ -97,7 +104,8 @@ const routes = [
                     title: '角色管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-monitor"
+                    iconCls: "el-icon-monitor",
+                    topPath: '/power'
                 },
                 path: '/power/roles',
                 name: 'roles',
@@ -107,7 +115,8 @@ const routes = [
                     title: '用户管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-monitor"
+                    iconCls: "el-icon-monitor",
+                    topPath: '/power'
                 },
                 path: '/power/users',
                 name: 'users',
@@ -119,7 +128,8 @@ const routes = [
             title: '运维管理',
             hidden: false,
             leaf: false,
-            iconCls: "el-icon-odometer"
+            iconCls: "el-icon-odometer",
+            topPath: '/monitor'
         },
         path: '/monitor',
         name: 'monitor',
@@ -130,7 +140,8 @@ const routes = [
                     title: '百度统计',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/monitor'
                 },
                 path: '/monitor/baidu',
                 name: 'baidu',
@@ -140,7 +151,8 @@ const routes = [
                     title: '系统监控',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/monitor'
                 },
                 path: '/monitor/perf',
                 name: 'perf',
@@ -151,7 +163,8 @@ const routes = [
             title: '应用管理',
             hidden: false,
             leaf: false,
-            iconCls: "el-icon-connection"
+            iconCls: "el-icon-connection",
+            topPath: '/app'
         },
         path: '/app',
         name: 'app',
@@ -163,7 +176,8 @@ const routes = [
                     title: 'tinymce富文本',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/app'
                 },
                 path: '/app/one',
                 name: 'one',
@@ -173,7 +187,8 @@ const routes = [
                     title: 'vscode编辑器',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/app'
                 },
                 path: '/app/two',
                 name: 'two',
@@ -184,7 +199,8 @@ const routes = [
                     hidden: false,
                     leaf: true,
                     iconCls: "el-icon-place",
-                    keepAlive: true
+                    keepAlive: true,
+                    topPath: '/app'
                 },
                 path: '/app/three',
                 name: 'three',
@@ -194,7 +210,8 @@ const routes = [
                     title: '视频播放',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/app'
                 },
                 path: '/app/four',
                 name: 'four',
@@ -204,7 +221,8 @@ const routes = [
                     title: '图标选择器',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/app'
                 },
                 path: '/app/five',
                 name: 'five',
@@ -214,7 +232,8 @@ const routes = [
                     title: '拼图验证码',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/app'
                 },
                 path: '/app/six',
                 name: 'six',
@@ -224,7 +243,8 @@ const routes = [
                     title: 'PDF生成',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/app'
                 },
                 path: '/app/seven',
                 name: 'seven',
@@ -234,7 +254,8 @@ const routes = [
                     title: '右键',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/app'
                 },
                 path: '/app/eight',
                 name: 'eight',
@@ -245,7 +266,8 @@ const routes = [
             title: '特殊页面',
             hidden: false,
             leaf: false,
-            iconCls: "el-icon-star-off"
+            iconCls: "el-icon-star-off",
+            topPath: '/page'
         },
         path: '/page',
         name: 'page',
@@ -256,7 +278,8 @@ const routes = [
                     title: '内容列表',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/page'
                 },
                 path: '/page/content',
                 name: 'content',
@@ -267,7 +290,8 @@ const routes = [
                     title: '栏目列表',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/page'
                 },
                 path: '/page/column',
                 name: 'column',
@@ -279,7 +303,8 @@ const routes = [
             title: '错误页',
             hidden: false,
             leaf: false,
-            iconCls: "el-icon-brush"
+            iconCls: "el-icon-brush",
+            topPath: '/errs'
         },
         path: '/errs',
         name: 'errs',
@@ -290,7 +315,8 @@ const routes = [
                     title: '404错误',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/errs'
                 },
                 path: '/errs/404',
                 name: 'errs404',
@@ -300,7 +326,8 @@ const routes = [
                     title: '401错误',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/errs'
                 },
                 path: '/errs/401',
                 name: 'errs401',
@@ -310,7 +337,8 @@ const routes = [
                     title: '开发中',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place"
+                    iconCls: "el-icon-place",
+                    topPath: '/errs'
                 },
                 path: '/errs/developing',
                 name: 'developing',
@@ -321,7 +349,8 @@ const routes = [
         meta: {
             title: '登录',
             hidden: true,
-            open: true
+            open: true,
+            topPath: '/login'
         },
         path: '/login',
         name: 'login',
@@ -331,7 +360,8 @@ const routes = [
         meta: {
             title: '锁屏',
             hidden: true,
-            open: true
+            open: true,
+            topPath: '/lock'
         },
         path: '/lock',
         name: 'lock',
@@ -341,7 +371,8 @@ const routes = [
         meta: {
             title: '注册',
             hidden: true,
-            open: true
+            open: true,
+            topPath: '/register'
         },
         path: '/register',
         name: 'register',
@@ -351,7 +382,8 @@ const routes = [
         meta: {
             title: '401',
             hidden: true,
-            open: true
+            open: true,
+            topPath: '/401'
         },
         path: '/401',
         name: 'err401',
@@ -361,7 +393,8 @@ const routes = [
         meta: {
             title: '404',
             hidden: true,
-            open: true
+            open: true,
+            topPath: '/404'
         },
         path: '/404',
         name: 'err404',
@@ -370,7 +403,8 @@ const routes = [
     {
         meta: {
             title: '404',
-            hidden: true
+            hidden: true,
+            topPath: '*'
         },
         path: '*',
         name: 'err404all',

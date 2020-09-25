@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-15 15:58:10
+ * @lastTime: 2020-09-25 17:29:51
  */
 
 import {
@@ -33,10 +33,10 @@ const power = {
     },
     //改变属性的状态
     mutations: {
-        LEFT_ROUTERS: (state, data) => {
-            state.leftRouters = data;
-            router.addRoutes(routes);
-        },
+        // LEFT_ROUTERS: (state, data) => {
+        //     state.leftRouters = data;
+        //     router.addRoutes(routes);
+        // },
         SET_PERMS: (state, params) => {
             router.addRoutes(routes);
             state.user = params.user;
@@ -57,9 +57,9 @@ const power = {
     },
     //应用mutaions
     actions: {
-        setLeftRouters({ commit }, data) {
-            commit('LEFT_ROUTERS', data);
-        },
+        // setLeftRouters({ commit }, data) {
+        //     commit('LEFT_ROUTERS', data);
+        // },
         userLogin({ commit }, data) {
             const remember = data.rememberPswd;
             const username = data.user;

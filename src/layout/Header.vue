@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-22 18:06:24
+ * @lastTime: 2020-09-25 18:44:57
  -->
 <template>
 	<div class="header-box">
@@ -22,7 +22,7 @@
 				>
 					<template v-for="topRouter in topRouters">
 						<el-menu-item
-							:index="topRouter.name"
+							:index="topRouter.path"
 							:route="topRouter"
 							v-if="topRouter.meta.hidden == false"
 							:key="topRouter.path"
@@ -122,47 +122,32 @@ export default {
 		};
 	},
 	watch: {
-		lang() {
-			this.searchPool = this.generateRoutes(this.routes);
-		},
-		routes() {
-			this.searchPool = this.generateRoutes(this.routes);
-		},
 		searchPool(list) {
 			this.initFuse(list);
-		},
-		$route(to) {
-			if (to.name == "Work") {
-				this.$store.dispatch("setLeftRouters", this.topRouters);
-			} else {
-				this.$store.dispatch("setLeftRouters", this.topRouters);
-			}
 		},
 	},
 	computed: {
 		user() {
 			return this.$store.getters.getUser;
 		},
-		routes() {
-			return this.$store.getters.getRoutes[0].children;
-		},
 		topRouters() {
-			return this.$store.getters.getRoutes;
-		},
-		activeIndex() {
-			return this.$route.path;
+			return this.$store.getters.getTopRouters;
 		},
 	},
-	created() {},
-	mounted() {
-		this.$store.dispatch("setLeftRouters", this.topRouters);
-		this.searchPool = this.generateRoutes(this.routes);
+	created() {
+		// this.$store.dispatch("setLeftRouters", "/");
+		console.log(this.$route);
+		// this.$store.dispatch("setLeftRouters", this.$route.path);
+		this.$store.dispatch("setLeftRouters", this.$route.meta.topPath);
 	},
+	mounted() {},
 	methods: {
 		// eslint-disable-next-line no-unused-vars
 		menuSelect(index, indexPath) {
+			console.log(index);
+			console.log(indexPath);
 			// if (this.$route.name == "Work") {
-			// 	this.$store.dispatch("setLeftRouters", this.routes);
+			this.$store.dispatch("setLeftRouters", index);
 			// } else {
 			// 	this.$store.dispatch("setLeftRouters", []);
 			// }
