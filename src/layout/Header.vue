@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-25 18:44:57
+ * @lastTime: 2020-09-27 21:33:26
  -->
 <template>
 	<div class="header-box">
@@ -12,7 +12,7 @@
 			<div class="header-menu">
 				<el-menu
 					:router="true"
-					:default-active="$route.name"
+					:default-active="topPath"
 					mode="horizontal"
 					background-color="transparent"
 					text-color="#fff"
@@ -127,6 +127,9 @@ export default {
 		},
 	},
 	computed: {
+		topPath() {
+			return this.$route.meta.topPath;
+		},
 		user() {
 			return this.$store.getters.getUser;
 		},
@@ -135,22 +138,13 @@ export default {
 		},
 	},
 	created() {
-		// this.$store.dispatch("setLeftRouters", "/");
-		console.log(this.$route);
-		// this.$store.dispatch("setLeftRouters", this.$route.path);
 		this.$store.dispatch("setLeftRouters", this.$route.meta.topPath);
 	},
 	mounted() {},
 	methods: {
 		// eslint-disable-next-line no-unused-vars
 		menuSelect(index, indexPath) {
-			console.log(index);
-			console.log(indexPath);
-			// if (this.$route.name == "Work") {
 			this.$store.dispatch("setLeftRouters", index);
-			// } else {
-			// 	this.$store.dispatch("setLeftRouters", []);
-			// }
 		},
 		//锁屏操作
 		clockScreen() {

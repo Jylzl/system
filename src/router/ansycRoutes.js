@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-22 10:46:18
+ * @lastTime: 2020-09-28 00:14:28
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -12,6 +12,7 @@ const dept = r => require.ensure([], () => r(require('@/views/power/Dept.vue')),
 const menu = r => require.ensure([], () => r(require('@/views/power/Menu.vue')), 'menu') // 菜单
 const roles = r => require.ensure([], () => r(require('@/views/power/Roles.vue')), 'roles') // 角色
 const users = r => require.ensure([], () => r(require('@/views/power/Users.vue')), 'users') // 用户
+const area = r => require.ensure([], () => r(require('@/views/power/Area.vue')), 'area') // 区域
 // app-应用
 const one = r => require.ensure([], () => r(require('@/views/app/AppOne.vue')), 'one') // 机构
 const two = r => require.ensure([], () => r(require('@/views/app/AppTwo.vue')), 'two') // 菜单
@@ -37,6 +38,7 @@ ansycRoutes.set("dept", dept) // 机构
 ansycRoutes.set("menu", menu) // 菜单
 ansycRoutes.set("roles", roles) // 角色
 ansycRoutes.set("users", users) // 用户
+ansycRoutes.set("area", area) // 区域
 // app-应用
 ansycRoutes.set("one", one)
 ansycRoutes.set("two", two)

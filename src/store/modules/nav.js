@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-09-25 17:09:13
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-25 17:33:34
+ * @lastTime: 2020-09-27 21:36:32
  */
 import {
   routes
@@ -27,7 +27,6 @@ const nav = {
   // 应用mutaions
   actions: {
     setLeftRouters({ commit }, data) {
-      console.log(data)
       commit('LEFT_ROUTERS', data);
     },
   }

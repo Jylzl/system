@@ -64,6 +64,7 @@ const routes = [
         },
         path: '/power',
         name: 'power',
+        redirect: '/power/menu',
         component: Container,
         children: [
             {
@@ -71,7 +72,7 @@ const routes = [
                     title: '菜单管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place",
+                    iconCls: "el-icon-menu",
                     topPath: '/power'
                 },
                 path: '/power/menu',
@@ -85,15 +86,15 @@ const routes = [
                     iconCls: "el-icon-place",
                     topPath: '/power'
                 },
-                path: '/power/region',
-                name: 'region',
-                component: ansycRoutes.get('region')
+                path: '/power/area',
+                name: 'area',
+                component: ansycRoutes.get('area')
             }, {
                 meta: {
                     title: '部门管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-monitor",
+                    iconCls: "el-icon-s-check",
                     topPath: '/power'
                 },
                 path: '/power/dept',
@@ -104,7 +105,7 @@ const routes = [
                     title: '角色管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-monitor",
+                    iconCls: "el-icon-collection-tag",
                     topPath: '/power'
                 },
                 path: '/power/roles',
@@ -115,7 +116,7 @@ const routes = [
                     title: '用户管理',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-monitor",
+                    iconCls: "el-icon-user",
                     topPath: '/power'
                 },
                 path: '/power/users',
@@ -133,6 +134,7 @@ const routes = [
         },
         path: '/monitor',
         name: 'monitor',
+        redirect: '/monitor/baidu',
         component: Container,
         children: [
             {
@@ -140,7 +142,7 @@ const routes = [
                     title: '百度统计',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place",
+                    iconCls: "el-icon-bangzhu",
                     topPath: '/monitor'
                 },
                 path: '/monitor/baidu',
@@ -151,7 +153,7 @@ const routes = [
                     title: '系统监控',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place",
+                    iconCls: "el-icon-monitor",
                     topPath: '/monitor'
                 },
                 path: '/monitor/perf',
@@ -168,7 +170,7 @@ const routes = [
         },
         path: '/app',
         name: 'app',
-        redirect: '/app/three',
+        redirect: '/app/one',
         component: Container,
         children: [
             {
