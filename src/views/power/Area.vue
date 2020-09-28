@@ -7,7 +7,7 @@
  -->
 <template>
 	<el-container>
-		<el-aside width="240px">
+		<el-aside width="240px" class="aside-left">
 			<div class="left-top">
 				<el-button type="text" icon="el-icon-menu" @click="getAreaTree(false, -1);">顶级区域</el-button>
 				<el-button type="text" icon="el-icon-refresh" @click="getAreaTree(false,nowAreaID)">刷新</el-button>

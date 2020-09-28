@@ -7,7 +7,7 @@
  -->
 <template>
 	<el-container>
-		<el-aside width="240px">
+		<el-aside width="240px" class="aside-left">
 			<ColumnTree @columnClick="columnClick" @columnRefresh="columnClick"></ColumnTree>
 		</el-aside>
 		<el-main>

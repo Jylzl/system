@@ -1,12 +1,18 @@
 <template>
 	<div class="h100">
 		<div class="left-top">
-			<el-button type="text" icon="el-icon-menu" @click="getColumnTree(false, -1);">顶级栏目</el-button>
+			<el-button type="text" icon="el-icon-menu" @click="getColumnTree(false, -1);">顶级栏目栏目</el-button>
 			<el-button type="text" icon="el-icon-refresh" @click="getColumnTree(false,nowColumnID)">刷新</el-button>
 		</div>
 		<div class="left-center" v-loading="treeLoading">
 			<el-scrollbar wrap-class="scrollbar-wrapper">
-				<el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick">
+				<el-tree
+					:data="data"
+					:props="defaultProps"
+					node-key="id"
+					:default-expanded-keys="[1, 2, 3]"
+					@node-click="handleNodeClick"
+				>
 					<span class="custom-tree-node" slot-scope="{ node, data }">
 						<span>{{ node.label }}</span>
 						<span v-if="edit">
@@ -44,15 +50,15 @@ export default {
 			treeLoading: false,
 			data: [
 				{
-					label: "一级 1",
+					label: "一级栏目 1",
 					id: 1,
 					children: [
 						{
-							label: "二级 1-1",
+							label: "二级栏目 1-1",
 							id: 11,
 							children: [
 								{
-									label: "三级 1-1-1",
+									label: "三级栏目 1-1-1",
 									id: 111,
 								},
 							],
@@ -60,25 +66,25 @@ export default {
 					],
 				},
 				{
-					label: "一级 2",
+					label: "一级栏目 2",
 					id: 2,
 					children: [
 						{
-							label: "二级 2-1",
+							label: "二级栏目 2-1",
 							id: 21,
 							children: [
 								{
-									label: "三级 2-1-1",
+									label: "三级栏目 2-1-1",
 									id: 211,
 								},
 							],
 						},
 						{
-							label: "二级 2-2",
+							label: "二级栏目 2-2",
 							id: 22,
 							children: [
 								{
-									label: "三级 2-2-1",
+									label: "三级栏目 2-2-1",
 									id: 221,
 								},
 							],
@@ -86,25 +92,25 @@ export default {
 					],
 				},
 				{
-					label: "一级 3",
+					label: "一级栏目 3",
 					id: 3,
 					children: [
 						{
-							label: "二级 3-1",
+							label: "二级栏目 3-1",
 							id: 31,
 							children: [
 								{
-									label: "三级 3-1-1",
+									label: "三级栏目 3-1-1",
 									id: 311,
 								},
 							],
 						},
 						{
-							label: "二级 3-2",
+							label: "二级栏目 3-2",
 							id: 32,
 							children: [
 								{
-									label: "三级 3-2-1",
+									label: "三级栏目 3-2-1",
 									id: 321,
 								},
 							],

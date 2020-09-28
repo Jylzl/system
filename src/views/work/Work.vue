@@ -3,131 +3,171 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-14 12:37:34
+ * @lastTime: 2020-09-28 15:02:26
  -->
 <template>
-	<div class="work h100">
-		<el-row :gutter="20">
-			<el-col :span="4" v-for="(i,index) in inf" :key="i.unm + index" class="m-b-20">
-				<div :class="'grid-content item bg-purple-'+index">
-					<a href="javascript:void(0);">
-						<div class="item-header">
-							<p>{{i.title}}</p>
-							<span>实时</span>
+	<el-container>
+		<el-main>
+			<div class="work h100">
+				<el-row :gutter="20">
+					<el-col
+						:span="4"
+						:xl="4"
+						:lg="4"
+						:md="8"
+						:sm="12"
+						:xs="24"
+						v-for="(i,index) in inf"
+						:key="i.unm + index"
+						class="m-b-20"
+					>
+						<div :class="'grid-content item bg-purple-'+index">
+							<a href="javascript:void(0);">
+								<div class="item-header">
+									<p>{{i.title}}</p>
+									<span>实时</span>
+								</div>
+								<div class="item-body">
+									<span class="h2">
+										<countTo :startVal="0" :endVal="i.unm" :duration="3000"></countTo>
+									</span>
+								</div>
+								<p class="item-tip">类</p>
+							</a>
 						</div>
-						<div class="item-body">
-							<span class="h2">
-								<countTo :startVal="0" :endVal="i.unm" :duration="3000"></countTo>
-							</span>
-						</div>
-						<p class="item-tip">类</p>
-					</a>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20">
+					<el-col
+						:span="8"
+						:xl="8"
+						:lg="8"
+						:md="8"
+						:sm="12"
+						:xs="24"
+						class="m-b-20"
+						v-for="i in 2"
+						:key="i"
+					>
+						<el-card class="custom-card" :body-style="{ padding: '15px' }">
+							<div slot="header">
+								<span>快捷操作</span>
+							</div>
+							<div class="personal-inf text item">
+								<el-row :gutter="10">
+									<el-col :span="6" :xl="6" :lg="8" :md="8" :sm="12" :xs="8">
+										<el-link :underline="false" class="personal-inf-card">
+											<div class="card-icon">
+												<i class="el-icon-edit"></i>
+											</div>
+											<div class="card-inf">数据发布</div>
+										</el-link>
+									</el-col>
+									<el-col :span="6" :xl="6" :lg="8" :md="8" :sm="12" :xs="8">
+										<el-link :underline="false" class="personal-inf-card">
+											<div class="card-icon">
+												<i class="el-icon-cpu"></i>
+											</div>
+											<div class="card-inf">数据清洗</div>
+										</el-link>
+									</el-col>
+									<el-col :span="6" :xl="6" :lg="8" :md="8" :sm="12" :xs="8">
+										<el-link :underline="false" class="personal-inf-card">
+											<div class="card-icon">
+												<i class="el-icon-search"></i>
+											</div>
+											<div class="card-inf">数据检索</div>
+										</el-link>
+									</el-col>
+									<el-col :span="6" :xl="6" :lg="8" :md="8" :sm="12" :xs="8">
+										<el-link :underline="false" class="personal-inf-card">
+											<div class="card-icon">
+												<i class="el-icon-pie-chart"></i>
+											</div>
+											<div class="card-inf">数据统计</div>
+										</el-link>
+									</el-col>
+									<el-col :span="6" :xl="6" :lg="8" :md="8" :sm="12" :xs="8">
+										<el-link :underline="false" class="personal-inf-card">
+											<div class="card-icon">
+												<i class="el-icon-setting"></i>
+											</div>
+											<div class="card-inf">个人设置</div>
+										</el-link>
+									</el-col>
+									<el-col :span="6" :xl="6" :lg="8" :md="8" :sm="12" :xs="8">
+										<el-link :underline="false" class="personal-inf-card">
+											<div class="card-icon">
+												<i class="el-icon-circle-plus-outline"></i>
+											</div>
+											<div class="card-inf">添加入口</div>
+										</el-link>
+									</el-col>
+								</el-row>
+							</div>
+						</el-card>
+					</el-col>
+					<el-col :span="8" :xl="8" :lg="8" :md="8" :sm="24" :xs="24" class="m-b-20">
+						<el-card class="custom-card" :body-style="{ padding: '15px' }">
+							<div slot="header">
+								<span>今日数据</span>
+							</div>
+							<div class="text item personal-content">
+								<el-row :gutter="10">
+									<el-col :span="12" v-for="(item,index) in personalContent" :key="index">
+										<el-link :underline="false" class="personal-content-card">
+											<div class="card-title">{{item.title}}</div>
+											<div class="card-content">{{item.count}}</div>
+										</el-link>
+									</el-col>
+								</el-row>
+							</div>
+						</el-card>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20">
+					<el-col :span="16" :xl="16" :lg="16" :md="24" :sm="24" :xs="24" class="m-b-20">
+						<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
+							<div slot="header" class="clearfix w100">
+								<span>访问量</span>
+								<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
+							</div>
+							<div class="canvas-box">
+								<div id="canvas"></div>
+							</div>
+						</el-card>
+					</el-col>
+					<el-col :span="8" :xl="8" :lg="8" :md="24" :sm="24" :xs="24" class="m-b-20">
+						<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
+							<div slot="header" class="clearfix w100">
+								<span>民生关注</span>
+								<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
+							</div>
+							<div class="canvas-box">
+								<div id="canvas1"></div>
+							</div>
+						</el-card>
+					</el-col>
+				</el-row>
+			</div>
+		</el-main>
+		<el-footer height="42px">
+			<div class="work-footer">
+				<div class="work-footer-right">
+					<el-link :underline="false" tyoe="info">华为开发者联盟 版权所有 ©2019-2020</el-link>
 				</div>
-			</el-col>
-		</el-row>
-		<el-row :gutter="20">
-			<el-col :span="8" class="m-b-20" v-for="i in 2" :key="i">
-				<el-card class="custom-card" :body-style="{ padding: '15px' }">
-					<div slot="header">
-						<span>快捷操作</span>
-					</div>
-					<div class="personal-inf text item">
-						<el-row :gutter="10">
-							<el-col :span="6">
-								<el-link :underline="false" class="personal-inf-card">
-									<div class="card-icon">
-										<i class="el-icon-edit"></i>
-									</div>
-									<div class="card-inf">数据发布</div>
-								</el-link>
-							</el-col>
-							<el-col :span="6">
-								<el-link :underline="false" class="personal-inf-card">
-									<div class="card-icon">
-										<i class="el-icon-cpu"></i>
-									</div>
-									<div class="card-inf">数据清洗</div>
-								</el-link>
-							</el-col>
-							<el-col :span="6">
-								<el-link :underline="false" class="personal-inf-card">
-									<div class="card-icon">
-										<i class="el-icon-search"></i>
-									</div>
-									<div class="card-inf">数据检索</div>
-								</el-link>
-							</el-col>
-							<el-col :span="6">
-								<el-link :underline="false" class="personal-inf-card">
-									<div class="card-icon">
-										<i class="el-icon-pie-chart"></i>
-									</div>
-									<div class="card-inf">数据统计</div>
-								</el-link>
-							</el-col>
-							<el-col :span="6">
-								<el-link :underline="false" class="personal-inf-card">
-									<div class="card-icon">
-										<i class="el-icon-setting"></i>
-									</div>
-									<div class="card-inf">个人设置</div>
-								</el-link>
-							</el-col>
-							<el-col :span="6">
-								<el-link :underline="false" class="personal-inf-card">
-									<div class="card-icon">
-										<i class="el-icon-circle-plus-outline"></i>
-									</div>
-									<div class="card-inf">添加入口</div>
-								</el-link>
-							</el-col>
-						</el-row>
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :span="8" :xl="8" :lg="8" :md="12" :sm="12" class="m-b-20">
-				<el-card class="custom-card" :body-style="{ padding: '15px' }">
-					<div slot="header">
-						<span>今日数据</span>
-					</div>
-					<div class="text item">
-						<el-row :gutter="10" class="personal-content">
-							<el-col :span="12" v-for="(item,index) in personalContent" :key="index">
-								<el-link :underline="false" class="personal-content-card">
-									<div class="card-title">{{item.title}}</div>
-									<div class="card-content">{{item.count}}</div>
-								</el-link>
-							</el-col>
-						</el-row>
-					</div>
-				</el-card>
-			</el-col>
-		</el-row>
-		<el-row :gutter="20">
-			<el-col :span="16" class="m-b-20">
-				<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
-					<div slot="header" class="clearfix w100">
-						<span>访问量</span>
-						<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
-					</div>
-					<div class="canvas-box">
-						<div id="canvas"></div>
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :span="8" class="m-b-20">
-				<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
-					<div slot="header" class="clearfix w100">
-						<span>民生关注</span>
-						<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
-					</div>
-					<div class="canvas-box">
-						<div id="canvas1"></div>
-					</div>
-				</el-card>
-			</el-col>
-		</el-row>
-	</div>
+				<div class="work-footer-right">
+					<el-link :underline="false" type="info" href="https://element.eleme.io" target="_blank">问题反馈</el-link>
+					<span>|</span>
+					<el-link :underline="false" type="info">使用条款</el-link>
+					<span>|</span>
+					<el-link :underline="false" type="info">隐私声明</el-link>
+					<span>|</span>
+					<el-link :underline="false" type="info">隐私政策</el-link>
+				</div>
+			</div>
+		</el-footer>
+	</el-container>
 </template>
 
 <script>
@@ -313,6 +353,7 @@ export default {
 
 <style scoped>
 .work {
+	overflow: hidden;
 	background-color: #f7f7f9;
 }
 
@@ -427,10 +468,6 @@ export default {
 	height: 84px;
 }
 
-.personal-inf .el-col:nth-child(n + 5) {
-	margin-top: 10px;
-}
-
 .personal-inf-card .card-icon {
 	height: 60px;
 	line-height: 60px;
@@ -469,8 +506,27 @@ export default {
 	text-align: left;
 }
 
-.personal-inf .el-col:nth-child(n + 5),
-.personal-content .el-col:nth-child(n + 3) {
+.personal-inf .el-row,
+.personal-content .el-row {
+	margin-top: -10px;
+}
+
+.personal-inf .el-col,
+.personal-content .el-col {
 	margin-top: 10px;
+}
+
+.work-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 42px;
+	line-height: 42px;
+	font-size: 12px;
+	color: #999;
+}
+
+.work-footer-right span {
+	padding: 0 6px;
 }
 </style>

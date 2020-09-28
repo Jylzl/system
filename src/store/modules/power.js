@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-25 17:29:51
+ * @lastTime: 2020-09-28 09:34:19
  */
 
 import {
@@ -38,7 +38,7 @@ const power = {
         //     router.addRoutes(routes);
         // },
         SET_PERMS: (state, params) => {
-            router.addRoutes(routes);
+            // router.addRoutes(routes);
             state.user = params.user;
             state.perms = true;
         },

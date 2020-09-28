@@ -3,11 +3,11 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-13 12:43:05
+ * @lastTime: 2020-09-28 09:45:21
  -->
 <template>
 	<el-container>
-		<el-aside width="240px">
+		<el-aside width="240px" class="aside-left">
 			<div class="left-top">
 				<el-button type="text" icon="el-icon-menu" @click="getDeptTree(false, -1);">顶级部门</el-button>
 				<el-button type="text" icon="el-icon-refresh" @click="getDeptTree(false,nowDeptID)">刷新</el-button>

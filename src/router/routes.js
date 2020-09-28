@@ -273,6 +273,7 @@ const routes = [
         },
         path: '/page',
         name: 'page',
+        redirect: '/page/content',
         component: Container,
         children: [
             {
@@ -280,7 +281,7 @@ const routes = [
                     title: '内容列表',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place",
+                    iconCls: "el-icon-notebook-2",
                     topPath: '/page'
                 },
                 path: '/page/content',
@@ -292,7 +293,7 @@ const routes = [
                     title: '栏目列表',
                     hidden: false,
                     leaf: true,
-                    iconCls: "el-icon-place",
+                    iconCls: "el-icon-notebook-1",
                     topPath: '/page'
                 },
                 path: '/page/column',

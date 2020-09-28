@@ -3,11 +3,11 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-03 09:03:16
+ * @lastTime: 2020-09-28 09:45:00
  -->
 <template>
 	<el-container>
-		<el-aside width="240px">
+		<el-aside width="240px" class="aside-left">
 			<div class="left-top">
 				<el-button type="text" icon="el-icon-menu" @click="getMenuTree(false, -1);">顶级菜单</el-button>
 				<el-button type="text" icon="el-icon-refresh" @click="getMenuTree(false,nowMenuID)">刷新</el-button>

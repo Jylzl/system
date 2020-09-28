@@ -3,11 +3,11 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-17 12:02:43
+ * @lastTime: 2020-09-28 09:45:11
  -->
 <template>
 	<el-container>
-		<el-aside width="240px">
+		<el-aside width="240px" class="aside-left">
 			<ColumnTree @columnClick="columnClick" @columnRefresh="columnClick"></ColumnTree>
 		</el-aside>
 		<el-main>

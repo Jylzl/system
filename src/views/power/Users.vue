@@ -3,11 +3,11 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-14 11:56:26
+ * @lastTime: 2020-09-28 16:12:44
  -->
 <template>
 	<el-container>
-		<el-aside width="240px">
+		<el-aside width="240px" class="aside-left">
 			<div class="left-top">
 				<el-button type="text" icon="el-icon-menu" @click="getDeptTree(false, -1);">顶级部门</el-button>
 				<el-button type="text" icon="el-icon-refresh" @click="getDeptTree(false,nowDeptID)">刷新</el-button>
@@ -124,8 +124,10 @@
 								<el-upload
 									class="avatar-uploader"
 									:action="uploadAction"
+									accept="image/png, image/jpeg"
 									name="fields"
 									:headers="uploadHeader"
+									:with-credentials="true"
 									:show-file-list="false"
 									:on-success="handleAvatarSuccess"
 									:before-upload="beforeAvatarUpload"
@@ -185,7 +187,7 @@
 	</el-container>
 </template>
 <script>
-import { getToken } from "@/utils/auth";
+import { getToken, csrfToken } from "@/utils/auth";
 import va from "@/rules/index.js";
 import { Encrypt } from "@/utils/aes.js";
 import { fetchDeptTree } from "@/api/power/dept";
@@ -283,8 +285,10 @@ export default {
 	computed: {
 		uploadHeader() {
 			const token = getToken() || localStorage.getItem("access_token"); //登录标示
+			const csrf_token = csrfToken();
 			return {
 				authorization: "Bearer " + token,
+				"x-csrf-token": csrf_token,
 			};
 		},
 		uploadAction() {
@@ -439,20 +443,20 @@ export default {
 			this.page.currentPage = val;
 			this.getRoleList(); //获取角色列表
 		},
+		// eslint-disable-next-line no-unused-vars
 		handleAvatarSuccess(res, file) {
-			this.imageUrl = URL.createObjectURL(file.raw);
+			// this.imageUrl = URL.createObjectURL(file.raw);
+			console.log("res");
+			console.log(res);
+			this.userForm.image_url =
+				process.env.VUE_APP_SERVER_API + res.data.url;
 		},
 		beforeAvatarUpload(file) {
-			const isJPG = file.type === "image/jpeg";
 			const isLt2M = file.size / 1024 / 1024 < 2;
-
-			if (!isJPG) {
-				this.$message.error("上传头像图片只能是 JPG 格式!");
-			}
 			if (!isLt2M) {
 				this.$message.error("上传头像图片大小不能超过 2MB!");
 			}
-			return isJPG && isLt2M;
+			return isLt2M;
 		},
 	},
 };
