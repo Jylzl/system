@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-28 15:02:26
+ * @lastTime: 2020-09-29 18:14:10
  -->
 <template>
 	<el-container>
@@ -151,20 +151,21 @@
 				</el-row>
 			</div>
 		</el-main>
-		<el-footer height="42px">
-			<div class="work-footer">
-				<div class="work-footer-right">
-					<el-link :underline="false" tyoe="info">华为开发者联盟 版权所有 ©2019-2020</el-link>
-				</div>
-				<div class="work-footer-right">
-					<el-link :underline="false" type="info" href="https://element.eleme.io" target="_blank">问题反馈</el-link>
-					<span>|</span>
-					<el-link :underline="false" type="info">使用条款</el-link>
-					<span>|</span>
-					<el-link :underline="false" type="info">隐私声明</el-link>
-					<span>|</span>
-					<el-link :underline="false" type="info">隐私政策</el-link>
-				</div>
+		<el-footer height="42px" class="work-footer">
+			<div class="work-footer-right">
+				<el-link :underline="false" type="info">华为开发者联盟 版权所有 ©2019-2020</el-link>
+			</div>
+			<div class="work-footer-right">
+				<el-link
+					:underline="false"
+					href="https://element.eleme.io"
+					target="_blank"
+					icon="el-icon-message"
+				>问题反馈</el-link>
+				<span>·</span>
+				<el-link :underline="false" icon="el-icon-help">使用帮助</el-link>
+				<span>·</span>
+				<el-link :underline="false" icon="el-icon-service">联系我们</el-link>
 			</div>
 		</el-footer>
 	</el-container>
@@ -223,71 +224,81 @@ export default {
 				},
 			],
 			data: [
-				{ year: "00:00", value: 3 },
-				{ year: "01:00", value: 4 },
-				{ year: "02:00", value: 5 },
-				{ year: "03:00", value: 5 },
-				{ year: "04:00", value: 4 },
-				{ year: "05:00", value: 6 },
-				{ year: "06:00", value: 7 },
-				{ year: "07:00", value: 9 },
-				{ year: "08:00", value: 9 },
-				{ year: "09:00", value: 5 },
-				{ year: "10:00", value: 6 },
-				{ year: "11:00", value: 4 },
-				{ year: "12:00", value: 7 },
-				{ year: "13:00", value: 9 },
-				{ year: "14:00", value: 5 },
-				{ year: "15:00", value: null },
-				{ year: "16:00", value: null },
-				{ year: "17:00", value: null },
-				{ year: "18:00", value: 4 },
-				{ year: "19:00", value: 7 },
-				{ year: "20:00", value: 4 },
-				{ year: "21:00", value: 9 },
-				{ year: "22:00", value: 4 },
-				{ year: "23:00", value: 6 },
+				{ year: "00:00", type: "访问量", value: 3 },
+				{ year: "01:00", type: "访问量", value: 4 },
+				{ year: "02:00", type: "访问量", value: 5 },
+				{ year: "03:00", type: "访问量", value: 5 },
+				{ year: "04:00", type: "访问量", value: 4 },
+				{ year: "05:00", type: "访问量", value: 6 },
+				{ year: "06:00", type: "访问量", value: 7 },
+				{ year: "07:00", type: "访问量", value: 9 },
+				{ year: "08:00", type: "访问量", value: 9 },
+				{ year: "09:00", type: "访问量", value: 5 },
+				{ year: "10:00", type: "访问量", value: 6 },
+				{ year: "11:00", type: "访问量", value: 4 },
+				{ year: "12:00", type: "访问量", value: 7 },
+				{ year: "13:00", type: "访问量", value: 9 },
+				{ year: "14:00", type: "访问量", value: 5 },
+				{ year: "15:00", type: "访问量", value: null },
+				{ year: "16:00", type: "访问量", value: null },
+				{ year: "17:00", type: "访问量", value: null },
+				{ year: "18:00", type: "访问量", value: 4 },
+				{ year: "19:00", type: "访问量", value: 7 },
+				{ year: "20:00", type: "访问量", value: 4 },
+				{ year: "21:00", type: "访问量", value: 9 },
+				{ year: "22:00", type: "访问量", value: 4 },
+				{ year: "23:00", type: "访问量", value: 6 },
 			],
 			data1: [
 				{
 					item: "招工用工",
-					score: 70,
+					value: 70,
+					type: "关注量",
 				},
 				{
 					item: "税费减免",
-					score: 60,
+					value: 60,
+					type: "关注量",
 				},
 				{
 					item: "融资贷款",
-					score: 60,
+					value: 60,
+					type: "关注量",
 				},
 				{
 					item: "农林牧渔",
-					score: 40,
+					value: 40,
+					type: "关注量",
 				},
 				{
 					item: "交通出行",
-					score: 60,
+					value: 60,
+					type: "关注量",
 				},
 				{
 					item: "社会保障",
-					score: 70,
+					value: 70,
+					type: "关注量",
 				},
 				{
 					item: "返岗复工",
-					score: 50,
+					value: 50,
+					type: "关注量",
 				},
 				{
 					item: "疫情防控",
-					score: 30,
+					value: 30,
+					type: "关注量",
 				},
 				{
 					item: "高考志愿",
-					score: 60,
+					value: 60,
+					type: "关注量",
 				},
 				{
 					item: "中考查询",
-					score: 50,
+					value: 50,
+					type: "关注量",
 				},
 			],
 		};
@@ -311,6 +322,11 @@ export default {
 				data,
 				xField: "year",
 				yField: "value",
+				seriesField: "type",
+				legend: {
+					visible: false,
+					position: "right-top",
+				},
 				lineStyle: {
 					stroke: "#1476d1",
 					lineWidth: 2,
@@ -322,6 +338,12 @@ export default {
 					shadowOffsetY: 5,
 					cursor: "pointer",
 				},
+				// 动画
+				// animation: {
+				// 	appear: {
+				// 		animation: "clipingWithData",
+				// 	},
+				// },
 			});
 			linePlot.render();
 		},
@@ -338,8 +360,13 @@ export default {
 				},
 				data,
 				angleField: "item",
-				radiusField: "score",
+				radiusField: "value",
+				seriesField: "type",
 				color: ["#1476d1"],
+				legend: {
+					visible: false,
+					position: "right-top",
+				},
 				radiusAxis: {
 					gridType: "arc",
 					gridAlternateColor: "rgba(0, 0, 0, 0.04)",
@@ -524,9 +551,11 @@ export default {
 	line-height: 42px;
 	font-size: 12px;
 	color: #999;
+	background-color: #fff;
 }
 
-.work-footer-right span {
+.work-footer-right > span {
 	padding: 0 6px;
+	font-size: 0;
 }
 </style>

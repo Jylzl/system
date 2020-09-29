@@ -273,7 +273,7 @@ const routes = [
         },
         path: '/page',
         name: 'page',
-        redirect: '/page/content',
+        redirect: '/page/content_list',
         component: Container,
         children: [
             {
@@ -284,9 +284,21 @@ const routes = [
                     iconCls: "el-icon-notebook-2",
                     topPath: '/page'
                 },
-                path: '/page/content',
+                path: '/page/content_list',
                 name: 'content',
-                component: ansycRoutes.get('content')
+                component: ansycRoutes.get('content'),
+            },
+            {
+                meta: {
+                    title: '内容详情',
+                    hidden: true,
+                    leaf: true,
+                    iconCls: "el-icon-notebook-2",
+                    topPath: '/page'
+                },
+                path: '/page/content_details',
+                name: 'contentDetails',
+                component: ansycRoutes.get('contentDetails')
             },
             {
                 meta: {

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-28 00:14:28
+ * @lastTime: 2020-09-29 11:34:25
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -26,8 +26,9 @@ const eight = r => require.ensure([], () => r(require('@/views/app/AppEight.vue'
 const baidu = r => require.ensure([], () => r(require('@/views/monitor/Baidu.vue')), 'baidu') // 机构
 const perf = r => require.ensure([], () => r(require('@/views/monitor/Perf.vue')), 'perf') // 菜单
 // page-页面
-const content = r => require.ensure([], () => r(require('@/views/page/content/Index.vue')), 'content') // 内容
-const column = r => require.ensure([], () => r(require('@/views/page/column/Index.vue')), 'column') // 栏目
+const content = r => require.ensure([], () => r(require('@/views/page/content/Index.vue')), 'content') // 内容列表
+const contentDetails = r => require.ensure([], () => r(require('@/views/page/content/Details.vue')), 'contentDetails') // 内容详情
+const column = r => require.ensure([], () => r(require('@/views/page/column/Index.vue')), 'column') // 栏目列表
 
 let ansycRoutes = new Map()
 
@@ -53,6 +54,7 @@ ansycRoutes.set("baidu", baidu)
 ansycRoutes.set("perf", perf)
 // page-页面
 ansycRoutes.set("content", content)
+ansycRoutes.set("contentDetails", contentDetails)
 ansycRoutes.set("column", column)
 
 export {

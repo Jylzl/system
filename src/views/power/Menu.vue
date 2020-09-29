@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-28 09:45:00
+ * @lastTime: 2020-09-29 11:22:35
  -->
 <template>
 	<el-container>
@@ -108,7 +108,7 @@
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
 						<el-table :data="menus" stripe style="width: 100%;height:100%;" size="small">
-							<el-table-column type="expand">
+							<!-- <el-table-column type="expand">
 								<template slot-scope="props">
 									<el-form label-position="left" inline class="demo-table-expand">
 										<el-form-item label="上级Id:">
@@ -122,8 +122,7 @@
 										</el-form-item>
 									</el-form>
 								</template>
-							</el-table-column>
-							<el-table-column prop="order_num" label="排序" width="60" align="center"></el-table-column>
+							</el-table-column>-->
 							<el-table-column label="类型" width="80" align="center">
 								<template slot-scope="scope">
 									<template v-for="item in menuTypeLists">
@@ -136,13 +135,20 @@
 									</template>
 								</template>
 							</el-table-column>
-							<el-table-column prop="name" label="名称" align="left"></el-table-column>
 							<el-table-column prop="icon" label="图标" width="100" align="center">
 								<template slot-scope="scope">
-									<i :class="scope.row.icon"></i>
+									<i :class="scope.row.icon" style="font-size:18px;"></i>
 								</template>
 							</el-table-column>
-							<el-table-column prop="title" label="标题" align="left" :show-overflow-tooltip="true"></el-table-column>
+							<el-table-column prop="name" label="名称" align="left"></el-table-column>
+							<el-table-column prop="title" label="标题" align="left"></el-table-column>
+							<el-table-column prop="url" label="路由/权限">
+								<template slot-scope="scope">
+									<span v-if="scope.row.type == 3">{{scope.row.perms}}</span>
+									<span v-else>{{scope.row.url}}</span>
+								</template>
+							</el-table-column>
+							<!-- <el-table-column prop="perms" label="权限"></el-table-column> -->
 							<el-table-column prop="show" label="禁用" width="60" align="center">
 								<template slot-scope="scope">
 									<span v-if="scope.row.visible">是</span>
@@ -161,8 +167,7 @@
 									<span v-else>否</span>
 								</template>
 							</el-table-column>
-							<el-table-column prop="url" label="前端地址"></el-table-column>
-							<el-table-column prop="perms" label="权限"></el-table-column>
+							<el-table-column prop="order_num" label="排序" width="60" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -250,7 +255,16 @@
 					</el-col>
 					<el-col :span="menuDialog.span" v-if="menuForm.type == 1 || menuForm.type == 2">
 						<el-form-item label="重定向路径">
-							<el-input v-model="menuForm.rurl" maxlength="200" placeholder="请输入重定向路径"></el-input>
+							<el-cascader
+								v-model="menuForm.rurl"
+								:options="menuTree"
+								:props="rurlProps"
+								:show-all-levels="false"
+								clearable
+								class="w100"
+								placeholder="请选择重定向菜单"
+							></el-cascader>
+							<!-- <el-input v-model="menuForm.rurl" maxlength="200" placeholder="请输入重定向路径"></el-input> -->
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span" v-if="menuForm.type == 3">
@@ -382,6 +396,14 @@ export default {
 				children: "children",
 				label: "title",
 				value: "id",
+			},
+			rurlProps: {
+				filterable: true,
+				emitPath: false,
+				checkStrictly: true,
+				children: "children",
+				label: "title",
+				value: "url",
 			},
 			// 表单验证规则
 			menuFormRules: {

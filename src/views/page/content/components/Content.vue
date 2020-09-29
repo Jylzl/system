@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-09-15 15:35:58
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-16 14:06:22
+ * @lastTime: 2020-09-29 11:53:07
 -->
 <template>
 	<div class="content-list">
@@ -98,17 +98,11 @@
 								<el-tag size="small">待审核</el-tag>
 							</div>
 							<div class="box-footer-right">
-								<!-- <el-button type="primary" icon="el-icon-edit" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-s-promotion" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-s-data" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-link" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-delete" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-camera" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-view" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-document-copy" size="mini" circle></el-button>
-										<el-button type="primary" icon="el-icon-rank" size="mini" circle></el-button>
-								<el-button type="primary" icon="el-icon-more" size="mini" circle></el-button>-->
-								<el-button type="text" icon="el-icon-edit">编辑</el-button>
+								<el-button
+									type="text"
+									icon="el-icon-edit"
+									@click="toLink('/page/content_details',{id:i,type:'edit'})"
+								>编辑</el-button>
 								<el-button type="text" icon="el-icon-s-promotion">发布</el-button>
 								<el-button type="text" icon="el-icon-s-data">置顶</el-button>
 								<el-button type="text" icon="el-icon-link">下线</el-button>
@@ -344,6 +338,12 @@ export default {
 			this.checkAll = checkedCount === this.contentList.length;
 			this.isIndeterminate =
 				checkedCount > 0 && checkedCount < this.contentList.length;
+		},
+		toLink(path, query) {
+			this.$router.push({
+				path,
+				query,
+			});
 		},
 	},
 };

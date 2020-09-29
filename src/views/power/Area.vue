@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-28 00:25:45
+ * @lastTime: 2020-09-29 11:27:51
  -->
 <template>
 	<el-container>
@@ -225,7 +225,7 @@ export default {
 			areaFormRules: {
 				name: [r_required],
 				abbreviation: [r_required],
-				code: [r_checkChinese],
+				code: [r_required, r_checkChinese],
 				order_num: [r_required, r_number],
 				desc: [r_notRequired],
 			},
