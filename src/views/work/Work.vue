@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 15:42:30
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-29 18:14:10
+ * @lastTime: 2020-09-30 11:05:04
  -->
 <template>
 	<el-container>
@@ -160,12 +160,13 @@
 					:underline="false"
 					href="https://element.eleme.io"
 					target="_blank"
+					type="info"
 					icon="el-icon-message"
 				>问题反馈</el-link>
 				<span>·</span>
-				<el-link :underline="false" icon="el-icon-help">使用帮助</el-link>
+				<el-link :underline="false" type="info" icon="el-icon-help">使用帮助</el-link>
 				<span>·</span>
-				<el-link :underline="false" icon="el-icon-service">联系我们</el-link>
+				<el-link :underline="false" type="info" icon="el-icon-service">联系我们</el-link>
 			</div>
 		</el-footer>
 	</el-container>
@@ -486,6 +487,11 @@ export default {
 }
 
 .canvas-box {
+	box-sizing: border-box;
+}
+
+.canvas-box > div {
+	height: 400px;
 	background-color: #fff;
 }
 

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-09-10 19:59:33
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-23 10:43:26
+ * @lastTime: 2020-09-30 09:54:44
 -->
 <template>
 	<div>
@@ -92,6 +92,7 @@ export default {
 						}
 						return i === node.table.headerRows ? 2 : 1;
 					},
+					// eslint-disable-next-line no-unused-vars
 					vLineWidth: function (i) {
 						return 0;
 					},
