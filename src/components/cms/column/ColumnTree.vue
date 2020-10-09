@@ -1,7 +1,7 @@
 <template>
 	<div class="h100">
 		<div class="left-top">
-			<el-button type="text" icon="el-icon-menu" @click="getColumnTree(false, -1);">顶级栏目栏目</el-button>
+			<el-button type="text" icon="el-icon-menu" @click="getColumnTree(false, -1);">顶级栏目</el-button>
 			<el-button type="text" icon="el-icon-refresh" @click="getColumnTree(false,nowColumnID)">刷新</el-button>
 		</div>
 		<div class="left-center" v-loading="treeLoading">

@@ -308,7 +308,7 @@ const routes = [
                     iconCls: "el-icon-notebook-1",
                     topPath: '/page'
                 },
-                path: '/page/column',
+                path: '/page/column_list',
                 name: 'column',
                 component: ansycRoutes.get('column')
             }

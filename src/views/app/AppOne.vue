@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-10 14:05:07
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-04 18:19:14
+ * @lastTime: 2020-10-09 10:31:23
 --> 
 <template>
 	<div>
@@ -19,7 +19,7 @@ export default {
 	},
 	data() {
 		return {
-			value: "<p>111111</p>",
+			value: "",
 			options: {
 				height: 600,
 			},
