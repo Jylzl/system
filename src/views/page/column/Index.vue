@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-17 14:05:23
+ * @lastTime: 2020-10-09 18:13:58
  -->
 <template>
 	<el-container>
@@ -27,17 +27,21 @@
 				</div>
 			</div>
 			<div class="right-table-50">
-				<el-scrollbar wrap-class="scrollbar-wrapper">11</el-scrollbar>
+				<el-scrollbar wrap-class="scrollbar-wrapper">
+					<List></List>
+				</el-scrollbar>
 			</div>
 		</el-main>
 	</el-container>
 </template>
 <script>
 import ColumnTree from "@/components/cms/column/ColumnTree.vue";
+import List from "./components/List.vue";
 export default {
 	name: "columnList",
 	components: {
 		ColumnTree,
+		List,
 	},
 	data() {
 		return {
