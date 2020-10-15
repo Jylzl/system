@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-07-08 08:59:30
+ * @lastTime: 2020-10-15 18:21:41
  */
 
 import Vue from 'vue'
@@ -22,7 +22,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: process.env.BASE_URL || "/",
   routes
 })
 

@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-11 18:30:57
+ * @lastTime: 2020-10-15 11:47:12
  -->
 <template>
 	<div class="land-box">
@@ -12,7 +12,10 @@
 				<img :src="imgUrl" alt draggable="false" />
 			</div>
 			<div class="right">
-				<div class="logo">Jeecms-logo</div>
+				<div class="logo">
+					孝感市政府网站监测平台
+					<span>V1.1.0</span>
+				</div>
 				<div class="land-form">
 					<el-tabs v-model="activeName" @tab-click="handleClick">
 						<el-tab-pane label="账号登录" name="password">
@@ -615,15 +618,24 @@ export default {
 }
 
 .logo {
+	box-sizing: border-box;
 	height: 150px;
-	font-size: 36px;
+	padding-top: 50px;
+	font-size: 28px;
+	font-weight: bold;
 	text-align: center;
-	line-height: 150px;
+	line-height: 100px;
+	color: #409eff;
+}
+
+.logo span {
+	font-size: 12px;
+	color: #909399;
 }
 
 .land-form {
 	box-sizing: border-box;
-	padding: 20px 80px 0 80px;
+	padding: 20px 60px 0 60px;
 }
 
 .forget-password {
@@ -655,7 +667,7 @@ export default {
 
 .land-form-btn {
 	box-sizing: border-box;
-	padding: 0 80px;
+	padding: 0 60px;
 }
 
 .three-land {

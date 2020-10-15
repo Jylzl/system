@@ -12,7 +12,7 @@ import {
 import Container from '@/layout/Container.vue';
 // import ChildView from '@/layout/ChildView.vue';
 
-import Login from '@/views/account/Login.vue'
+import Login from '@/views/account/login/Index.vue'
 import Lock from '@/views/account/Lock.vue'
 import Register from '@/views/account/Register.vue'
 

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:36:36
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-28 11:59:09
+ * @lastTime: 2020-10-15 18:20:42
  */
 
 'use strict'
@@ -18,8 +18,8 @@ function resolve(dir) {
 const name = defaultSettings.title // page title
 
 module.exports = {
-    publicPath: '/' + process.env.BASE_URL, // 根路径
-    outputDir: process.env.BASE_URL, //构建输出目录
+    publicPath: '/' + process.env.BASE_URL || "", // 根路径
+    outputDir: process.env.BASE_URL || "dist", //构建输出目录
     assetsDir: 'assets', //静态资源目录
     lintOnSave: false, // 是否开启eslint保存检测，有效值true/false/error
     devServer: {

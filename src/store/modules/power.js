@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-30 09:54:21
+ * @lastTime: 2020-10-15 14:29:53
  */
 
 import {
@@ -61,6 +61,7 @@ const power = {
         //     commit('LEFT_ROUTERS', data);
         // },
         userLogin({ commit }, data) {
+            console.log(data)
             const remember = data.rememberPswd;
             const username = data.user;
             const password = Encrypt(data.pswd, process.env.VUE_APP_aesKey, process.env.VUE_APP_ivKey); //密码加密
