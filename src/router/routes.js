@@ -13,8 +13,9 @@ import Container from '@/layout/Container.vue';
 // import ChildView from '@/layout/ChildView.vue';
 
 import Login from '@/views/account/login/Index.vue'
-import Lock from '@/views/account/Lock.vue'
-import Register from '@/views/account/Register.vue'
+import Lock from '@/views/account/lock/Index.vue'
+import Register from '@/views/account/register/Index.vue'
+import Forget from '@/views/account/forget/Index.vue'
 
 const routes = [
     {
@@ -392,6 +393,17 @@ const routes = [
         path: '/register',
         name: 'register',
         component: Register
+    },
+    {
+        meta: {
+            title: '找回密码',
+            hidden: true,
+            open: true,
+            topPath: '/forget'
+        },
+        path: '/forget',
+        name: 'forget',
+        component: Forget
     },
     {
         meta: {

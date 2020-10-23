@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-09-15 15:35:58
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-29 11:53:07
+ * @lastTime: 2020-10-23 17:48:41
 -->
 <template>
 	<div class="content-list">
@@ -16,32 +16,31 @@
 				size="small"
 			>
 				<el-form-item label="创建方式">
-					<el-select v-model="formInline.formSource" placeholder="创建方式" style="width: 126px;">
+					<el-select v-model="formInline.formSource" placeholder="创建方式" style="width: 126px;" clear>
 						<el-option label="全部" value></el-option>
 						<el-option :label="o.label" :value="o.value" v-for="o in formSourceOptions" :key="o.value"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="排序方式">
-					<el-select v-model="formInline.order" placeholder="排序方式" style="width: 126px;">
+					<el-select v-model="formInline.order" placeholder="排序方式" style="width: 126px;" clear>
 						<el-option label="默认排序" value></el-option>
-						<el-option label="申请时间" value="applicationTime"></el-option>
-						<el-option label="处理时间" value="delayDate"></el-option>
+						<el-option :label="o.label" :value="o.value" v-for="o in orderOptions" :key="o.value"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="申请类型">
-					<el-select v-model="formInline.requestType" placeholder="申请类型" style="width: 126px;">
+				<el-form-item label="内容类型">
+					<el-select v-model="formInline.contentType" placeholder="内容类型" style="width: 126px;" clear>
 						<el-option label="全部" value></el-option>
-						<el-option :label="o.label" :value="o.value" v-for="o in requestTypeOptions" :key="o.value"></el-option>
+						<el-option :label="o.label" :value="o.value" v-for="o in contentTypeOptions" :key="o.value"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="处理状态">
-					<el-select v-model="formInline.auditStatus" placeholder="审核状态" style="width: 126px;">
+				<el-form-item label="内容状态">
+					<el-select v-model="formInline.auditStatus" placeholder="内容状态" style="width: 126px;" clear>
 						<el-option label="全部" value></el-option>
 						<el-option :label="o.label" :value="o.value" v-for="o in auditStatusOptions" :key="o.value"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item>
-					<el-input v-model="formInline.appTitle" placeholder="请输入标题">
+					<el-input v-model="formInline.appTitle" placeholder="请输入标题" clear>
 						<el-button slot="append" type="primary" icon="el-icon-search"></el-button>
 					</el-input>
 				</el-form-item>
@@ -221,18 +220,17 @@
 					<el-form-item label="排序方式">
 						<el-select v-model="formInline.order" placeholder="排序方式" class="w100">
 							<el-option label="默认排序" value></el-option>
-							<el-option label="申请时间" value="applicationTime"></el-option>
-							<el-option label="处理时间" value="delayDate"></el-option>
+							<el-option :label="o.label" :value="o.value" v-for="o in orderOptions" :key="o.value"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="申请类型">
-						<el-select v-model="formInline.requestType" placeholder="申请类型" class="w100">
+					<el-form-item label="内容类型">
+						<el-select v-model="formInline.contentType" placeholder="内容类型" class="w100">
 							<el-option label="全部" value></el-option>
-							<el-option :label="o.label" :value="o.value" v-for="o in requestTypeOptions" :key="o.value"></el-option>
+							<el-option :label="o.label" :value="o.value" v-for="o in contentTypeOptions" :key="o.value"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="处理状态">
-						<el-select v-model="formInline.auditStatus" placeholder="审核状态" class="w100">
+					<el-form-item label="内容状态">
+						<el-select v-model="formInline.auditStatus" placeholder="内容状态" class="w100">
 							<el-option label="全部" value></el-option>
 							<el-option :label="o.label" :value="o.value" v-for="o in auditStatusOptions" :key="o.value"></el-option>
 						</el-select>
@@ -268,25 +266,33 @@ export default {
 			checkList: [],
 			checkAll: false,
 			isIndeterminate: false,
-			formInline: {},
+			formInline: {
+				formSource: "",
+				order: "",
+				contentType: "",
+			},
 			value: null,
 			dialogVisible: false,
 			formSourceOptions: [
 				{
-					label: "信息公开",
+					label: "后台发布",
 					value: 1,
 				},
 				{
-					label: "新媒体",
+					label: "信息公开推送",
 					value: 2,
 				},
 				{
-					label: "后台发布",
+					label: "新媒体推送",
 					value: 3,
 				},
 				{
 					label: "前台投稿",
 					value: 4,
+				},
+				{
+					label: "采集",
+					value: 5,
 				},
 			],
 			auditStatusOptions: [
@@ -307,14 +313,44 @@ export default {
 					value: 4,
 				},
 			],
-			requestTypeOptions: [
+			contentTypeOptions: [
 				{
-					label: "公民",
+					label: "头条",
 					value: 0,
 				},
 				{
-					label: "法人/其他组织",
+					label: "焦点",
 					value: 1,
+				},
+				{
+					label: "要闻",
+					value: 2,
+				},
+			],
+			orderOptions: [
+				{
+					label: "发布时间降序",
+					value: 0,
+				},
+				{
+					label: "发布时间升序",
+					value: 1,
+				},
+				{
+					label: "创建时间降序",
+					value: 2,
+				},
+				{
+					label: "创建时间升序",
+					value: 3,
+				},
+				{
+					label: "总访问数降序",
+					value: 4,
+				},
+				{
+					label: "总访问数升序",
+					value: 5,
 				},
 			],
 		};

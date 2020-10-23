@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:48:03
  * @LastAuthor: lizlong
- * @lastTime: 2020-10-15 15:50:19
+ * @lastTime: 2020-10-16 10:35:56
  -->
 <template>
 	<div class="land-box">
@@ -12,10 +12,7 @@
 				<img :src="imgUrl" draggable="false" />
 			</div>
 			<div class="right">
-				<div class="logo">
-					孝感市政府网站监测平台
-					<span>V1.1.0</span>
-				</div>
+				<div class="logo">{{sysInf.title}}</div>
 				<div class="land-form">
 					<el-tabs v-model="activeName">
 						<el-tab-pane label="账号登录" name="password">
@@ -28,7 +25,7 @@
 				</div>
 				<div class="three-land">
 					<div class="three-land-left">
-						<el-link type="info">注册新账户</el-link>
+						<router-link to="/register" class="el-link el-link--info is-underline">注册新账户</router-link>
 					</div>
 					<div class="three-land-right">
 						<thirdLogin />
@@ -36,9 +33,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="sys-version">版本：v_{{sysInf.version}}</div>
 	</div>
 </template>
 <script>
+const defaultSettings = require("@/settings.js");
 import userLogin from "./User";
 import phoneLogin from "./Phone";
 import thirdLogin from "./Third";
@@ -54,6 +53,11 @@ export default {
 			imgUrl: require("@/assets/img/account/land_bg_center.png"),
 			activeName: "password",
 		};
+	},
+	computed: {
+		sysInf() {
+			return defaultSettings;
+		},
 	},
 };
 </script>
@@ -102,11 +106,6 @@ export default {
 	color: #409eff;
 }
 
-.logo span {
-	font-size: 12px;
-	color: #909399;
-}
-
 .land-form {
 	box-sizing: border-box;
 	padding: 20px 60px 0 60px;
@@ -114,13 +113,19 @@ export default {
 
 .three-land {
 	box-sizing: border-box;
-	box-sizing: border-box;
-	display: -webkit-flex;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 60px;
 	text-align: right;
 	margin-top: 22px;
+}
+
+.sys-version {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	font-size: 12px;
+	color: #909399;
 }
 </style>

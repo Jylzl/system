@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-10-15 10:55:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-10-15 15:48:30
+ * @lastTime: 2020-10-23 11:45:54
 -->
 <template>
 	<div class="card-box">
@@ -12,7 +12,7 @@
 				<el-autocomplete
 					v-model="form.user"
 					:fetch-suggestions="querySearch"
-					placeholder="请输入手机号/邮箱/用户名"
+					placeholder="手机号/邮箱/用户名"
 					:trigger-on-focus="false"
 					@select="handleSelect"
 					style="width:100%;"
@@ -60,7 +60,7 @@
 						:true-label="1"
 						:false-label="0"
 					>记住密码</el-checkbox>
-					<router-link to="/register">忘记密码？</router-link>
+					<router-link to="/forget">忘记密码？</router-link>
 				</div>
 			</el-form-item>
 			<el-form-item style="margin:0;">
