@@ -367,7 +367,6 @@ export default {
 				.then(() => {
 					this.tableLoading = true;
 					delObj(id).then((res) => {
-						console.log(res);
 						this.tableLoading = false;
 						this.getUserList(this.nowDeptID); //获取菜单列表
 						this.$message.success(`成功删除${res.data}条数据`);
@@ -446,8 +445,6 @@ export default {
 		// eslint-disable-next-line no-unused-vars
 		handleAvatarSuccess(res, file) {
 			// this.imageUrl = URL.createObjectURL(file.raw);
-			console.log("res");
-			console.log(res);
 			this.userForm.image_url =
 				process.env.VUE_APP_SERVER_API + res.data.url;
 		},

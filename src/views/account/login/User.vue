@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-10-15 10:55:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-10-23 11:45:54
+ * @lastTime: 2020-12-12 17:39:12
 -->
 <template>
 	<div class="card-box">
@@ -89,8 +89,8 @@ export default {
 		return {
 			form: {
 				grant_type: "password",
-				user: "",
-				pswd: "",
+				user: "lizilong",
+				pswd: "long1234",
 				remember: true,
 				code: "",
 			},
@@ -103,16 +103,11 @@ export default {
 			},
 			isPswd: true,
 			landLoading: false,
+			rememberUsers: [],
+			landTimes: 0,
 		};
 	},
-	computed: {
-		rememberUsers() {
-			return [];
-		},
-		landTimes() {
-			return 0;
-		},
-	},
+	computed: {},
 	methods: {
 		checkCookies() {
 			if (!navigator.cookieEnabled) {
@@ -229,7 +224,7 @@ export default {
 					if (res.code == "200") {
 						//登录成功后，先清除旧用户信息，然后判断用户是否勾选记住密码，是则将用户信息插入数组，否则仅记住用户名，然后将数组加密后存入cookies
 						this.rememberUsers = this.rememberUsers.filter(
-							(user) => user.value != this.landForm_password.user
+							(user) => user.value != this.form.user
 						);
 						// 默认记录5条用户信息，
 						if (this.rememberUsers.length > 4) {
@@ -238,14 +233,14 @@ export default {
 								4
 							);
 						}
-						if (this.landForm_password.remember) {
+						if (this.form.remember) {
 							this.rememberUsers.push({
-								value: this.landForm_password.user,
-								pswd: this.landForm_password.pswd,
+								value: this.form.user,
+								pswd: this.form.pswd,
 							});
 						} else {
 							this.rememberUsers.push({
-								value: this.landForm_password.user,
+								value: this.form.user,
 								pswd: "",
 							});
 						}
@@ -271,7 +266,7 @@ export default {
 							showClose: true,
 						});
 						// 重置登录样式
-						this.restLand();
+						this.landLoading = false;
 						// 登录成功跳转主页
 						this.$router.push({
 							name: "work",
@@ -280,14 +275,13 @@ export default {
 						this.landFail();
 					}
 				})
-				.catch((err) => {
+				.catch(() => {
 					this.landFail();
-					console.log(err);
 				});
 		},
 		//登陆失败
 		landFail(type, msg) {
-			this.loading = false;
+			this.landLoading = false;
 			// 登陆错误时记录次数
 			Cookies.set(
 				"landingTimes",

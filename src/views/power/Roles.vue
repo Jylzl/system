@@ -248,7 +248,6 @@ export default {
 		},
 		//添加
 		add() {
-			console.log("1");
 			this.roleDialog.visible = true;
 			this.roleDialog.roleForm = "add";
 			this.roleDialog.title = "新增";
@@ -269,7 +268,6 @@ export default {
 				.then(() => {
 					this.tableLoading = true;
 					delObj(menuId).then((res) => {
-						console.log(res);
 						this.tableLoading = false;
 						this.getRoleList(); //获取角色列表
 						this.$message.success(`成功删除${res.data}条数据`);

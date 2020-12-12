@@ -101,7 +101,6 @@ service.interceptors.response.use(
 		return response.data;
 	},
 	error => {
-		console.log(error)
 		showMessage('服务器响应失败');
 		return Promise.reject(error)
 	}

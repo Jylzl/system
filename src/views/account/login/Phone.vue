@@ -107,7 +107,6 @@ export default {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {
 					this.landLoading = true;
-					console.log(this.form);
 				} else {
 					return false;
 				}

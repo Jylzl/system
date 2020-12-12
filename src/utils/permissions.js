@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-10-23 16:07:02
+ * @lastTime: 2020-12-12 17:03:29
  */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -28,34 +28,33 @@ router.beforeEach((to, from, next) => {
     // 设置页面标题
     document.title = getPageTitle(to.meta.title)
 
-    next();
-    // let token = getToken() || localStorage.getItem("access_token"); //登录标示
-    // let perms = store.state.power.perms; //store登录状态
-    // if ((token == null || token == undefined || token == "") && to.meta.open != true) {
-    //     next('/login');
-    // } else {
-    //     if (to.meta.open == true) {
-    //         next();
-    //     } else {
-    //         if (perms) {
-    //             next();
-    //         } else {
-    //             try {
-    //                 store.dispatch('setRouters').then(() => {
-    //                     next()
-    //                 }).catch(() => {
-    //                     next("/login");
-    //                 });
-    //                 // hack method to ensure that addRoutes is complete
-    //                 // set the replace: true, so the navigation will not leave a history record
-    //             } catch (error) {
-    //                 // remove token and go to login page to re-login
-    //                 next(`/login?redirect=${to.path}`)
-    //                 NProgress.done()
-    //             }
-    //         }
-    //     }
-    // }
+    let token = getToken() || localStorage.getItem("access_token"); //登录标示
+    let perms = store.state.power.perms; //store登录状态
+    if ((token == null || token == undefined || token == "") && to.meta.open != true) {
+        next('/login');
+    } else {
+        if (to.meta.open == true) {
+            next();
+        } else {
+            if (perms) {
+                next();
+            } else {
+                try {
+                    store.dispatch('setRouters').then(() => {
+                        next()
+                    }).catch(() => {
+                        next("/login");
+                    });
+                    // hack method to ensure that addRoutes is complete
+                    // set the replace: true, so the navigation will not leave a history record
+                } catch (error) {
+                    // remove token and go to login page to re-login
+                    next(`/login?redirect=${to.path}`)
+                    NProgress.done()
+                }
+            }
+        }
+    }
 })
 
 router.afterEach(() => {

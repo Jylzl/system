@@ -312,6 +312,18 @@ const routes = [
                 path: '/page/column_list',
                 name: 'column',
                 component: ansycRoutes.get('column')
+            },
+            {
+                meta: {
+                    title: '采集列表',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-notebook-1",
+                    topPath: '/page'
+                },
+                path: '/page/crawler_list',
+                name: 'crawler',
+                component: ansycRoutes.get('crawler')
             }
         ]
     }, {

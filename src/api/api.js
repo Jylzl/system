@@ -1,17 +1,9 @@
-/*
- * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-08-21 11:07:45
- * @LastEditTime: 2020-04-27 22:12:58
- * @LastEditors: OBKoro1
- */
-
 /**
  * @description: 全局api
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-08-12 15:16:26
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 09:50:34
+ * @lastTime: 2020-12-12 17:10:42
  */
 
 const api = {

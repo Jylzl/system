@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2020-10-28 14:53:38
+ * @lastTime: 2020-12-07 11:09:29
  -->
 <template>
 	<Editor v-model="html" api-key="udm8u7u1w88b8yqqt0czgf3glqzet1mnbt95at9wv8u6bib3" :init="init"></Editor>
@@ -101,14 +101,10 @@ export default {
 					a11ychecker: "/tinymce/plugins/a11ychecker/plugin.js",
 				},
 				plugins:
-					"print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker imagetools textpattern noneditable help formatpainter permanentpen pageembed charmap tinycomments mentions quickbars linkchecker emoticons advtable",
-				tinydrive_token_provider: "URL_TO_YOUR_TOKEN_PROVIDER",
-				tinydrive_dropbox_app_key: "YOUR_DROPBOX_APP_KEY",
-				tinydrive_google_drive_key: "YOUR_GOOGLE_DRIVE_KEY",
-				tinydrive_google_drive_client_id: "YOUR_GOOGLE_DRIVE_CLIENT_ID",
+					"print preview powerpaste importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount a11ychecker imagetools textpattern noneditable help formatpainter charmap quickbars emoticons advtable",
 				mobile: {
 					plugins:
-						"print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable",
+						"print preview powerpaste importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount a11ychecker textpattern noneditable help formatpainter charmap quickbars emoticons advtable",
 				},
 				menubar: "file edit view insert format tools table tc help",
 				menu: {
@@ -154,8 +150,6 @@ export default {
 						items: "help",
 					},
 				},
-				// toolbar:
-				// 	"undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment",
 				toolbar:
 					"undo redo | formatselect | formatpainter a11ycheck | fontselect | fontsizeselect | bold italic underline strikethrough subscript superscript removeformat | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent indent2em lineheight | lists image media emoticons link charmap codesample table | bdmap | fullscreen",
 				autosave_ask_before_unload: true,
@@ -207,10 +201,8 @@ export default {
 				noneditable_noneditable_class: "mceNonEditable",
 				toolbar_mode: "sliding",
 				spellchecker_whitelist: ["Ephox", "Moxiecode"],
-				tinycomments_mode: "embedded",
 				content_style: ".mymention{ color: gray; }",
-				contextmenu:
-					"link image imagetools table configurepermanentpen",
+				contextmenu: "link image imagetools table",
 				a11y_advanced_options: true,
 				font_formats:
 					"微软雅黑=Microsoft YaHei; 宋体=SimSun; 新宋体=NSimSun; 仿宋=FangSong; 楷体=KaiTi; 黑体=SimHei; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Times New Roman=times new roman,times; Verdana=verdana,geneva;",

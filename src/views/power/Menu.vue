@@ -491,7 +491,6 @@ export default {
 				.then(() => {
 					this.tableLoading = true;
 					delObj(id).then((res) => {
-						console.log(res);
 						this.tableLoading = false;
 						this.getMenuList(this.nowMenuID); //获取菜单列表
 						this.$message.success(`成功删除${res.data}条数据`);

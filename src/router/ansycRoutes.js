@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-29 11:34:25
+ * @lastTime: 2020-12-12 17:49:02
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -29,6 +29,8 @@ const perf = r => require.ensure([], () => r(require('@/views/monitor/Perf.vue')
 const content = r => require.ensure([], () => r(require('@/views/page/content/Index.vue')), 'content') // 内容列表
 const contentDetails = r => require.ensure([], () => r(require('@/views/page/content/Details.vue')), 'contentDetails') // 内容详情
 const column = r => require.ensure([], () => r(require('@/views/page/column/Index.vue')), 'column') // 栏目列表
+
+const crawler = r => require.ensure([], () => r(require('@/views/page/crawler/Index.vue')), 'crawler') // 采集列表
 
 let ansycRoutes = new Map()
 
@@ -56,6 +58,7 @@ ansycRoutes.set("perf", perf)
 ansycRoutes.set("content", content)
 ansycRoutes.set("contentDetails", contentDetails)
 ansycRoutes.set("column", column)
+ansycRoutes.set("crawler", crawler)
 
 export {
     ansycRoutes
