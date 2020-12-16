@@ -109,9 +109,9 @@ const routes = [
                     iconCls: "el-icon-collection-tag",
                     topPath: '/power'
                 },
-                path: '/power/roles',
-                name: 'roles',
-                component: ansycRoutes.get('roles')
+                path: '/power/role',
+                name: 'role',
+                component: ansycRoutes.get('role')
             }, {
                 meta: {
                     title: '用户管理',
@@ -120,9 +120,9 @@ const routes = [
                     iconCls: "el-icon-user",
                     topPath: '/power'
                 },
-                path: '/power/users',
-                name: 'users',
-                component: ansycRoutes.get('users')
+                path: '/power/user',
+                name: 'user',
+                component: ansycRoutes.get('user')
             }
         ]
     }, {
@@ -328,7 +328,7 @@ const routes = [
         ]
     }, {
         meta: {
-            title: '错误页',
+            title: '错误页面',
             hidden: false,
             leaf: false,
             iconCls: "el-icon-brush",

@@ -3,15 +3,15 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-12 17:49:02
+ * @lastTime: 2020-12-16 21:12:52
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
 // power-权限
 const dept = r => require.ensure([], () => r(require('@/views/power/Dept.vue')), 'dept') // 机构
 const menu = r => require.ensure([], () => r(require('@/views/power/Menu.vue')), 'menu') // 菜单
-const roles = r => require.ensure([], () => r(require('@/views/power/Roles.vue')), 'roles') // 角色
-const users = r => require.ensure([], () => r(require('@/views/power/Users.vue')), 'users') // 用户
+const role = r => require.ensure([], () => r(require('@/views/power/Role.vue')), 'role') // 角色
+const user = r => require.ensure([], () => r(require('@/views/power/User.vue')), 'user') // 用户
 const area = r => require.ensure([], () => r(require('@/views/power/Area.vue')), 'area') // 区域
 // app-应用
 const one = r => require.ensure([], () => r(require('@/views/app/AppOne.vue')), 'one') // 机构
@@ -39,8 +39,8 @@ ansycRoutes.set("personal", personal) // 个人中心
 // power-权限
 ansycRoutes.set("dept", dept) // 机构
 ansycRoutes.set("menu", menu) // 菜单
-ansycRoutes.set("roles", roles) // 角色
-ansycRoutes.set("users", users) // 用户
+ansycRoutes.set("role", role) // 角色
+ansycRoutes.set("user", user) // 用户
 ansycRoutes.set("area", area) // 区域
 // app-应用
 ansycRoutes.set("one", one)

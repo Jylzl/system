@@ -1,9 +1,9 @@
 /**
- * @description: 地区0接口
+ * @description: 地区接口
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-28 00:18:15
+ * @lastTime: 2020-12-16 23:00:17
  */
 
 import request from '@/utils/request'
