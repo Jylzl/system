@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-07 11:09:29
+ * @lastTime: 2020-12-16 17:08:51
  -->
 <template>
 	<Editor v-model="html" api-key="udm8u7u1w88b8yqqt0czgf3glqzet1mnbt95at9wv8u6bib3" :init="init"></Editor>
@@ -89,6 +89,7 @@ export default {
 				base_url: "/tinymce", // 从另一个位置加载主题和插件
 				language_url: "/tinymce/langs/zh_CN.min.js", // 语言包的路径
 				language: "zh_CN", // 语言
+				branding: false,
 				skin_url: "/tinymce/skins/ui/oxide", // skin路径
 				emoticons_database_url:
 					"/tinymce/plugins/emoticons/emojis.min.js",

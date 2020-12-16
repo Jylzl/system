@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-09-18 15:18:49
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-18 18:29:02
+ * @lastTime: 2020-12-16 17:21:55
 -->
 <template>
 	<div class="errPage">
@@ -40,5 +40,6 @@ export default {
 	align-items: center;
 	width: 100%;
 	height: 100%;
+	background-color: #fff;
 }
 </style>

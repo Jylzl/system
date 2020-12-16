@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-27 21:33:26
+ * @lastTime: 2020-12-16 17:18:02
  -->
 <template>
 	<div class="header-box">
@@ -33,7 +33,7 @@
 		</div>
 		<div class="header-right">
 			<div class="siteSearch-form" :class="{'show':show}">
-				<el-select v-model="site" placeholder="请选择站点" size="mini" class="site-select mr-20">
+				<el-select v-model="site" placeholder="请选择站点" size="mini" class="site-select mr-20" filterable>
 					<el-option v-for="item in siteList" :key="item.value" :label="item.label" :value="item.value"></el-option>
 				</el-select>
 				<el-popover placement="bottom" width="260" trigger="click">

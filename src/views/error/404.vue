@@ -41,6 +41,7 @@ export default {
 	align-items: center;
 	width: 100%;
 	height: 100%;
+	background-color: #fff;
 
 	.wscn-http404 {
 		position: relative;

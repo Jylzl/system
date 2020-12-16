@@ -68,6 +68,7 @@ export default {
 	align-items: center;
 	width: 100%;
 	height: 100%;
+	background-color: #fff;
 	.errPage-container {
 		width: 800px;
 		max-width: 100%;
