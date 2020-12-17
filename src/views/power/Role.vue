@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-13 11:14:20
+ * @lastTime: 2020-12-17 14:52:23
  -->
 <template>
 	<el-container>
@@ -286,6 +286,9 @@ export default {
 			this.roleDialog.roleForm = "update";
 			this.roleDialog.title = "修改";
 			this.roleForm = row;
+			this.roleForm.menus = row.menus.map((item) => {
+				return item.id;
+			});
 		},
 		// 分页
 		handleSizeChange(val) {

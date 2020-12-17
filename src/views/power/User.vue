@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-28 16:12:44
+ * @lastTime: 2020-12-17 16:22:49
  -->
 <template>
 	<el-container>
@@ -40,13 +40,13 @@
 						<el-table :data="menus" stripe style="width: 100%;height:100%;" size="small">
 							<el-table-column prop="image_url" label="用户头像" width="120" align="center">
 								<template slot-scope="scope">
-									<el-avatar size="small" :src="scope.row.image_url"></el-avatar>
+									<el-avatar size="small" :src="scope.row.user_inf.image_url"></el-avatar>
 								</template>
 							</el-table-column>
 							<el-table-column prop="name" label="用户名" align="left"></el-table-column>
-							<el-table-column prop="real_name" label="真实姓名" align="left"></el-table-column>
-							<el-table-column prop="phone" label="手机号码" align="left"></el-table-column>
-							<el-table-column prop="email" label="邮箱号码" align="left"></el-table-column>
+							<el-table-column prop="user_inf[real_name]" label="真实姓名" align="left"></el-table-column>
+							<el-table-column prop="user_inf[phone]" label="手机号码" align="left"></el-table-column>
+							<el-table-column prop="user_inf[email]" label="邮箱号码" align="left"></el-table-column>
 							<el-table-column prop="last_login_time" label="后登录时间" align="left"></el-table-column>
 							<el-table-column prop="status" label="用户状态" align="left"></el-table-column>
 							<el-table-column prop="login_count" label="登录次数" align="left"></el-table-column>
@@ -114,10 +114,14 @@
 						<div class="form-first">
 							<div class="form-first-left">
 								<el-form-item label="用户名" prop="name">
-									<el-input v-model="userForm.name" maxlength="50"></el-input>
+									<el-input
+										v-model="userForm.name"
+										maxlength="50"
+										:disabled="userDialog.type == 'add'? false:true"
+									></el-input>
 								</el-form-item>
 								<el-form-item label="真实姓名" prop="real_name">
-									<el-input v-model="userForm.real_name" maxlength="50"></el-input>
+									<el-input v-model="userForm.user_inf.real_name" maxlength="50"></el-input>
 								</el-form-item>
 							</div>
 							<div class="form-first-right">
@@ -132,7 +136,7 @@
 									:on-success="handleAvatarSuccess"
 									:before-upload="beforeAvatarUpload"
 								>
-									<img v-if="userForm.image_url" :src="userForm.image_url" class="avatar" />
+									<img v-if="userForm.user_inf.image_url" :src="userForm.user_inf.image_url" class="avatar" />
 									<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 								</el-upload>
 							</div>
@@ -144,22 +148,22 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
-						<el-form-item label="身份证" prop="id_card">
-							<el-input v-model="userForm.id_card" maxlength="200"></el-input>
+						<el-form-item label="身份证">
+							<el-input v-model="userForm.user_inf.id_card" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
-						<el-form-item label="手机号码" prop="phone">
-							<el-input v-model="userForm.phone" maxlength="200"></el-input>
+						<el-form-item label="手机号码">
+							<el-input v-model="userForm.user_inf.phone" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
-						<el-form-item label="邮箱号码" prop="email">
-							<el-input v-model="userForm.email" maxlength="200"></el-input>
+						<el-form-item label="邮箱号码">
+							<el-input v-model="userForm.user_inf.email" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
-						<el-form-item label="所在部门" prop="dept_id">
+						<el-form-item label="所在部门">
 							<el-cascader
 								v-model="userForm.dept_id"
 								:options="deptTree"
@@ -171,8 +175,8 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
-						<el-form-item label="用户角色" prop="role_ids">
-							<el-select v-model="userForm.role_ids" multiple placeholder="请选择用户角色" class="w100">
+						<el-form-item label="用户角色">
+							<el-select v-model="userForm.roles" multiple placeholder="请选择用户角色" class="w100">
 								<el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
 							</el-select>
 						</el-form-item>
@@ -236,17 +240,19 @@ export default {
 				span: 24,
 			},
 			userForm: {
-				dept_id: "",
-				role_ids: "",
 				name: "",
-				real_name: "",
 				pswd: "",
-				id_card: "",
-				phone: "",
-				email: "",
-				qq: "",
-				github: "",
-				image_url: "",
+				dept_id: "",
+				roles: "",
+				user_inf: {
+					real_name: "",
+					id_card: "",
+					phone: "",
+					qq: "",
+					email: "",
+					github: "",
+					image_url: "",
+				},
 			},
 			deptTreeProps: {
 				children: "children",
@@ -270,7 +276,7 @@ export default {
 				phone: [r_required, r_mobile],
 				email: [r_required, r_email],
 				dept_id: [r_required],
-				role_ids: [r_required],
+				roles: [r_required],
 			},
 		};
 	},
@@ -339,22 +345,39 @@ export default {
 		},
 		//添加
 		add() {
+			if (this.deptTree.length == 0) {
+				this.$message({
+					showClose: true,
+					message: "请先创建一个部门",
+					type: "warning",
+				});
+				return false;
+			} else if (this.roles.length == 0) {
+				this.$message({
+					showClose: true,
+					message: "请先创建一个角色",
+					type: "warning",
+				});
+				return false;
+			}
 			this.userDialog.visible = true;
-			this.userDialog.userForm = "add";
+			this.userDialog.type = "add";
 			this.userDialog.title = "新增";
 
 			this.userForm = {
-				dept_id: "",
-				role_ids: "",
 				name: "",
-				real_name: "",
 				pswd: "",
-				id_card: "",
-				phone: "",
-				email: "",
-				qq: "",
-				github: "",
-				image_url: "",
+				dept_id: "",
+				roles: "",
+				user_inf: {
+					real_name: "",
+					id_card: "",
+					phone: "",
+					qq: "",
+					email: "",
+					github: "",
+					image_url: "",
+				},
 			};
 		},
 		//删除
@@ -382,15 +405,19 @@ export default {
 		//修改
 		update(row) {
 			this.userDialog.visible = true;
-			this.userDialog.userForm = "update";
+			this.userDialog.type = "update";
 			this.userDialog.title = "修改";
 			this.userForm = row;
+			this.userForm.roles = row.roles.map((item) => {
+				return item.id;
+			});
+			console.log(row);
 		},
 		//获取菜单列表
 		getUserList(id) {
 			this.tableLoading = true;
 			getUser({
-				parent_id: id,
+				dept_id: id,
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
 			}).then((res) => {
@@ -411,8 +438,8 @@ export default {
 		},
 		//菜单树点击事件
 		deptTreeClick(index) {
-			this.nowDeptID = index;
-			this.getUserList(index);
+			this.nowDeptID = index.id;
+			this.getUserList(index.id);
 			// this.creatBread(index, []);
 		},
 		//二级面包屑
@@ -445,7 +472,7 @@ export default {
 		// eslint-disable-next-line no-unused-vars
 		handleAvatarSuccess(res, file) {
 			// this.imageUrl = URL.createObjectURL(file.raw);
-			this.userForm.image_url =
+			this.userForm.user_inf.image_url =
 				process.env.VUE_APP_SERVER_API + res.data.url;
 		},
 		beforeAvatarUpload(file) {
