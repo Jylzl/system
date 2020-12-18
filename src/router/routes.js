@@ -254,7 +254,7 @@ const routes = [
                 component: ansycRoutes.get('seven')
             }, {
                 meta: {
-                    title: '右键',
+                    title: '右键菜单',
                     hidden: false,
                     leaf: true,
                     iconCls: "el-icon-place",
@@ -286,8 +286,8 @@ const routes = [
                     topPath: '/page'
                 },
                 path: '/page/content_list',
-                name: 'content',
-                component: ansycRoutes.get('content'),
+                name: 'contentList',
+                component: ansycRoutes.get('contentList'),
             },
             {
                 meta: {
@@ -310,8 +310,8 @@ const routes = [
                     topPath: '/page'
                 },
                 path: '/page/column_list',
-                name: 'column',
-                component: ansycRoutes.get('column')
+                name: 'columnList',
+                component: ansycRoutes.get('columnList')
             },
             {
                 meta: {
@@ -322,8 +322,8 @@ const routes = [
                     topPath: '/page'
                 },
                 path: '/page/crawler_list',
-                name: 'crawler',
-                component: ansycRoutes.get('crawler')
+                name: 'crawlerList',
+                component: ansycRoutes.get('crawlerList')
             }
         ]
     }, {

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-18 11:14:30
+ * @lastTime: 2020-12-18 12:01:46
  -->
 <template>
 	<el-container>
@@ -493,6 +493,7 @@ export default {
 					delObj(id).then((res) => {
 						this.tableLoading = false;
 						this.getMenuList(this.nowMenuID); //获取菜单列表
+						this.getMenuTree(false, this.nowMenuID); //获取菜单树
 						this.$message.success(`成功删除${res.data}条数据`);
 					});
 				})
@@ -525,7 +526,7 @@ export default {
 			this.treeLoading = true;
 			this.nowMenuID = parent_id;
 			this.getMenuList(parent_id); //获取菜单列表
-			fetchMenuTree(lazy, -1, '1,2').then((res) => {
+			fetchMenuTree(lazy, -1, "1,2").then((res) => {
 				this.menuTree = res.data;
 				this.treeLoading = false;
 			});
