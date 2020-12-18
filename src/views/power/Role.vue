@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-17 14:52:23
+ * @lastTime: 2020-12-18 11:14:45
  -->
 <template>
 	<el-container>
@@ -191,7 +191,7 @@ export default {
 	},
 	created() {
 		this.getRoleList(); //获取角色列表
-		fetchMenuTree(false, -1).then((res) => {
+		fetchMenuTree(false, -1, '1,2,3').then((res) => {
 			this.menuTree = res.data;
 		});
 	},

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 09:46:02
+ * @lastTime: 2020-12-18 10:49:04
  */
 
 import request from '@/utils/request'
@@ -24,11 +24,11 @@ export function getTopMenu() {
   })
 }
 
-export function fetchMenuTree(lazy, parent_id) {
+export function fetchMenuTree(lazy, parent_id, type) {
   return request({
     url: '/api/menu/tree',
     method: 'get',
-    params: { lazy, parent_id }
+    params: { lazy, parent_id, type }
   })
 }
 

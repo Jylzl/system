@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-29 11:22:35
+ * @lastTime: 2020-12-18 11:14:30
  -->
 <template>
 	<el-container>
@@ -525,7 +525,7 @@ export default {
 			this.treeLoading = true;
 			this.nowMenuID = parent_id;
 			this.getMenuList(parent_id); //获取菜单列表
-			fetchMenuTree(lazy, -1).then((res) => {
+			fetchMenuTree(lazy, -1, '1,2').then((res) => {
 				this.menuTree = res.data;
 				this.treeLoading = false;
 			});
