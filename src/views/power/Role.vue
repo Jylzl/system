@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-18 11:14:45
+ * @lastTime: 2020-12-21 13:18:33
  -->
 <template>
 	<el-container>
@@ -109,7 +109,7 @@
 					<el-col :span="roleDialog.span">
 						<el-form-item label="菜单权限" prop="code">
 							<el-cascader
-								v-model="roleForm.menus"
+								v-model="roleForm.pow_menus"
 								:options="menuTree"
 								:props="menProps"
 								clearable
@@ -180,7 +180,7 @@ export default {
 				name: "",
 				code: "",
 				desc: "",
-				menus: [],
+				pow_menus: [],
 			},
 			// 表单验证规则
 			roleFormRules: {
@@ -255,7 +255,7 @@ export default {
 				name: "",
 				code: "",
 				desc: "",
-				menus: [],
+				pow_menus: [],
 			};
 		},
 		//删除
@@ -286,7 +286,7 @@ export default {
 			this.roleDialog.roleForm = "update";
 			this.roleDialog.title = "修改";
 			this.roleForm = row;
-			this.roleForm.menus = row.menus.map((item) => {
+			this.roleForm.pow_menus = row.pow_menus.map((item) => {
 				return item.id;
 			});
 		},

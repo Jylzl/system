@@ -127,6 +127,30 @@ const routes = [
         ]
     }, {
         meta: {
+            title: '系统管理',
+            hidden: false,
+            leaf: false,
+            iconCls: "el-icon-odometer",
+            topPath: '/system'
+        },
+        path: '/system',
+        name: 'system',
+        redirect: '/system/dict',
+        component: Container,
+        children: [{
+            meta: {
+                title: '字典管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-bangzhu",
+                topPath: '/system'
+            },
+            path: '/system/dict',
+            name: 'dict',
+            component: ansycRoutes.get('dict')
+        }]
+    }, {
+        meta: {
             title: '运维管理',
             hidden: false,
             leaf: false,

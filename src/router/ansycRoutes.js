@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-18 11:58:40
+ * @lastTime: 2020-12-21 09:26:02
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -13,6 +13,8 @@ const menu = r => require.ensure([], () => r(require('@/views/power/Menu.vue')),
 const role = r => require.ensure([], () => r(require('@/views/power/Role.vue')), 'role') // 角色
 const user = r => require.ensure([], () => r(require('@/views/power/User.vue')), 'user') // 用户
 const area = r => require.ensure([], () => r(require('@/views/power/Area.vue')), 'area') // 区域
+// system-系统
+const dict = r => require.ensure([], () => r(require('@/views/system/dict/Index.vue')), 'dict') // 机构
 // app-应用
 const one = r => require.ensure([], () => r(require('@/views/app/AppOne.vue')), 'one') // 机构
 const two = r => require.ensure([], () => r(require('@/views/app/AppTwo.vue')), 'two') // 菜单
@@ -42,6 +44,8 @@ ansycRoutes.set("menu", menu) // 菜单
 ansycRoutes.set("role", role) // 角色
 ansycRoutes.set("user", user) // 用户
 ansycRoutes.set("area", area) // 区域
+// power-系统
+ansycRoutes.set("dict", dict) // 字典
 // app-应用
 ansycRoutes.set("one", one)
 ansycRoutes.set("two", two)

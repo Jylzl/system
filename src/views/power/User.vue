@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-17 16:22:49
+ * @lastTime: 2020-12-21 13:23:27
  -->
 <template>
 	<el-container>
@@ -40,13 +40,13 @@
 						<el-table :data="menus" stripe style="width: 100%;height:100%;" size="small">
 							<el-table-column prop="image_url" label="用户头像" width="120" align="center">
 								<template slot-scope="scope">
-									<el-avatar size="small" :src="scope.row.user_inf.image_url"></el-avatar>
+									<el-avatar size="small" :src="scope.row.pow_user_inf.image_url"></el-avatar>
 								</template>
 							</el-table-column>
 							<el-table-column prop="name" label="用户名" align="left"></el-table-column>
-							<el-table-column prop="user_inf[real_name]" label="真实姓名" align="left"></el-table-column>
-							<el-table-column prop="user_inf[phone]" label="手机号码" align="left"></el-table-column>
-							<el-table-column prop="user_inf[email]" label="邮箱号码" align="left"></el-table-column>
+							<el-table-column prop="pow_user_inf[real_name]" label="真实姓名" align="left"></el-table-column>
+							<el-table-column prop="pow_user_inf[phone]" label="手机号码" align="left"></el-table-column>
+							<el-table-column prop="pow_user_inf[email]" label="邮箱号码" align="left"></el-table-column>
 							<el-table-column prop="last_login_time" label="后登录时间" align="left"></el-table-column>
 							<el-table-column prop="status" label="用户状态" align="left"></el-table-column>
 							<el-table-column prop="login_count" label="登录次数" align="left"></el-table-column>
@@ -121,7 +121,7 @@
 									></el-input>
 								</el-form-item>
 								<el-form-item label="真实姓名" prop="real_name">
-									<el-input v-model="userForm.user_inf.real_name" maxlength="50"></el-input>
+									<el-input v-model="userForm.pow_user_inf.real_name" maxlength="50"></el-input>
 								</el-form-item>
 							</div>
 							<div class="form-first-right">
@@ -136,7 +136,7 @@
 									:on-success="handleAvatarSuccess"
 									:before-upload="beforeAvatarUpload"
 								>
-									<img v-if="userForm.user_inf.image_url" :src="userForm.user_inf.image_url" class="avatar" />
+									<img v-if="userForm.pow_user_inf.image_url" :src="userForm.pow_user_inf.image_url" class="avatar" />
 									<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 								</el-upload>
 							</div>
@@ -149,17 +149,17 @@
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="身份证">
-							<el-input v-model="userForm.user_inf.id_card" maxlength="200"></el-input>
+							<el-input v-model="userForm.pow_user_inf.id_card" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="手机号码">
-							<el-input v-model="userForm.user_inf.phone" maxlength="200"></el-input>
+							<el-input v-model="userForm.pow_user_inf.phone" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="邮箱号码">
-							<el-input v-model="userForm.user_inf.email" maxlength="200"></el-input>
+							<el-input v-model="userForm.pow_user_inf.email" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
@@ -244,7 +244,7 @@ export default {
 				pswd: "",
 				dept_id: "",
 				roles: "",
-				user_inf: {
+				pow_user_inf: {
 					real_name: "",
 					id_card: "",
 					phone: "",
@@ -369,7 +369,7 @@ export default {
 				pswd: "",
 				dept_id: "",
 				roles: "",
-				user_inf: {
+				pow_user_inf: {
 					real_name: "",
 					id_card: "",
 					phone: "",
@@ -472,7 +472,7 @@ export default {
 		// eslint-disable-next-line no-unused-vars
 		handleAvatarSuccess(res, file) {
 			// this.imageUrl = URL.createObjectURL(file.raw);
-			this.userForm.user_inf.image_url =
+			this.userForm.pow_user_inf.image_url =
 				process.env.VUE_APP_SERVER_API + res.data.url;
 		},
 		beforeAvatarUpload(file) {
