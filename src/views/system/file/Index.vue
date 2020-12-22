@@ -3,13 +3,31 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-22 18:23:54
+ * @lastTime: 2020-12-23 00:14:42
 -->
 <template>
 	<el-container>
 		<el-main>
 			<div class="right-top">
-				<div class="right-top-left">1</div>
+				<div class="right-top-left">
+					<el-form :inline="true" :model="searchForm" size="mini" class="demo-form-inline">
+						<el-form-item label="文件名">
+							<el-input v-model="searchForm.new_name" placeholder="文件名" clearable></el-input>
+						</el-form-item>
+						<el-form-item label="创建时间">
+							<el-date-picker
+								v-model="searchForm.time"
+								type="daterange"
+								range-separator="至"
+								start-placeholder="开始日期"
+								end-placeholder="结束日期"
+							></el-date-picker>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" @click="getList">查询</el-button>
+						</el-form-item>
+					</el-form>
+				</div>
 				<div class="right-top-right">
 					<el-button type="primary" icon="el-icon-upload" size="mini" @click="add">添加</el-button>
 				</div>
@@ -19,11 +37,12 @@
 					<div class="h100" style="box-sizing:border-box;padding: 15px;">
 						<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-							<el-table-column prop="name" label="原名称"></el-table-column>
+							<el-table-column prop="folder" label="空间" width="120" align="center"></el-table-column>
+							<el-table-column prop="new_name" label="文件名"></el-table-column>
+							<el-table-column prop="name" label="原文件名"></el-table-column>
 							<el-table-column prop="extname" label="扩展名" width="120" align="center"></el-table-column>
 							<el-table-column prop="mime_type" label="文件类型" width="120" align="center"></el-table-column>
 							<el-table-column prop="size" label="文件大小" width="120" align="center"></el-table-column>
-							<el-table-column prop="url" label="资源地址"></el-table-column>
 							<el-table-column prop="created_at" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
@@ -83,18 +102,23 @@
 								class="upload-demo"
 								:action="action"
 								:headers="headers"
-								name="file"
+								name="fields"
+								:data="{folder:'system'}"
 								:with-credentials="true"
+								multiple
+								:limit="3"
+								:accept="accept"
 								:on-preview="handlePreview"
 								:on-remove="handleRemove"
 								:before-remove="beforeRemove"
-								multiple
-								:limit="3"
+								:on-success="onSuccess"
 								:on-exceed="handleExceed"
 								:file-list="fileList"
+								:auto-upload="false"
+								ref="upload"
 							>
 								<el-button size="small" type="primary">点击上传</el-button>
-								<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+								<div slot="tip" class="el-upload__tip">上传同步至文件服务器，大小不超过500mb</div>
 							</el-upload>
 						</el-form-item>
 					</el-col>
@@ -109,7 +133,7 @@
 </template>
 
 <script>
-import { getList, addObj, putObj, delObj } from "@/api/system/file";
+import { getList, delObj } from "@/api/system/file";
 import { getToken, csrfToken } from "@/utils/auth";
 export default {
 	components: {},
@@ -138,18 +162,11 @@ export default {
 				description: "",
 				remarks: "",
 			},
-			fileList: [
-				{
-					name: "food.jpeg",
-					url:
-						"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-				},
-				{
-					name: "food2.jpeg",
-					url:
-						"https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-				},
-			],
+			fileList: [],
+			searchForm: {
+				new_name: "",
+				time: [],
+			},
 		};
 	},
 	computed: {
@@ -162,6 +179,9 @@ export default {
 				"x-csrf-token": csrfToken(),
 			};
 		},
+		accept() {
+			return "image/*,application/*,text/*,audio/*";
+		},
 	},
 	created() {
 		this.getList();
@@ -172,6 +192,17 @@ export default {
 			getList({
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
+				new_name: this.searchForm.new_name,
+				startTime:
+					this.searchForm.time != null &&
+					this.searchForm.time.length == 2
+						? this.searchForm.time[0]
+						: "",
+				endTime:
+					this.searchForm.time != null &&
+					this.searchForm.time.length == 2
+						? this.searchForm.time[1]
+						: "",
 			}).then((res) => {
 				console.log(res);
 				this.tableData = res.data.rows;
@@ -223,25 +254,7 @@ export default {
 		},
 		// 保存
 		saveForm() {
-			this.$refs["editForm"].validate((valid) => {
-				if (valid) {
-					if (this.editDialog.type == "add") {
-						addObj(this.editForm).then(() => {
-							this.editDialog.visible = false;
-							this.getList();
-							this.$message.success("添加成功");
-						});
-					} else {
-						putObj(this.editForm).then(() => {
-							this.editDialog.visible = false;
-							this.getList();
-							this.$message.success("修改成功");
-						});
-					}
-				} else {
-					return false;
-				}
-			});
+			this.$refs.upload.submit();
 		},
 		beforeClose(done) {
 			done();
@@ -272,6 +285,25 @@ export default {
 		beforeRemove(file, fileList) {
 			return this.$confirm(`确定移除 ${file.name}？`);
 		},
+		onSuccess(response, file, fileList) {
+			this.editDialog.visible = false;
+			this.getList();
+			console.log(response);
+			console.log(file);
+			console.log(fileList);
+		},
 	},
 };
 </script>
+
+<style scoped>
+.right-top-left {
+	height: 28px;
+	line-height: 28px;
+	padding: 6px 0;
+}
+
+.demo-form-inline .el-form-item {
+	margin-bottom: 0;
+}
+</style>
