@@ -148,6 +148,17 @@ const routes = [
             path: '/system/dict',
             name: 'dict',
             component: ansycRoutes.get('dict')
+        }, {
+            meta: {
+                title: '文件管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-files",
+                topPath: '/system'
+            },
+            path: '/system/file',
+            name: 'file',
+            component: ansycRoutes.get('file')
         }]
     }, {
         meta: {

@@ -1,21 +1,21 @@
 <!--
- * @description: Description
+ * @description: 字典项
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 17:01:57
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-21 18:09:04
+ * @lastTime: 2020-12-22 15:16:32
 -->
 <template>
 	<div class="dialog-box h100">
 		<div class="box-top">
-			<el-button type="primary" icon="el-icon-edit" size="mini">添加</el-button>
-			<!-- <div class="box-top-left"></div>
-			<div class="box-top-right"></div>-->
+			<el-button type="primary" icon="el-icon-edit" size="mini" @click="add">添加</el-button>
 		</div>
 		<div class="box-center">
 			<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 				<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-				<el-table-column prop="dict_id" label="类型" width="80" align="center"></el-table-column>
+				<el-table-column prop="dict_id" label="名称" width="120" align="center">
+					<template>{{name}}</template>
+				</el-table-column>
 				<el-table-column prop="label" label="标签名" width="100" align="center"></el-table-column>
 				<el-table-column prop="value" label="数据值" width="100" align="center"></el-table-column>
 				<el-table-column prop="description" label="描述"></el-table-column>
@@ -57,19 +57,77 @@
 				></el-pagination>
 			</div>
 		</div>
+		<!-- 修改表单弹窗 -->
+		<el-dialog
+			:title="editDialog.title"
+			:visible.sync="editDialog.visible"
+			:top="editDialog.top"
+			:width="editDialog.width"
+			:close-on-click-modal="false"
+			:destroy-on-close="true"
+			:before-close="beforeClose"
+			append-to-body
+		>
+			<el-form
+				:model="editForm"
+				:rules="editFormRules"
+				ref="editForm"
+				label-width="100px"
+				size="medium"
+				label-suffix=":"
+			>
+				<el-row :gutter="20">
+					<el-col :span="editDialog.span">
+						<el-form-item label="标签名" prop="label">
+							<el-input v-model="editForm.label" maxlength="200"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="数据值" prop="value">
+							<el-input v-model="editForm.value" maxlength="200"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="描述" prop="description">
+							<el-input v-model="editForm.description" maxlength="200"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="备注">
+							<el-input v-model="editForm.remarks" maxlength="200"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="排序">
+							<el-input-number v-model="editForm.order_num"></el-input-number>
+						</el-form-item>
+					</el-col>
+				</el-row>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button type="primary" @click="saveForm()" icon="el-icon-circle-check" size="small">保 存</el-button>
+				<el-button @click="resetForm('editForm')" icon="el-icon-circle-close" size="small">取 消</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
-import { getDictItem } from "@/api/system/dictitem";
+import { getDictItem, addObj, putObj, delObj } from "@/api/system/dictitem";
+import va from "@/rules/index.js";
 export default {
 	name: "DictItems",
 	props: {
 		dictId: {
 			type: Number,
 		},
+		name: {
+			type: String,
+		},
 	},
 	data() {
+		//引入自定义验证规则
+		let r_required = va.required();
 		return {
 			tableLoading: false,
 			page: {
@@ -79,10 +137,33 @@ export default {
 				pageSizes: [5, 10, 20, 50],
 			},
 			tableData: [],
+			editDialog: {
+				top: "15vh",
+				width: "45%",
+				type: "add",
+				title: "新增",
+				visible: false,
+				span: 24,
+			},
+			editForm: {
+				dict_id: null,
+				label: "",
+				value: "",
+				description: "",
+				remarks: "",
+				order_num: null,
+			},
+			// 表单验证规则
+			editFormRules: {
+				dict_id: [r_required],
+				label: [r_required],
+				value: [r_required],
+				description: [r_required],
+			},
 		};
 	},
 	created() {
-		console.log(this.dictId);
+		this.editForm.dict_id = this.dictId;
 		this.getDictItem(this.dictId);
 	},
 	methods: {
@@ -93,17 +174,78 @@ export default {
 				pageSize: this.page.pageSize,
 				dictId: id,
 			}).then((res) => {
-				console.log(res);
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;
 				this.tableLoading = false;
 			});
 		},
+		add() {
+			this.editForm = {
+				dict_id: this.dictId,
+				label: "",
+				value: "",
+				description: "",
+				remarks: "",
+				order_num: null,
+			};
+			this.editDialog.type = "add";
+			this.editDialog.title = "新增";
+			this.editDialog.visible = true;
+		},
 		update(row) {
-			console.log(row);
+			this.editForm = row;
+			this.editForm.dict_id = this.dictId;
+			this.editDialog.type = "update";
+			this.editDialog.title = "修改";
+			this.editDialog.visible = true;
 		},
 		del(id) {
-			console.log(id);
+			this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning",
+			})
+				.then(() => {
+					this.tableLoading = true;
+					delObj(id).then((res) => {
+						this.tableLoading = false;
+						this.getDictItem(this.dictId);
+						this.$message.success(`成功删除${res.data}条数据`);
+					});
+				})
+				.catch(() => {
+					this.$message({
+						type: "info",
+						message: "已取消删除",
+					});
+				});
+		},
+		// 重置
+		resetForm(formName) {
+			this.$refs[formName].resetFields();
+			this.editDialog.visible = false;
+		},
+		// 保存
+		saveForm() {
+			this.$refs["editForm"].validate((valid) => {
+				if (valid) {
+					if (this.editDialog.type == "add") {
+						addObj(this.editForm).then(() => {
+							this.editDialog.visible = false;
+							this.getDictItem(this.dictId);
+							this.$message.success("添加成功");
+						});
+					} else {
+						putObj(this.editForm).then(() => {
+							this.editDialog.visible = false;
+							this.getDictItem(this.dictId);
+							this.$message.success("修改成功");
+						});
+					}
+				} else {
+					return false;
+				}
+			});
 		},
 		// 分页
 		handleSizeChange(val) {
@@ -113,6 +255,9 @@ export default {
 		handleCurrentChange(val) {
 			this.page.currentPage = val;
 			this.getDictItem();
+		},
+		beforeClose(done) {
+			done();
 		},
 	},
 };
@@ -129,5 +274,9 @@ export default {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+}
+
+.z-index-3002 {
+	z-index: 3002;
 }
 </style>

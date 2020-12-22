@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-21 13:23:27
+ * @lastTime: 2020-12-22 09:33:38
  -->
 <template>
 	<el-container>
@@ -136,7 +136,11 @@
 									:on-success="handleAvatarSuccess"
 									:before-upload="beforeAvatarUpload"
 								>
-									<img v-if="userForm.pow_user_inf.image_url" :src="userForm.pow_user_inf.image_url" class="avatar" />
+									<img
+										v-if="userForm.pow_user_inf.image_url"
+										:src="userForm.pow_user_inf.image_url"
+										class="avatar"
+									/>
 									<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 								</el-upload>
 							</div>
@@ -327,7 +331,7 @@ export default {
 							process.env.VUE_APP_ivKey
 						);
 					}
-					if (this.userDialog.userForm == "add") {
+					if (this.userDialog.type == "add") {
 						addObj(this.userForm).then(() => {
 							this.userDialog.visible = false;
 							this.$message.success("添加成功");
