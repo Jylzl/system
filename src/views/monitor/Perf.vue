@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-14 10:23:04
+ * @lastTime: 2020-12-23 20:08:36
 -->
 <template>
 	<div class="perf">
@@ -68,6 +68,8 @@
 
 <script>
 import { Line, Gauge } from "@antv/g2plot";
+import { getSysInf } from "@/api/monitor/perf";
+
 export default {
 	data() {
 		return {
@@ -100,6 +102,7 @@ export default {
 		};
 	},
 	mounted() {
+		this.getSysInf();
 		this.chart1();
 		this.chart2();
 		this.chart3();
@@ -109,6 +112,11 @@ export default {
 		this.chart7();
 	},
 	methods: {
+		getSysInf() {
+			getSysInf().then((res) => {
+				console.log(res);
+			});
+		},
 		chart1() {
 			const gaugePlot = new Gauge(document.getElementById("container1"), {
 				title: {
