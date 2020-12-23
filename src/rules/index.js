@@ -3,12 +3,12 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 16:34:42
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-12 17:13:47
+ * @lastTime: 2020-12-23 16:27:09
  */
 // import axios from "axios";
-// import request from '@/utils/request'
-// import api from '@/api/api';
-// import code from '@/code/code';
+import request from '@/utils/request'
+import api from '@/api/api';
+import code from '@/code/code';
 
 let passWord = "";
 
@@ -282,8 +282,6 @@ function pswd(message) { //密码校验，及复杂度校验
             } else {
                 grade = 0;
             }
-            console.log(value);
-            console.log(value === '' || value === undefined);
             if (value === '' || value === undefined) {
                 callback();
             } else if (!reg3.test(value)) {
@@ -298,10 +296,6 @@ function pswd(message) { //密码校验，及复杂度校验
 }
 
 function pswdcheck(message) { // 密码二次校验
-    console.log("pass------");
-    console.log(message);
-    console.log(passWord);
-
     return {
         validator: (rule, value, callback) => {
             if (value === '') {
@@ -311,6 +305,51 @@ function pswdcheck(message) { // 密码二次校验
             } else {
                 callback();
             }
+        },
+        trigger: 'blur'
+    }
+}
+
+function checkDictName(message) { // 字典名称验证
+    return {
+        required: true,
+        validator: (rule, value, callback) => {
+            request.get(api.checkDictName, {
+                params: {
+                    name: value
+                }
+            }).then(res => {
+                if (res.code == code.success && res.data.length == 0) {
+                    callback()
+                } else if (res.code == code.success && res.data.length > 0) {
+                    callback(new Error(message || '当前值已存在'));
+                } else {
+                    callback(new Error('服务器响应异常'));
+                }
+            })
+        },
+        trigger: 'blur'
+    }
+}
+
+function checkDictItemName(message, dict_id) { // 字典名称验证
+    return {
+        required: true,
+        validator: (rule, value, callback) => {
+            request.get(api.checkDictItemName, {
+                params: {
+                    value,
+                    dict_id
+                }
+            }).then(res => {
+                if (res.code == code.success && res.data.length == 0) {
+                    callback()
+                } else if (res.code == code.success && res.data.length > 0) {
+                    callback(new Error(message || '当前值已存在'));
+                } else {
+                    callback(new Error('服务器响应异常'));
+                }
+            })
         },
         trigger: 'blur'
     }
@@ -334,5 +373,7 @@ export default {
     checkChinese,
     isURL,
     pswd,
-    pswdcheck
+    pswdcheck,
+    checkDictName,
+    checkDictItemName
 }

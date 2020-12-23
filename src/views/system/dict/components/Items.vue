@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 17:01:57
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-22 15:16:32
+ * @lastTime: 2020-12-23 11:23:18
 -->
 <template>
 	<div class="dialog-box h100">
@@ -128,6 +128,10 @@ export default {
 	data() {
 		//引入自定义验证规则
 		let r_required = va.required();
+		let r_checkDictItemName = va.checkDictItemName(
+			"当前数据已存在",
+			this.dictId
+		);
 		return {
 			tableLoading: false,
 			page: {
@@ -157,7 +161,7 @@ export default {
 			editFormRules: {
 				dict_id: [r_required],
 				label: [r_required],
-				value: [r_required],
+				value: [r_required, r_checkDictItemName],
 				description: [r_required],
 			},
 		};

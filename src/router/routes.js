@@ -159,6 +159,17 @@ const routes = [
             path: '/system/file',
             name: 'file',
             component: ansycRoutes.get('file')
+        }, {
+            meta: {
+                title: '密钥管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-key",
+                topPath: '/system'
+            },
+            path: '/system/secretkey',
+            name: 'secretkey',
+            component: ansycRoutes.get('secretkey')
         }]
     }, {
         meta: {

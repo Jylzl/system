@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-22 16:29:54
+ * @lastTime: 2020-12-23 15:54:07
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -16,6 +16,7 @@ const area = r => require.ensure([], () => r(require('@/views/power/Area.vue')),
 // system-系统
 const dict = r => require.ensure([], () => r(require('@/views/system/dict/Index.vue')), 'dict') // 机构
 const file = r => require.ensure([], () => r(require('@/views/system/file/Index.vue')), 'file') // 文件
+const secretkey = r => require.ensure([], () => r(require('@/views/system/secretkey/Index.vue')), 'secretkey') // 密钥
 // app-应用
 const one = r => require.ensure([], () => r(require('@/views/app/AppOne.vue')), 'one') // 机构
 const two = r => require.ensure([], () => r(require('@/views/app/AppTwo.vue')), 'two') // 菜单
@@ -48,6 +49,7 @@ ansycRoutes.set("area", area) // 区域
 // power-系统
 ansycRoutes.set("dict", dict) // 字典
 ansycRoutes.set("file", file) // 文件
+ansycRoutes.set("secretkey", secretkey) // 密钥
 // app-应用
 ansycRoutes.set("one", one)
 ansycRoutes.set("two", two)

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 14:55:31
+ * @lastTime: 2020-12-23 16:29:14
 -->
 <template>
 	<el-container>
@@ -11,17 +11,18 @@
 			<div class="right-top">
 				<div class="right-top-left">
 					<el-form :inline="true" :model="searchForm" size="mini" class="demo-form-inline">
-						<el-form-item label="文件名">
-							<el-input v-model="searchForm.new_name" placeholder="文件名" clearable></el-input>
+						<el-form-item label="类型">
+							<el-select v-model="searchForm.type" placeholder="请选择" class="w100" clearable>
+								<el-option
+									v-for="item in socialType"
+									:key="item.value"
+									:label="item.label"
+									:value="item.value"
+								></el-option>
+							</el-select>
 						</el-form-item>
-						<el-form-item label="创建时间">
-							<el-date-picker
-								v-model="searchForm.time"
-								type="daterange"
-								range-separator="至"
-								start-placeholder="开始日期"
-								end-placeholder="结束日期"
-							></el-date-picker>
+						<el-form-item label="描述">
+							<el-input v-model="searchForm.description" placeholder="描述" clearable></el-input>
 						</el-form-item>
 						<el-form-item>
 							<el-button type="primary" @click="getList">查询</el-button>
@@ -37,21 +38,20 @@
 					<div class="h100" style="box-sizing:border-box;padding: 15px;">
 						<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-							<el-table-column prop="folder" label="空间" width="120" align="center"></el-table-column>
-							<el-table-column prop="new_name" label="文件名"></el-table-column>
-							<el-table-column prop="name" label="原文件名"></el-table-column>
-							<el-table-column prop="extname" label="扩展名" width="120" align="center"></el-table-column>
-							<el-table-column prop="mime_type" label="文件类型" width="120" align="center"></el-table-column>
-							<el-table-column prop="size" label="文件大小" width="120" align="center"></el-table-column>
+							<el-table-column prop="type" label="类型" width="120" align="center"></el-table-column>
+							<el-table-column prop="description" label="描述"></el-table-column>
+							<el-table-column prop="app_id" label="appId" align="center"></el-table-column>
+							<el-table-column prop="app_secret" label="appSecret" align="center"></el-table-column>
+							<el-table-column prop="remarks" label="备注信息"></el-table-column>
 							<el-table-column prop="created_at" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
 										size="mini"
 										type="primary"
-										icon="el-icon-download"
-										title="下载"
-										@click="down(scope.row.id)"
+										icon="el-icon-edit"
+										title="编辑"
+										@click="update(scope.row)"
 										circle
 									></el-button>
 									<el-button
@@ -94,32 +94,45 @@
 			:destroy-on-close="true"
 			:before-close="beforeClose"
 		>
-			<el-form :model="editForm" ref="editForm" label-width="100px" size="medium" label-suffix=":">
+			<el-form
+				:model="editForm"
+				:rules="editFormRules"
+				ref="editForm"
+				label-width="100px"
+				size="medium"
+				label-suffix=":"
+			>
 				<el-row :gutter="20">
 					<el-col :span="editDialog.span">
-						<el-form-item label="附件上传">
-							<el-upload
-								class="upload-demo"
-								:action="action"
-								:headers="headers"
-								name="fields"
-								:data="{folder:'system'}"
-								:with-credentials="true"
-								multiple
-								:limit="3"
-								:accept="accept"
-								:on-preview="handlePreview"
-								:on-remove="handleRemove"
-								:before-remove="beforeRemove"
-								:on-success="onSuccess"
-								:on-exceed="handleExceed"
-								:file-list="fileList"
-								:auto-upload="false"
-								ref="upload"
-							>
-								<el-button size="small" type="primary">点击上传</el-button>
-								<div slot="tip" class="el-upload__tip">上传同步至文件服务器，大小不超过500mb</div>
-							</el-upload>
+						<el-form-item label="类型" prop="type">
+							<el-select v-model="editForm.type" placeholder="请选择" class="w100">
+								<el-option
+									v-for="item in socialType"
+									:key="item.value"
+									:label="item.label"
+									:value="item.value"
+								></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="描述" prop="description">
+							<el-input v-model="editForm.description" maxlength="100"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="appId" prop="app_id">
+							<el-input v-model="editForm.app_id" maxlength="100"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="appSecret">
+							<el-input v-model="editForm.app_secret" maxlength="100"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="备注信息">
+							<el-input v-model="editForm.remarks" maxlength="100"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -133,12 +146,17 @@
 </template>
 
 <script>
-import { getList, delObj, downObj } from "@/api/system/file";
-import { getToken, csrfToken } from "@/utils/auth";
+import { getList, addObj, delObj, putObj } from "@/api/system/secretkey";
+import { getDictItemByType } from "@/api/system/dict";
+import va from "@/rules/index.js";
+
 export default {
 	components: {},
 	data() {
+		//引入自定义验证规则
+		let r_required = va.required();
 		return {
+			socialType: [],
 			page: {
 				currentPage: 1,
 				pageSize: 20,
@@ -156,53 +174,39 @@ export default {
 				span: 24,
 			},
 			editForm: {
-				type: null,
-				name: "",
-				value_type: "string",
+				type: "",
 				description: "",
+				app_id: "",
+				app_secret: "",
 				remarks: "",
 			},
-			fileList: [],
 			searchForm: {
-				new_name: "",
-				time: [],
+				type: "",
+				description: "",
+			},
+			// 表单验证规则
+			editFormRules: {
+				type: [r_required],
+				description: [r_required],
 			},
 		};
 	},
-	computed: {
-		action() {
-			return process.env.VUE_APP_SERVER_API + "/api/upload";
-		},
-		headers() {
-			return {
-				authorization: `Bearer ${getToken()}`,
-				"x-csrf-token": csrfToken(),
-			};
-		},
-		accept() {
-			return "image/*,application/*,text/*,audio/*";
-		},
-	},
+	computed: {},
 	created() {
+		this.getDictType();
 		this.getList();
 	},
 	mounted() {},
 	methods: {
+		getDictType() {
+			getDictItemByType("social_type").then((res) => {
+				this.socialType = res.data;
+			});
+		},
 		getList() {
 			getList({
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
-				new_name: this.searchForm.new_name,
-				startTime:
-					this.searchForm.time != null &&
-					this.searchForm.time.length == 2
-						? this.searchForm.time[0]
-						: "",
-				endTime:
-					this.searchForm.time != null &&
-					this.searchForm.time.length == 2
-						? this.searchForm.time[1]
-						: "",
 			}).then((res) => {
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;
@@ -211,22 +215,21 @@ export default {
 		},
 		add() {
 			this.editForm = {
-				type: this.type,
-				name: "",
-				value_type: "string",
+				type: "",
 				description: "",
+				app_id: "",
+				app_secret: "",
 				remarks: "",
 			};
 			this.editDialog.type = "add";
 			this.editDialog.title = "新增";
 			this.editDialog.visible = true;
 		},
-		down(id) {
-			console.log("down");
-			console.log(id);
-			downObj(id).then((res) => {
-				console.log(res);
-			});
+		update(row) {
+			this.editForm = row;
+			this.editDialog.type = "update";
+			this.editDialog.title = "修改";
+			this.editDialog.visible = true;
 		},
 		del(id) {
 			this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
@@ -258,7 +261,25 @@ export default {
 		},
 		// 保存
 		saveForm() {
-			this.$refs.upload.submit();
+			this.$refs["editForm"].validate((valid) => {
+				if (valid) {
+					if (this.editDialog.type == "add") {
+						addObj(this.editForm).then(() => {
+							this.editDialog.visible = false;
+							this.getList();
+							this.$message.success("添加成功");
+						});
+					} else {
+						putObj(this.editForm).then(() => {
+							this.editDialog.visible = false;
+							this.getList();
+							this.$message.success("修改成功");
+						});
+					}
+				} else {
+					return false;
+				}
+			});
 		},
 		beforeClose(done) {
 			done();
@@ -266,35 +287,11 @@ export default {
 		// 分页
 		handleSizeChange(val) {
 			this.page.pageSize = val;
-			this.getDict();
+			this.getList();
 		},
 		handleCurrentChange(val) {
 			this.page.currentPage = val;
-			this.getDict();
-		},
-		handleRemove(file, fileList) {
-			console.log(file, fileList);
-		},
-		handlePreview(file) {
-			console.log(file);
-		},
-		handleExceed(files, fileList) {
-			this.$message.warning(
-				`当前限制选择 3 个文件，本次选择了 ${
-					files.length
-				} 个文件，共选择了 ${files.length + fileList.length} 个文件`
-			);
-		},
-		// eslint-disable-next-line no-unused-vars
-		beforeRemove(file, fileList) {
-			return this.$confirm(`确定移除 ${file.name}？`);
-		},
-		onSuccess(response, file, fileList) {
-			this.editDialog.visible = false;
 			this.getList();
-			console.log(response);
-			console.log(file);
-			console.log(fileList);
 		},
 	},
 };

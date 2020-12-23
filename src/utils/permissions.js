@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-12 17:03:29
+ * @lastTime: 2020-12-23 17:51:55
  */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -29,14 +29,14 @@ router.beforeEach((to, from, next) => {
     document.title = getPageTitle(to.meta.title)
 
     let token = getToken() || localStorage.getItem("access_token"); //登录标示
-    let perms = store.state.power.perms; //store登录状态
+    let login = store.state.power.login; //store登录状态
     if ((token == null || token == undefined || token == "") && to.meta.open != true) {
         next('/login');
     } else {
         if (to.meta.open == true) {
             next();
         } else {
-            if (perms) {
+            if (login) {
                 next();
             } else {
                 try {

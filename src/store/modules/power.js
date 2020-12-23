@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-12 17:43:51
+ * @lastTime: 2020-12-23 18:21:33
  */
 
 import {
@@ -27,39 +27,38 @@ const power = {
     //设置属性
     state: {
         user: {},
-        perms: false,
+        login: false, // 登录状态
         routes: routes,
-        leftRouters: []
+        menus: [],
+        perms: [],
     },
     //改变属性的状态
     mutations: {
-        // LEFT_ROUTERS: (state, data) => {
-        //     state.leftRouters = data;
-        //     router.addRoutes(routes);
-        // },
         SET_PERMS: (state, params) => {
-            // router.addRoutes(routes);
             state.user = params.user;
-            state.perms = true;
+            state.menus = params.menus;
+            state.perms = params.perms;
+            state.login = true;
         },
         LOGING_STATE: (state, params) => {
             localStorage.setItem('access_token', params.token); //将token存进localStorage
             setToken(params.token); //将token存进cookies
             state.user = params.user;
-            state.perms = true;
+            state.menus = params.menus;
+            state.perms = params.perms;
+            state.login = true;
         },
         LOGOUT_STATE: (state,) => {
             localStorage.setItem('access_token', ""); // 清空token
             removeToken(); //清空token
             state.user = {};
-            state.perms = false;
+            state.menus = [];
+            state.perms = [];
+            state.login = false;
         },
     },
     //应用mutaions
     actions: {
-        // setLeftRouters({ commit }, data) {
-        //     commit('LEFT_ROUTERS', data);
-        // },
         userLogin({ commit }, data) {
             const remember = data.rememberPswd;
             const username = data.user;

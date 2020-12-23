@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-22 16:52:58
+ * @lastTime: 2020-12-23 11:55:36
  */
 
 import request from '@/utils/request'
@@ -43,5 +43,12 @@ export function putObj(obj) {
     url: '/api/upload/' + obj.id,
     method: 'put',
     data: obj
+  })
+}
+
+export function downObj(id) {
+  return request({
+    url: '/api/upload/down/' + id,
+    method: 'get'
   })
 }

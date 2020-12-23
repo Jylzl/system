@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-22 15:20:32
+ * @lastTime: 2020-12-23 09:56:07
 -->
 <template>
 	<el-container>
@@ -186,6 +186,7 @@ export default {
 	data() {
 		//引入自定义验证规则
 		let r_required = va.required();
+		let r_checkDictName = va.checkDictName("当前名称已存在");
 		return {
 			type: "1",
 			dictId: null,
@@ -225,7 +226,7 @@ export default {
 			// 表单验证规则
 			editFormRules: {
 				type: [r_required],
-				name: [r_required],
+				name: [r_required, r_checkDictName],
 				value_type: [r_required],
 				description: [r_required],
 			},
