@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-21 13:18:33
+ * @lastTime: 2020-12-24 14:14:46
  -->
 <template>
 	<el-container>
@@ -114,6 +114,7 @@
 								:props="menProps"
 								clearable
 								placeholder="请选择菜单权限"
+								collapse-tags
 								class="w100"
 							></el-cascader>
 						</el-form-item>
@@ -191,7 +192,7 @@ export default {
 	},
 	created() {
 		this.getRoleList(); //获取角色列表
-		fetchMenuTree(false, -1, '1,2,3').then((res) => {
+		fetchMenuTree(false, -1, "1,2,3").then((res) => {
 			this.menuTree = res.data;
 		});
 	},

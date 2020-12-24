@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-02 10:57:10
  * @LastAuthor: lizlong
- * @lastTime: 2020-11-13 00:28:14
+ * @lastTime: 2020-12-24 15:32:19
  */
 
 import service from "@/utils/request";
@@ -45,6 +45,7 @@ moment.locale('zh-cn', {
             return hour >= 11 ? hour : hour + 12;
         }
     },
+    // eslint-disable-next-line no-unused-vars
     meridiem: function (hour, minute, isLower) {
         const hm = hour * 100 + minute;
         if (hm < 600) {

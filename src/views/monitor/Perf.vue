@@ -3,54 +3,70 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 20:08:36
+ * @lastTime: 2020-12-24 14:53:46
 -->
 <template>
-	<div class="perf">
+	<div class="perf" v-loading="loading">
 		<div>
-			<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
-				<div slot="header" class="clearfix w100">
-					<span>
-						服务状态
-						<span style="font-size:12px; color:#999;">(2020-08-06 09:07)</span>
-					</span>
-					<el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button>
-				</div>
-				<div class="canvas-box">
-					<el-row :gutter="20">
-						<el-col :span="4">
-							<div class="grid-content bg-purple">
-								<div id="container1" class="canvas-chart"></div>
+			<el-row :gutter="20">
+				<el-col :span="16">
+					<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
+						<div slot="header" class="clearfix w100">
+							<span>
+								服务器状态
+								<span style="font-size:12px; color:#999;">(上次更新时间：{{time}})</span>
+							</span>
+							<el-button
+								style="float: right; padding: 3px 0"
+								type="text"
+								icon="el-icon-refresh"
+								@click="getSysInf"
+								title="立即更新"
+							></el-button>
+						</div>
+						<div class="canvas-box">
+							<el-row :gutter="20">
+								<el-col :span="6">
+									<div class="grid-content bg-purple">
+										<div id="container1" class="canvas-chart"></div>
+									</div>
+								</el-col>
+								<el-col :span="6">
+									<div class="grid-content bg-purple">
+										<div id="container2" class="canvas-chart"></div>
+									</div>
+								</el-col>
+								<el-col :span="6">
+									<div class="grid-content bg-purple">
+										<div id="container3" class="canvas-chart"></div>
+									</div>
+								</el-col>
+								<el-col :span="6">
+									<div class="grid-content bg-purple">
+										<div id="container4" class="canvas-chart"></div>
+									</div>
+								</el-col>
+							</el-row>
+						</div>
+					</el-card>
+				</el-col>
+				<el-col :span="8">
+					<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
+						<div slot="header" class="clearfix w100">
+							<span>服务器信息</span>
+							<!-- <el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-refresh"></el-button> -->
+						</div>
+						<div class="canvas-box">
+							<div class="sys-inf">
+								<el-table :data="tableData" border :show-header="false" style="width: 100%">
+									<el-table-column prop="label" label="名称一" width="180" align="center"></el-table-column>
+									<el-table-column prop="value" label="数据一" align="center"></el-table-column>
+								</el-table>
 							</div>
-						</el-col>
-						<el-col :span="4">
-							<div class="grid-content bg-purple">
-								<div id="container2" class="canvas-chart"></div>
-							</div>
-						</el-col>
-						<el-col :span="4">
-							<div class="grid-content bg-purple">
-								<div id="container3" class="canvas-chart"></div>
-							</div>
-						</el-col>
-						<el-col :span="4">
-							<div class="grid-content bg-purple">
-								<div id="container4" class="canvas-chart"></div>
-							</div>
-						</el-col>
-						<el-col :span="4">
-							<div class="grid-content bg-purple">
-								<div id="container5" class="canvas-chart"></div>
-							</div>
-						</el-col>
-						<el-col :span="4">
-							<div class="grid-content bg-purple">
-								<div id="container6" class="canvas-chart"></div>
-							</div>
-						</el-col>
-					</el-row>
-				</div>
-			</el-card>
+						</div>
+					</el-card>
+				</el-col>
+			</el-row>
 		</div>
 		<div class="m-t-20">
 			<el-card class="custom-card" shadow="never" :body-style="{ padding: '0px' }">
@@ -73,6 +89,8 @@ import { getSysInf } from "@/api/monitor/perf";
 export default {
 	data() {
 		return {
+			loading: false,
+			time: "YYYY-MM-DD hh:mm:ss",
 			data7: [
 				{ year: "00:00", value: 3 },
 				{ year: "01:00", value: 4 },
@@ -99,22 +117,61 @@ export default {
 				{ year: "22:00", value: 4 },
 				{ year: "23:00", value: 6 },
 			],
+			tableData: [],
+			mem: {
+				totalmem: null,
+				freemem: null,
+				usemem: null,
+			},
+			cpu: 0,
 		};
 	},
 	mounted() {
 		this.getSysInf();
 		this.chart1();
-		this.chart2();
-		this.chart3();
 		this.chart4();
-		this.chart5();
-		this.chart6();
 		this.chart7();
 	},
 	methods: {
 		getSysInf() {
+			this.loading = true;
 			getSysInf().then((res) => {
-				console.log(res);
+				const table = [
+					{
+						label: "主机名",
+						value: res.data.hostname,
+					},
+					{
+						label: "服务器类型",
+						value: res.data.type,
+					},
+					{
+						label: "CPU 架构",
+						value: res.data.arch,
+					},
+					{
+						label: "CPU 核心",
+						value: res.data.cpus.length + "核",
+					},
+				];
+				this.tableData = table;
+				this.mem = {
+					totalmem: Math.round(
+						res.data.totalmem / 1024 / 1024 / 1024
+					),
+					freemem: (res.data.freemem / 1024 / 1024 / 1024).toFixed(2),
+					usemem:
+						Math.round(res.data.totalmem / 1024 / 1024 / 1024) -
+						(res.data.freemem / 1024 / 1024 / 1024).toFixed(2),
+				};
+				const cpu = this.cpuIAverage(res.data.cpus);
+				this.cpu = Math.round(
+					((cpu.total - cpu.idle) / cpu.total) * 100
+				);
+				this.time = this.$moment().format("YYYY-MM-DD hh:mm:ss");
+				this.chart2();
+				this.chart3();
+				this.loading = false;
 			});
 		},
 		chart1() {
@@ -157,11 +214,11 @@ export default {
 						fontSize: 15,
 					},
 				},
-				value: 64,
+				value: this.cpu,
 				statistic: {
 					visible: true,
 					position: ["50%", "100%"],
-					text: "CPU使用率",
+					text: this.cpu + "%",
 					color: "#999",
 					size: 12,
 				},
@@ -186,16 +243,16 @@ export default {
 						fontSize: 15,
 					},
 				},
-				value: 18,
+				value: this.mem.usemem,
 				statistic: {
 					visible: true,
 					position: ["50%", "100%"],
-					text: "内存使用量",
+					text: this.mem.usemem + "G",
 					color: "#999",
 					size: 12,
 				},
 				min: 0,
-				max: 64,
+				max: this.mem.totalmem,
 				// range: [0, 8, 16, 32, 64],
 				// color: ["#39B8FF", "#52619B", "#43E089", "#C0EDF3"],
 				range: [0, 64],
@@ -231,60 +288,6 @@ export default {
 			});
 			gaugePlot.render();
 		},
-		chart5() {
-			const gaugePlot = new Gauge(document.getElementById("container5"), {
-				title: {
-					visible: true,
-					alignTo: "middle",
-					text: "磁盘使用量",
-					style: {
-						fill: "#666",
-						fontSize: 15,
-					},
-				},
-				value: 64,
-				statistic: {
-					visible: true,
-					position: ["50%", "100%"],
-					text: "磁盘使用量",
-					color: "#999",
-					size: 12,
-				},
-				min: 0,
-				max: 100,
-				range: [0, 25, 50, 75, 100],
-				color: ["#39B8FF", "#52619B", "#43E089", "#C0EDF3"],
-				rangeSize: 6,
-			});
-			gaugePlot.render();
-		},
-		chart6() {
-			const gaugePlot = new Gauge(document.getElementById("container6"), {
-				title: {
-					visible: true,
-					alignTo: "middle",
-					text: "磁盘使用量",
-					style: {
-						fill: "#666",
-						fontSize: 15,
-					},
-				},
-				value: 64,
-				statistic: {
-					visible: true,
-					position: ["50%", "100%"],
-					text: "磁盘使用量",
-					color: "#999",
-					size: 12,
-				},
-				min: 0,
-				max: 100,
-				range: [0, 25, 50, 75, 100],
-				color: ["#39B8FF", "#52619B", "#43E089", "#C0EDF3"],
-				rangeSize: 6,
-			});
-			gaugePlot.render();
-		},
 		chart7() {
 			const data = this.data7;
 			const linePlot = new Line("container7", {
@@ -313,6 +316,26 @@ export default {
 			});
 			linePlot.render();
 		},
+		// cpu使用率计算
+		cpuIAverage(cpus) {
+			let idle = 0,
+				total = 0;
+			for (let index = 0; index < cpus.length; index++) {
+				let totalIdle = 0;
+				let totalTick = 0;
+				const cpu = cpus[index];
+				for (const type in cpu.times) {
+					totalTick += cpu.times[type];
+				}
+				totalIdle += cpu.times.idle;
+				idle += totalIdle / cpus.length;
+				total += totalTick / cpus.length;
+			}
+			return {
+				idle: idle,
+				total: total,
+			};
+		},
 	},
 };
 </script>
@@ -328,8 +351,14 @@ export default {
 	padding: 0 40px;
 }
 
+.sys-inf,
 .canvas-chart {
-	height: 200px;
+	height: 220px;
+}
+
+.sys-inf {
+	box-sizing: border-box;
+	padding: 14px;
 }
 
 .canvas-chart7 {

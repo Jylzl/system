@@ -170,6 +170,17 @@ const routes = [
             path: '/system/secretkey',
             name: 'secretkey',
             component: ansycRoutes.get('secretkey')
+        }, {
+            meta: {
+                title: '日志管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-tickets",
+                topPath: '/system'
+            },
+            path: '/system/log',
+            name: 'log',
+            component: ansycRoutes.get('log')
         }]
     }, {
         meta: {
