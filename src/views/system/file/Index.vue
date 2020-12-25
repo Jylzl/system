@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 14:55:31
+ * @lastTime: 2020-12-25 17:01:50
 -->
 <template>
 	<el-container>
@@ -41,7 +41,7 @@
 							<el-table-column prop="new_name" label="文件名"></el-table-column>
 							<el-table-column prop="name" label="原文件名"></el-table-column>
 							<el-table-column prop="extname" label="扩展名" width="120" align="center"></el-table-column>
-							<el-table-column prop="mime_type" label="文件类型" width="120" align="center"></el-table-column>
+							<el-table-column prop="mime_type" label="文件类型" width="160" align="center"></el-table-column>
 							<el-table-column prop="size" label="文件大小" width="120" align="center"></el-table-column>
 							<el-table-column prop="created_at" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
@@ -171,7 +171,7 @@ export default {
 	},
 	computed: {
 		action() {
-			return process.env.VUE_APP_SERVER_API + "/api/upload";
+			return process.env.VUE_APP_SERVER_API + "/api/file";
 		},
 		headers() {
 			return {
@@ -289,12 +289,11 @@ export default {
 		beforeRemove(file, fileList) {
 			return this.$confirm(`确定移除 ${file.name}？`);
 		},
+		// eslint-disable-next-line no-unused-vars
 		onSuccess(response, file, fileList) {
 			this.editDialog.visible = false;
 			this.getList();
-			console.log(response);
-			console.log(file);
-			console.log(fileList);
+			this.$message.success("上传成功");
 		},
 	},
 };

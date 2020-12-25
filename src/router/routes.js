@@ -320,6 +320,17 @@ const routes = [
                 path: '/app/eight',
                 name: 'eight',
                 component: ansycRoutes.get('eight')
+            }, {
+                meta: {
+                    title: '邮件管理',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-message",
+                    topPath: '/app'
+                },
+                path: '/app/nine',
+                name: 'nine',
+                component: ansycRoutes.get('nine')
             }]
     }, {
         meta: {
@@ -393,6 +404,7 @@ const routes = [
         },
         path: '/errs',
         name: 'errs',
+        redirect: '/errs/404',
         component: Container,
         children: [
             {

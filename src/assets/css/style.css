@@ -10,6 +10,13 @@
   line-height: 1;
 }
 
+.p-main .aside-right {
+  box-sizing: border-box;
+  border-left: 2px solid #d4dde2;
+  background-color: #fff;
+  line-height: 1;
+}
+
 .p-main .el-main {
   padding: 0;
   background-color: #fff;

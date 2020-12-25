@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-16 17:08:51
+ * @lastTime: 2020-12-25 17:39:10
  -->
 <template>
 	<Editor v-model="html" api-key="udm8u7u1w88b8yqqt0czgf3glqzet1mnbt95at9wv8u6bib3" :init="init"></Editor>
@@ -216,7 +216,58 @@ export default {
 				init_instance_callback: function (editor) {
 					console.log(`ID为:${editor.id}的编辑器已初始化完成.`);
 				},
+				images_upload_url:
+					process.env.VUE_APP_SERVER_API + "/api/upload",
+				images_upload_base_path: process.env.VUE_APP_SERVER_API,
+				images_upload_credentials: true,
+				images_upload_handler: function (blobInfo, succFun, failFun) {
+					const token =
+						getToken() || localStorage.getItem("access_token"); //登录标示
+					const csrf_token = csrfToken();
+					var xhr, formData;
+					var file = blobInfo.blob(); //转化为易于理解的file对象
+					xhr = new XMLHttpRequest();
+					xhr.open(
+						"POST",
+						process.env.VUE_APP_SERVER_API + "/api/upload"
+					);
+					xhr.withCredentials = true;
+					xhr.setRequestHeader("authorization", "Bearer " + token);
+					xhr.setRequestHeader("x-csrf-token", csrf_token);
+					// eslint-disable-next-line no-unused-vars
+					xhr.upload.onprogress = function (e) {
+						// 进度(e.loaded / e.total * 100)
+					};
+					xhr.onerror = function () {
+						//根据自己的需要添加代码
+						console.log(xhr.status);
+						return;
+					};
+					xhr.onload = function () {
+						var json;
+						if (xhr.status != 200) {
+							console.log("HTTP 错误: " + xhr.status);
+							return;
+						}
+						json = JSON.parse(xhr.responseText);
+						//假设接口返回JSON数据为{status: 0, msg: "上传成功", data: {location: "/localImgs/1546434503854.mp4"}}
+						if (!json || json.code != 200) {
+							console.log(json.msg);
+							failFun("Invalid JSON: " + xhr.responseText);
+							return;
+						} else {
+							succFun(
+								process.env.VUE_APP_SERVER_API + json.data.url
+							);
+						}
+					};
+					formData = new FormData();
+					formData.append("file", file, file.name); //此处与源文档不一样
+					formData.append("folder", "tinymce");
+					xhr.send(formData);
+				},
 				file_picker_callback: function (cb, value, meta) {
+					console.log("file_picker_callback");
 					const token =
 						getToken() || localStorage.getItem("access_token"); //登录标示
 					const csrf_token = csrfToken();
@@ -282,6 +333,7 @@ export default {
 						formData = new FormData();
 						//假设接口接收参数为file,值为选中的文件
 						formData.append("file", file);
+						formData.append("folder", "tinymce");
 						//正式使用将下面被注释的内容恢复
 						xhr.send(formData);
 					};
