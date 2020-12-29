@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 13:48:12
  * @LastAuthor: lizlong
- * @lastTime: 2020-10-15 11:48:48
+ * @lastTime: 2020-12-28 10:10:18
  -->
 <template>
 	<div id="app">
@@ -45,6 +45,7 @@ body,
 	height: 100%;
 	width: 100%;
 }
+/* 工具样式 */
 
 .w100 {
 	width: 100% !important;
@@ -72,5 +73,40 @@ body,
 
 .m-0 {
 	margin: 0;
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.w100 {
+	width: 100%;
+}
+
+.h100 {
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.p0 {
+	padding: 0;
+}
+
+.p-lf-10 {
+	padding: 0 10px;
+}
+
+.un-select {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 </style>

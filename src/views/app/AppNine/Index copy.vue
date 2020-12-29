@@ -3,13 +3,13 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-25 10:03:40
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-28 16:57:39
+ * @lastTime: 2020-12-25 14:08:52
 -->
 <template>
 	<el-container>
 		<el-aside width="240px" class="aside-left">
 			<div class="left-top">
-				<el-button type="text" icon="el-icon-message">邮箱</el-button>
+				<el-button type="text" icon="el-icon-message">我的信箱</el-button>
 				<el-button type="text" icon="el-icon-refresh">刷新</el-button>
 			</div>
 			<div class="left-center" v-loading="treeLoading">
