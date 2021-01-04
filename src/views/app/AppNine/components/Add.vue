@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-25 10:40:23
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-29 09:16:00
+ * @lastTime: 2021-01-04 09:59:01
 -->
 <template>
 	<el-container class="email-add">
@@ -28,7 +28,7 @@
 								>
 									<template slot-scope="{ node, data }">
 										<span>{{ data.label }}</span>
-										<span v-if="node.isLeaf">&lt;{{ data.value }}&gt;</span>
+										<span v-if="node.isLeaf">[{{ data.value }}]</span>
 									</template>
 								</el-cascader>
 							</el-form-item>
@@ -151,7 +151,7 @@ export default {
 			value: "",
 			tinymceOptions: {
 				height: 460,
-				menubar: [],
+				// menubar: [],
 			},
 			fileList: [],
 			options: [

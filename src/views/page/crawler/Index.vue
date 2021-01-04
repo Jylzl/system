@@ -3,10 +3,10 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-12 17:47:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-16 23:52:53
+ * @lastTime: 2021-01-04 11:03:48
 -->
 <template>
-	<el-main>
+	<el-main class="h100">
 		<div class="right-top">
 			<div class="right-top-left"></div>
 			<div class="right-top-right">
@@ -69,6 +69,7 @@ export default {
 				pageSizes: [1, 20, 50, 100, 200],
 			},
 			list: [],
+			timer: null,
 		};
 	},
 	created() {
@@ -77,6 +78,9 @@ export default {
 	methods: {
 		crawlerObj() {
 			this.loading = true;
+			this.timer = setInterval(() => {
+				this.getObj();
+			}, 1000);
 			crawlerObj()
 				.then((result) => {
 					console.log(result);
@@ -98,9 +102,11 @@ export default {
 					this.tableLoading = false;
 					this.list = res.data.rows;
 					this.page.total = res.data.count;
+					clearTimeout(this.timer);
 				})
 				.catch((err) => {
 					this.tableLoading = false;
+					clearTimeout(this.timer);
 					console.log(err);
 				});
 		},
