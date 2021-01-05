@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 18:21:33
+ * @lastTime: 2021-01-05 18:09:53
  */
 
 import {
@@ -26,7 +26,10 @@ import {
 const power = {
     //设置属性
     state: {
-        user: {},
+        user: {
+            pow_user_inf: {},
+            pow_roles: [],
+        },
         login: false, // 登录状态
         routes: routes,
         menus: [],
@@ -51,7 +54,10 @@ const power = {
         LOGOUT_STATE: (state,) => {
             localStorage.setItem('access_token', ""); // 清空token
             removeToken(); //清空token
-            state.user = {};
+            state.user = {
+                pow_user_inf: {},
+                pow_roles: [],
+            };
             state.menus = [];
             state.perms = [];
             state.login = false;

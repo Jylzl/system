@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 16:29:14
+ * @lastTime: 2021-01-05 14:51:00
 -->
 <template>
 	<el-container>
@@ -207,6 +207,8 @@ export default {
 			getList({
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
+				description: this.searchForm.description,
+				type: this.searchForm.type,
 			}).then((res) => {
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;

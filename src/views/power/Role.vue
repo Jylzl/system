@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-24 14:14:46
+ * @lastTime: 2021-01-05 09:29:32
  -->
 <template>
 	<el-container>
@@ -16,23 +16,9 @@
 			</div>
 			<div class="right-table-100" v-loading="tableLoading">
 				<el-scrollbar wrap-class="scrollbar-wrapper">
-					<div class="table-box">
-						<el-table :data="roles" stripe style="width: 100%;height:100%;" size="small">
-							<el-table-column type="expand">
-								<template slot-scope="props">
-									<el-form label-position="left" inline class="demo-table-expand">
-										<el-form-item label="角色名称:">
-											<span>{{ props.row.name }}</span>
-										</el-form-item>
-										<el-form-item label="角色标识:">
-											<span>{{ props.row.code }}</span>
-										</el-form-item>
-										<el-form-item label="角色描述:">
-											<span>{{ props.row.desc }}</span>
-										</el-form-item>
-									</el-form>
-								</template>
-							</el-table-column>
+					<div class="table-box" style="box-sizing: border-box; padding: 15px;">
+						<el-table :data="roles" border style="width: 100%;" size="small">
+							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
 							<el-table-column prop="name" label="角色名称" align="left"></el-table-column>
 							<el-table-column prop="code" label="角色标识" align="left"></el-table-column>
 							<el-table-column prop="desc" label="角色描述" align="left"></el-table-column>

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-25 09:48:53
+ * @lastTime: 2021-01-05 14:58:06
 -->
 <template>
 	<el-container>
@@ -27,7 +27,7 @@
 							</el-select>
 						</el-form-item>
 						<el-form-item label="标题">
-							<el-input v-model="searchForm.title" placeholder="描述" clearable></el-input>
+							<el-input v-model="searchForm.title" placeholder="标题" clearable></el-input>
 						</el-form-item>
 						<el-form-item>
 							<el-button type="primary" @click="getList">查询</el-button>
@@ -126,6 +126,7 @@ export default {
 			getList({
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
+				title: this.searchForm.title,
 			}).then((res) => {
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;

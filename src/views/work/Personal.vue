@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-07-02 10:11:54
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-09 09:13:41
+ * @lastTime: 2021-01-05 10:24:03
 --> 
 
 <template>
@@ -14,14 +14,11 @@
 					<el-card class="box-card h100">
 						<div class="user-header">
 							<div class="user-header-left">
-								<el-avatar
-									src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-									:size="100"
-								></el-avatar>
+								<el-avatar :src="user.pow_user_inf.image_url" :size="100"></el-avatar>
 							</div>
 							<div class="user-header-right">
-								<h2>张三</h2>
-								<p>我是一个前端小白</p>
+								<h2>{{user.name}}</h2>
+								<p>{{user.pow_user_inf.real_name}}</p>
 							</div>
 						</div>
 					</el-card>
@@ -62,6 +59,16 @@ export default {
 			value: new Date(),
 			activeName: "schedule",
 		};
+	},
+	watch: {
+		searchPool(list) {
+			this.initFuse(list);
+		},
+	},
+	computed: {
+		user() {
+			return this.$store.getters.getUser;
+		},
 	},
 	created() {},
 	mounted() {
