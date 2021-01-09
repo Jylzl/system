@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-09-15 15:35:58
  * @LastAuthor: lizlong
- * @lastTime: 2020-10-23 17:48:41
+ * @lastTime: 2021-01-08 11:27:15
 -->
 <template>
 	<div class="content-list">
@@ -116,13 +116,10 @@
 									</span>
 									<el-dropdown-menu slot="dropdown">
 										<el-dropdown-item>
-											<el-button type="text" icon="el-icon-edit" size="small">编辑</el-button>
+											<el-button type="text" icon="el-icon-edit" size="small">推送至信息公开</el-button>
 										</el-dropdown-item>
 										<el-dropdown-item>
-											<el-button type="text" icon="el-icon-edit" size="small">编辑</el-button>
-										</el-dropdown-item>
-										<el-dropdown-item>
-											<el-button type="text" icon="el-icon-edit" size="small">编辑</el-button>
+											<el-button type="text" icon="el-icon-edit" size="small">推送政务新媒体</el-button>
 										</el-dropdown-item>
 									</el-dropdown-menu>
 								</el-dropdown>
@@ -152,10 +149,16 @@
 								<el-button type="primary">改变状态</el-button>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item>
-										<el-button type="text" icon="el-icon-link">下线</el-button>
+										<el-button type="text" icon="el-icon-link">初稿</el-button>
 									</el-dropdown-item>
 									<el-dropdown-item>
-										<el-button type="text" icon="el-icon-delete">删除</el-button>
+										<el-button type="text" icon="el-icon-s-promotion">发布</el-button>
+									</el-dropdown-item>
+									<el-dropdown-item>
+										<el-button type="text" icon="el-icon-delete">草稿</el-button>
+									</el-dropdown-item>
+									<el-dropdown-item>
+										<el-button type="text" icon="el-icon-delete">下线</el-button>
 									</el-dropdown-item>
 								</el-dropdown-menu>
 							</el-dropdown>
@@ -165,10 +168,22 @@
 								<el-button type="primary">改变类型</el-button>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item>
-										<el-button type="text" icon="el-icon-link" size="small">下线</el-button>
+										<el-button type="text" icon="el-icon-link" size="small">热门</el-button>
 									</el-dropdown-item>
 									<el-dropdown-item>
-										<el-button type="text" icon="el-icon-delete" size="small">删除</el-button>
+										<el-button type="text" icon="el-icon-delete" size="small">取消热门</el-button>
+									</el-dropdown-item>
+									<el-dropdown-item>
+										<el-button type="text" icon="el-icon-delete" size="small">头条</el-button>
+									</el-dropdown-item>
+									<el-dropdown-item>
+										<el-button type="text" icon="el-icon-delete" size="small">取消头条</el-button>
+									</el-dropdown-item>
+									<el-dropdown-item>
+										<el-button type="text" icon="el-icon-delete" size="small">焦点</el-button>
+									</el-dropdown-item>
+									<el-dropdown-item>
+										<el-button type="text" icon="el-icon-delete" size="small">取消焦点</el-button>
 									</el-dropdown-item>
 								</el-dropdown-menu>
 							</el-dropdown>
@@ -178,7 +193,10 @@
 								<el-button type="primary">内容操作</el-button>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item>
-										<el-button type="text" icon="el-icon-link" size="small">下线</el-button>
+										<el-button type="text" icon="el-icon-document-copy" size="small">复制</el-button>
+									</el-dropdown-item>
+									<el-dropdown-item>
+										<el-button type="text" icon="el-icon-document-remove" size="small">移动</el-button>
 									</el-dropdown-item>
 									<el-dropdown-item>
 										<el-button type="text" icon="el-icon-delete" size="small">删除</el-button>

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-24 14:53:46
+ * @lastTime: 2021-01-08 10:59:14
 -->
 <template>
 	<div class="perf" v-loading="loading">
@@ -247,7 +247,7 @@ export default {
 				statistic: {
 					visible: true,
 					position: ["50%", "100%"],
-					text: this.mem.usemem + "G",
+					text: this.mem.usemem.toFixed(2) + "G",
 					color: "#999",
 					size: 12,
 				},
