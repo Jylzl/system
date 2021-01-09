@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-07-30 17:49:09
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-04 10:04:53
+ * @lastTime: 2021-01-09 15:48:59
  -->
 <template>
 	<Editor v-model="html" api-key="udm8u7u1w88b8yqqt0czgf3glqzet1mnbt95at9wv8u6bib3" :init="init"></Editor>
@@ -101,12 +101,17 @@ export default {
 					formatpainter: "/tinymce/plugins/formatpainter/plugin.js",
 					a11ychecker: "/tinymce/plugins/a11ychecker/plugin.js",
 					bdmap: "/tinymce/plugins/bdmap/plugin.js",
+					importword: "/tinymce/plugins/importword/plugin.js",
+					layout: "/tinymce/plugins/layout/plugin.js",
+					letterspacing: "/tinymce/plugins/letterspacing/plugin.js",
+					table: "/tinymce/plugins/table/plugin.js",
+					upfile: "/tinymce/plugins/upfile/plugin.js",
 				},
 				plugins:
-					"print preview powerpaste importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount a11ychecker imagetools textpattern noneditable help formatpainter charmap quickbars emoticons advtable",
+					"print preview powerpaste importword upfile layout importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount a11ychecker imagetools textpattern noneditable help formatpainter charmap quickbars emoticons advtable",
 				mobile: {
 					plugins:
-						"print preview powerpaste importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount a11ychecker textpattern noneditable help formatpainter charmap quickbars emoticons advtable",
+						"print preview powerpaste importword upfile layout importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount a11ychecker textpattern noneditable help formatpainter charmap quickbars emoticons advtable",
 				},
 				menubar: "file edit view insert format tools table tc help",
 				menu: {
@@ -153,7 +158,7 @@ export default {
 					},
 				},
 				toolbar:
-					"undo redo | formatselect | formatpainter a11ycheck | fontselect | fontsizeselect | bold italic underline strikethrough subscript superscript removeformat | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent indent2em lineheight | lists image media emoticons link charmap codesample table | bdmap | fullscreen",
+					"undo redo | formatselect | formatpainter a11ycheck | fontselect | fontsizeselect | bold italic underline strikethrough subscript superscript removeformat | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent indent2em lineheight | lists image media emoticons link charmap codesample table | bdmap importword upfile layout | fullscreen",
 				autosave_ask_before_unload: true,
 				autosave_interval: "30s",
 				autosave_prefix: "{path}{query}-{id}-",
