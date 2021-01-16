@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:45
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-05 18:09:53
+ * @lastTime: 2021-01-16 17:54:25
  */
 
 import {
@@ -17,10 +17,10 @@ import {
     removeToken
 } from '@/utils/auth'
 import code from '@/code/code';
+import router from '@/router/index' //路由
 import {
-    routes
-} from '@/router/routes'
-// import router from '@/router' //路由
+    ansycRoute
+} from '@/router/ansycRoutes'
 
 //展示的用户信息
 const power = {
@@ -31,15 +31,19 @@ const power = {
             pow_roles: [],
         },
         login: false, // 登录状态
-        routes: routes,
+        routes: [],
         menus: [],
         perms: [],
+
+        topNav: [],
+        leftNav: [],
     },
     //改变属性的状态
     mutations: {
         SET_PERMS: (state, params) => {
             state.user = params.user;
-            state.menus = params.menus;
+            state.menus = ansycRoute || params.menus;
+            state.topNav = ansycRoute || params.menus;
             state.perms = params.perms;
             state.login = true;
         },
@@ -61,6 +65,12 @@ const power = {
             state.menus = [];
             state.perms = [];
             state.login = false;
+        },
+        LEFT_ROUTERS: (state, data) => {
+            const arr = ansycRoute.filter((item) => {
+                return item.path == data
+            })
+            state.leftNav = arr[0].children == undefined ? [] : arr[0].children;
         },
     },
     //应用mutaions
@@ -89,6 +99,7 @@ const power = {
                 getPerms().then(res => {
                     if (res.code == code.success) {
                         commit('SET_PERMS', res.data); //执行登陆成功的方法
+                        router.addRoutes(ansycRoute);
                         resolve(res)
                     } else {
                         reject(false);
@@ -109,7 +120,10 @@ const power = {
                     reject(err);
                 });
             });
-        }
+        },
+        setLeftRouters({ commit }, data) {
+            commit('LEFT_ROUTERS', data);
+        },
     }
 }
 export default power

@@ -7,8 +7,8 @@
  */
 
 const getters = {
-	getTopRouters: state => state.nav.topNav,
-	getLeftRouters: state => state.nav.leftNav,
+	getTopRouters: state => state.power.topNav,
+	getLeftRouters: state => state.power.leftNav,
 	visitedViews: state => state.tagsView.visitedViews,
 	cachedViews: state => state.tagsView.cachedViews,
 	getUser: state => state.power.user,

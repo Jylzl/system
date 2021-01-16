@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-05-27 08:41:05
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 17:51:55
+ * @lastTime: 2021-01-16 17:53:08
  */
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -40,8 +40,12 @@ router.beforeEach((to, from, next) => {
                 next();
             } else {
                 try {
+                    console.log("路由载入中...")
                     store.dispatch('setRouters').then(() => {
-                        next()
+                        console.log("路由载入完...")
+                        next({
+                            ...to, replace: true
+                        }) // hack方法 确保addRoutes已完成
                     }).catch(() => {
                         next("/login");
                     });

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-16 18:03:11
+ * @lastTime: 2020-12-25 10:39:37
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -36,44 +36,42 @@ const contentList = r => require.ensure([], () => r(require('@/views/page/conten
 const contentDetails = r => require.ensure([], () => r(require('@/views/page/content/Details.vue')), 'contentDetails') // 内容详情
 const columnList = r => require.ensure([], () => r(require('@/views/page/column/Index.vue')), 'columnList') // 栏目列表
 
-const crawler = r => require.ensure([], () => r(require('@/views/page/crawler/Index.vue')), 'crawler') // 采集列表
-const crawlerSite = r => require.ensure([], () => r(require('@/views/page/crawler/site/Index.vue')), 'crawlerSite') // 采集列表
+const crawlerList = r => require.ensure([], () => r(require('@/views/page/crawler/Index.vue')), 'crawlerList') // 采集列表
 
-let routes = new Map()
+let ansycRoutes = new Map()
 
-routes.set("work", work) // 工作台
-routes.set("personal", personal) // 个人中心
+ansycRoutes.set("work", work) // 工作台
+ansycRoutes.set("personal", personal) // 个人中心
 // power-权限
-routes.set("dept", dept) // 机构
-routes.set("menu", menu) // 菜单
-routes.set("role", role) // 角色
-routes.set("user", user) // 用户
-routes.set("area", area) // 区域
+ansycRoutes.set("dept", dept) // 机构
+ansycRoutes.set("menu", menu) // 菜单
+ansycRoutes.set("role", role) // 角色
+ansycRoutes.set("user", user) // 用户
+ansycRoutes.set("area", area) // 区域
 // power-系统
-routes.set("dict", dict) // 字典
-routes.set("file", file) // 文件
-routes.set("secretkey", secretkey) // 密钥
-routes.set("log", log) // 日志
+ansycRoutes.set("dict", dict) // 字典
+ansycRoutes.set("file", file) // 文件
+ansycRoutes.set("secretkey", secretkey) // 密钥
+ansycRoutes.set("log", log) // 日志
 // app-应用
-routes.set("one", one)
-routes.set("two", two)
-routes.set("three", three)
-routes.set("four", four)
-routes.set("five", five)
-routes.set("six", six)
-routes.set("seven", seven)
-routes.set("eight", eight)
-routes.set("nine", nine)
+ansycRoutes.set("one", one)
+ansycRoutes.set("two", two)
+ansycRoutes.set("three", three)
+ansycRoutes.set("four", four)
+ansycRoutes.set("five", five)
+ansycRoutes.set("six", six)
+ansycRoutes.set("seven", seven)
+ansycRoutes.set("eight", eight)
+ansycRoutes.set("nine", nine)
 // monitor-监控
-routes.set("baidu", baidu)
-routes.set("perf", perf)
+ansycRoutes.set("baidu", baidu)
+ansycRoutes.set("perf", perf)
 // page-页面
-routes.set("contentList", contentList)
-routes.set("contentDetails", contentDetails)
-routes.set("columnList", columnList)
-routes.set("crawler", crawler)
-routes.set("crawlerSite", crawlerSite)
+ansycRoutes.set("contentList", contentList)
+ansycRoutes.set("contentDetails", contentDetails)
+ansycRoutes.set("columnList", columnList)
+ansycRoutes.set("crawlerList", crawlerList)
 
 export {
-    routes
+    ansycRoutes
 }

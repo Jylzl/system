@@ -3,75 +3,404 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-25 10:39:37
+ * @lastTime: 2021-01-16 18:00:47
  */
-const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
-const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
-// power-权限
-const dept = r => require.ensure([], () => r(require('@/views/power/Dept.vue')), 'dept') // 机构
-const menu = r => require.ensure([], () => r(require('@/views/power/Menu.vue')), 'menu') // 菜单
-const role = r => require.ensure([], () => r(require('@/views/power/Role.vue')), 'role') // 角色
-const user = r => require.ensure([], () => r(require('@/views/power/User.vue')), 'user') // 用户
-const area = r => require.ensure([], () => r(require('@/views/power/Area.vue')), 'area') // 区域
-// system-系统
-const dict = r => require.ensure([], () => r(require('@/views/system/dict/Index.vue')), 'dict') // 机构
-const file = r => require.ensure([], () => r(require('@/views/system/file/Index.vue')), 'file') // 文件
-const secretkey = r => require.ensure([], () => r(require('@/views/system/secretkey/Index.vue')), 'secretkey') // 密钥
-const log = r => require.ensure([], () => r(require('@/views/system/log/Index.vue')), 'log') // 日志
-// app-应用
-const one = r => require.ensure([], () => r(require('@/views/app/AppOne.vue')), 'one') // 机构
-const two = r => require.ensure([], () => r(require('@/views/app/AppTwo.vue')), 'two') // 菜单
-const three = r => require.ensure([], () => r(require('@/views/app/AppThree.vue')), 'three') // 菜单
-const four = r => require.ensure([], () => r(require('@/views/app/AppFour.vue')), 'four') // 菜单
-const five = r => require.ensure([], () => r(require('@/views/app/AppFive.vue')), 'five') // 菜单
-const six = r => require.ensure([], () => r(require('@/views/app/AppSix.vue')), 'six') // 菜单
-const seven = r => require.ensure([], () => r(require('@/views/app/AppSeven.vue')), 'seven') // 菜单
-const eight = r => require.ensure([], () => r(require('@/views/app/AppEight.vue')), 'eight') // 右键
-const nine = r => require.ensure([], () => r(require('@/views/app/AppNine/Index.vue')), 'nine') // 邮箱
-// monitor-监控
-const baidu = r => require.ensure([], () => r(require('@/views/monitor/Baidu.vue')), 'baidu') // 机构
-const perf = r => require.ensure([], () => r(require('@/views/monitor/Perf.vue')), 'perf') // 菜单
-// page-页面
-const contentList = r => require.ensure([], () => r(require('@/views/page/content/Index.vue')), 'contentList') // 内容列表
-const contentDetails = r => require.ensure([], () => r(require('@/views/page/content/Details.vue')), 'contentDetails') // 内容详情
-const columnList = r => require.ensure([], () => r(require('@/views/page/column/Index.vue')), 'columnList') // 栏目列表
 
-const crawlerList = r => require.ensure([], () => r(require('@/views/page/crawler/Index.vue')), 'crawlerList') // 采集列表
+import {
+    routes
+} from '@/router/routes';
 
-let ansycRoutes = new Map()
+import Container from '@/layout/Container.vue';
+// import ChildView from '@/layout/ChildView.vue';
 
-ansycRoutes.set("work", work) // 工作台
-ansycRoutes.set("personal", personal) // 个人中心
-// power-权限
-ansycRoutes.set("dept", dept) // 机构
-ansycRoutes.set("menu", menu) // 菜单
-ansycRoutes.set("role", role) // 角色
-ansycRoutes.set("user", user) // 用户
-ansycRoutes.set("area", area) // 区域
-// power-系统
-ansycRoutes.set("dict", dict) // 字典
-ansycRoutes.set("file", file) // 文件
-ansycRoutes.set("secretkey", secretkey) // 密钥
-ansycRoutes.set("log", log) // 日志
-// app-应用
-ansycRoutes.set("one", one)
-ansycRoutes.set("two", two)
-ansycRoutes.set("three", three)
-ansycRoutes.set("four", four)
-ansycRoutes.set("five", five)
-ansycRoutes.set("six", six)
-ansycRoutes.set("seven", seven)
-ansycRoutes.set("eight", eight)
-ansycRoutes.set("nine", nine)
-// monitor-监控
-ansycRoutes.set("baidu", baidu)
-ansycRoutes.set("perf", perf)
-// page-页面
-ansycRoutes.set("contentList", contentList)
-ansycRoutes.set("contentDetails", contentDetails)
-ansycRoutes.set("columnList", columnList)
-ansycRoutes.set("crawlerList", crawlerList)
+const ansycRoute = [{
+    meta: {
+        title: '欢迎页',
+        hidden: false,
+        leaf: true,
+        iconCls: "el-icon-data-analysis",
+        topPath: '/'
+    },
+    path: '/',
+    name: 'Layout',
+    redirect: '/work',
+    component: Container,
+    children: [
+        {
+            meta: {
+                title: '工作台',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-data-analysis",
+                topPath: '/'
+            },
+            path: '/work',
+            name: 'work',
+            component: routes.get('work')
+        }, {
+            meta: {
+                title: '个人中心',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-s-custom",
+                topPath: '/'
+            },
+            path: '/personal',
+            name: 'personal',
+            component: routes.get('personal')
+        }
+    ]
+}, {
+    meta: {
+        title: '权限管理',
+        hidden: false,
+        leaf: false,
+        iconCls: "el-icon-lock",
+        topPath: '/power'
+    },
+    path: '/power',
+    name: 'power',
+    redirect: '/power/menu',
+    component: Container,
+    children: [
+        {
+            meta: {
+                title: '菜单管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-menu",
+                topPath: '/power'
+            },
+            path: '/power/menu',
+            name: 'menu',
+            component: routes.get('menu')
+        }, {
+            meta: {
+                title: '区域管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/power'
+            },
+            path: '/power/area',
+            name: 'area',
+            component: routes.get('area')
+        }, {
+            meta: {
+                title: '部门管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-s-check",
+                topPath: '/power'
+            },
+            path: '/power/dept',
+            name: 'dept',
+            component: routes.get('dept')
+        }, {
+            meta: {
+                title: '角色管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-collection-tag",
+                topPath: '/power'
+            },
+            path: '/power/role',
+            name: 'role',
+            component: routes.get('role')
+        }, {
+            meta: {
+                title: '用户管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-user",
+                topPath: '/power'
+            },
+            path: '/power/user',
+            name: 'user',
+            component: routes.get('user')
+        }
+    ]
+}, {
+    meta: {
+        title: '系统管理',
+        hidden: false,
+        leaf: false,
+        iconCls: "el-icon-odometer",
+        topPath: '/system'
+    },
+    path: '/system',
+    name: 'system',
+    redirect: '/system/dict',
+    component: Container,
+    children: [{
+        meta: {
+            title: '字典管理',
+            hidden: false,
+            leaf: true,
+            iconCls: "el-icon-bangzhu",
+            topPath: '/system'
+        },
+        path: '/system/dict',
+        name: 'dict',
+        component: routes.get('dict')
+    }, {
+        meta: {
+            title: '文件管理',
+            hidden: false,
+            leaf: true,
+            iconCls: "el-icon-files",
+            topPath: '/system'
+        },
+        path: '/system/file',
+        name: 'file',
+        component: routes.get('file')
+    }, {
+        meta: {
+            title: '密钥管理',
+            hidden: false,
+            leaf: true,
+            iconCls: "el-icon-key",
+            topPath: '/system'
+        },
+        path: '/system/secretkey',
+        name: 'secretkey',
+        component: routes.get('secretkey')
+    }, {
+        meta: {
+            title: '日志管理',
+            hidden: false,
+            leaf: true,
+            iconCls: "el-icon-tickets",
+            topPath: '/system'
+        },
+        path: '/system/log',
+        name: 'log',
+        component: routes.get('log')
+    }]
+}, {
+    meta: {
+        title: '运维管理',
+        hidden: false,
+        leaf: false,
+        iconCls: "el-icon-odometer",
+        topPath: '/monitor'
+    },
+    path: '/monitor',
+    name: 'monitor',
+    redirect: '/monitor/baidu',
+    component: Container,
+    children: [
+        {
+            meta: {
+                title: '百度统计',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-bangzhu",
+                topPath: '/monitor'
+            },
+            path: '/monitor/baidu',
+            name: 'baidu',
+            component: routes.get('baidu')
+        }, {
+            meta: {
+                title: '系统监控',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-monitor",
+                topPath: '/monitor'
+            },
+            path: '/monitor/perf',
+            name: 'perf',
+            component: routes.get('perf')
+        }]
+}, {
+    meta: {
+        title: '应用管理',
+        hidden: false,
+        leaf: false,
+        iconCls: "el-icon-connection",
+        topPath: '/app'
+    },
+    path: '/app',
+    name: 'app',
+    redirect: '/app/one',
+    component: Container,
+    children: [
+        {
+            meta: {
+                title: 'tinymce富文本',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/app'
+            },
+            path: '/app/one',
+            name: 'one',
+            component: routes.get('one')
+        }, {
+            meta: {
+                title: 'vscode编辑器',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/app'
+            },
+            path: '/app/two',
+            name: 'two',
+            component: routes.get('two')
+        }, {
+            meta: {
+                title: '动态表单',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                keepAlive: true,
+                topPath: '/app'
+            },
+            path: '/app/three',
+            name: 'three',
+            component: routes.get('three')
+        }, {
+            meta: {
+                title: '视频播放',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/app'
+            },
+            path: '/app/four',
+            name: 'four',
+            component: routes.get('four')
+        }, {
+            meta: {
+                title: '图标选择器',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/app'
+            },
+            path: '/app/five',
+            name: 'five',
+            component: routes.get('five')
+        }, {
+            meta: {
+                title: '拼图验证码',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/app'
+            },
+            path: '/app/six',
+            name: 'six',
+            component: routes.get('six')
+        }, {
+            meta: {
+                title: 'PDF生成',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/app'
+            },
+            path: '/app/seven',
+            name: 'seven',
+            component: routes.get('seven')
+        }, {
+            meta: {
+                title: '右键菜单',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-place",
+                topPath: '/app'
+            },
+            path: '/app/eight',
+            name: 'eight',
+            component: routes.get('eight')
+        }, {
+            meta: {
+                title: '邮件管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-message",
+                topPath: '/app'
+            },
+            path: '/app/nine',
+            name: 'nine',
+            component: routes.get('nine')
+        }]
+}, {
+    meta: {
+        title: '特殊页面',
+        hidden: false,
+        leaf: false,
+        iconCls: "el-icon-star-off",
+        topPath: '/page'
+    },
+    path: '/page',
+    name: 'page',
+    redirect: '/page/content_list',
+    component: Container,
+    children: [
+        {
+            meta: {
+                title: '内容列表',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-notebook-2",
+                topPath: '/page'
+            },
+            path: '/page/content_list',
+            name: 'contentList',
+            component: routes.get('contentList'),
+        },
+        {
+            meta: {
+                title: '内容详情',
+                hidden: true,
+                leaf: true,
+                iconCls: "el-icon-notebook-2",
+                topPath: '/page'
+            },
+            path: '/page/content_details',
+            name: 'contentDetails',
+            component: routes.get('contentDetails')
+        },
+        {
+            meta: {
+                title: '栏目列表',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-notebook-1",
+                topPath: '/page'
+            },
+            path: '/page/column_list',
+            name: 'columnList',
+            component: routes.get('columnList')
+        },
+        {
+            meta: {
+                title: '采集列表',
+                hidden: false,
+                leaf: false,
+                iconCls: "el-icon-cpu",
+                topPath: '/page'
+            },
+            path: '/page/crawler',
+            name: 'crawler',
+            component: routes.get('crawler'),
+            children: [{
+                meta: {
+                    title: '站点配置',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-cpu",
+                    topPath: '/page'
+                },
+                path: '/page/crawler/site',
+                name: 'crawlerSite',
+                component: routes.get('crawlerSite'),
+            }]
+        }
+    ]
+}];
 
-export {
-    ansycRoutes
-}
+export { ansycRoute };
