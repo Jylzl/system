@@ -332,14 +332,14 @@ function checkDictName(message) { // 字典名称验证
     }
 }
 
-function checkDictItemName(message, dict_id) { // 字典名称验证
+function checkDictItemName(message, dictId) { // 字典名称验证
     return {
         required: true,
         validator: (rule, value, callback) => {
             request.get(api.checkDictItemName, {
                 params: {
                     value,
-                    dict_id
+                    dictId
                 }
             }).then(res => {
                 if (res.code == code.success && res.data.length == 0) {

@@ -3,16 +3,16 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-25 17:01:50
+ * @lastTime: 2021-01-18 11:58:06
 -->
 <template>
 	<el-container>
 		<el-main>
 			<div class="right-top">
 				<div class="right-top-left">
-					<el-form :inline="true" :model="searchForm" size="mini" class="demo-form-inline">
+					<el-form :inline="true" :model="searchForm" size="mini" class="top-form-inline">
 						<el-form-item label="文件名">
-							<el-input v-model="searchForm.new_name" placeholder="文件名" clearable></el-input>
+							<el-input v-model="searchForm.newName" placeholder="文件名" clearable></el-input>
 						</el-form-item>
 						<el-form-item label="创建时间">
 							<el-date-picker
@@ -38,12 +38,12 @@
 						<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
 							<el-table-column prop="folder" label="空间" width="120" align="center"></el-table-column>
-							<el-table-column prop="new_name" label="文件名"></el-table-column>
+							<el-table-column prop="newName" label="文件名"></el-table-column>
 							<el-table-column prop="name" label="原文件名"></el-table-column>
 							<el-table-column prop="extname" label="扩展名" width="120" align="center"></el-table-column>
-							<el-table-column prop="mime_type" label="文件类型" width="160" align="center"></el-table-column>
+							<el-table-column prop="mimeType" label="文件类型" width="160" align="center"></el-table-column>
 							<el-table-column prop="size" label="文件大小" width="120" align="center"></el-table-column>
-							<el-table-column prop="created_at" label="创建时间" width="200" align="center"></el-table-column>
+							<el-table-column prop="createdAt" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -158,13 +158,13 @@ export default {
 			editForm: {
 				type: null,
 				name: "",
-				value_type: "string",
+				valueType: "string",
 				description: "",
 				remarks: "",
 			},
 			fileList: [],
 			searchForm: {
-				new_name: "",
+				newName: "",
 				time: [],
 			},
 		};
@@ -192,7 +192,7 @@ export default {
 			getList({
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
-				new_name: this.searchForm.new_name,
+				newName: this.searchForm.newName,
 				startTime:
 					this.searchForm.time != null &&
 					this.searchForm.time.length == 2
@@ -213,7 +213,7 @@ export default {
 			this.editForm = {
 				type: this.type,
 				name: "",
-				value_type: "string",
+				valueType: "string",
 				description: "",
 				remarks: "",
 			};
@@ -298,15 +298,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-.right-top-left {
-	height: 28px;
-	line-height: 28px;
-	padding: 6px 0;
-}
-
-.demo-form-inline .el-form-item {
-	margin-bottom: 0;
-}
-</style>

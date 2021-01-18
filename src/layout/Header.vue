@@ -3,7 +3,7 @@
  * @Author: haoran
  * @Date: 2020-04-30 14:53:35
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-05 10:23:44
+ * @lastTime: 2021-01-18 11:46:47
  -->
 <template>
 	<div class="header-box">
@@ -71,8 +71,8 @@
 			<div class="user-inf">
 				<el-dropdown trigger="click">
 					<div class="el-dropdown-link">
-						<el-avatar class="user-header-img" :size="32" :src="user.pow_user_inf.image_url">A</el-avatar>
-						<span class="user-name">{{user.pow_user_inf.real_name}}</span>
+						<el-avatar class="user-header-img" :size="32" :src="user.powUserInf.imageUrl">A</el-avatar>
+						<span class="user-name">{{user.powUserInf.realName}}</span>
 						<i class="el-icon-caret-bottom"></i>
 					</div>
 					<el-dropdown-menu slot="dropdown">

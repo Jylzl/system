@@ -24,11 +24,11 @@ export function getTopMenu() {
   })
 }
 
-export function fetchMenuTree(lazy, parent_id, type) {
+export function fetchMenuTree(lazy, parentId, type) {
   return request({
     url: '/api/menu/tree',
     method: 'get',
-    params: { lazy, parent_id, type }
+    params: { lazy, parentId, type }
   })
 }
 

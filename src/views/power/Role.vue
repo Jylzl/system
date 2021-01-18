@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-05 09:29:32
+ * @lastTime: 2021-01-18 11:53:44
  -->
 <template>
 	<el-container>
@@ -95,7 +95,7 @@
 					<el-col :span="roleDialog.span">
 						<el-form-item label="菜单权限" prop="code">
 							<el-cascader
-								v-model="roleForm.pow_menus"
+								v-model="roleForm.powMenu"
 								:options="menuTree"
 								:props="menProps"
 								clearable
@@ -167,7 +167,7 @@ export default {
 				name: "",
 				code: "",
 				desc: "",
-				pow_menus: [],
+				powMenu: [],
 			},
 			// 表单验证规则
 			roleFormRules: {
@@ -212,8 +212,8 @@ export default {
 		saveForm() {
 			this.$refs["roleForm"].validate((valid) => {
 				if (valid) {
-					if (this.roleForm.parent_id == "") {
-						this.roleForm.parent_id = -1;
+					if (this.roleForm.parentId == "") {
+						this.roleForm.parentId = -1;
 					}
 					if (this.roleDialog.roleForm == "add") {
 						addObj(this.roleForm).then(() => {
@@ -242,7 +242,7 @@ export default {
 				name: "",
 				code: "",
 				desc: "",
-				pow_menus: [],
+				powMenu: [],
 			};
 		},
 		//删除
@@ -273,7 +273,7 @@ export default {
 			this.roleDialog.roleForm = "update";
 			this.roleDialog.title = "修改";
 			this.roleForm = row;
-			this.roleForm.pow_menus = row.pow_menus.map((item) => {
+			this.roleForm.powMenu = row.powMenu.map((item) => {
 				return item.id;
 			});
 		},

@@ -3,14 +3,14 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-05 14:51:00
+ * @lastTime: 2021-01-18 14:22:10
 -->
 <template>
 	<el-container>
 		<el-main>
 			<div class="right-top">
 				<div class="right-top-left">
-					<el-form :inline="true" :model="searchForm" size="mini" class="demo-form-inline">
+					<el-form :inline="true" :model="searchForm" size="mini" class="top-form-inline">
 						<el-form-item label="类型">
 							<el-select v-model="searchForm.type" placeholder="请选择" class="w100" clearable>
 								<el-option
@@ -40,10 +40,10 @@
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
 							<el-table-column prop="type" label="类型" width="120" align="center"></el-table-column>
 							<el-table-column prop="description" label="描述"></el-table-column>
-							<el-table-column prop="app_id" label="appId" align="center"></el-table-column>
-							<el-table-column prop="app_secret" label="appSecret" align="center"></el-table-column>
+							<el-table-column prop="appId" label="appId" align="center"></el-table-column>
+							<el-table-column prop="appsecret" label="appSecret" align="center"></el-table-column>
 							<el-table-column prop="remarks" label="备注信息"></el-table-column>
-							<el-table-column prop="created_at" label="创建时间" width="200" align="center"></el-table-column>
+							<el-table-column prop="createdAt" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -121,13 +121,13 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="appId" prop="app_id">
-							<el-input v-model="editForm.app_id" maxlength="100"></el-input>
+						<el-form-item label="appId" prop="appId">
+							<el-input v-model="editForm.appId" maxlength="100"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
 						<el-form-item label="appSecret">
-							<el-input v-model="editForm.app_secret" maxlength="100"></el-input>
+							<el-input v-model="editForm.appsecret" maxlength="100"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
@@ -176,8 +176,8 @@ export default {
 			editForm: {
 				type: "",
 				description: "",
-				app_id: "",
-				app_secret: "",
+				appId: "",
+				appsecret: "",
 				remarks: "",
 			},
 			searchForm: {
@@ -219,8 +219,8 @@ export default {
 			this.editForm = {
 				type: "",
 				description: "",
-				app_id: "",
-				app_secret: "",
+				appId: "",
+				appsecret: "",
 				remarks: "",
 			};
 			this.editDialog.type = "add";
@@ -298,15 +298,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-.right-top-left {
-	height: 28px;
-	line-height: 28px;
-	padding: 6px 0;
-}
-
-.demo-form-inline .el-form-item {
-	margin-bottom: 0;
-}
-</style>

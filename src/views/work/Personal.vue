@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-07-02 10:11:54
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-05 10:24:03
+ * @lastTime: 2021-01-18 11:47:15
 --> 
 
 <template>
@@ -14,11 +14,11 @@
 					<el-card class="box-card h100">
 						<div class="user-header">
 							<div class="user-header-left">
-								<el-avatar :src="user.pow_user_inf.image_url" :size="100"></el-avatar>
+								<el-avatar :src="user.powUserInf.imageUrl" :size="100"></el-avatar>
 							</div>
 							<div class="user-header-right">
 								<h2>{{user.name}}</h2>
-								<p>{{user.pow_user_inf.real_name}}</p>
+								<p>{{user.powUserInf.reaNname}}</p>
 							</div>
 						</div>
 					</el-card>

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-16 18:00:47
+ * @lastTime: 2021-01-18 16:48:10
  */
 
 import {
@@ -11,7 +11,7 @@ import {
 } from '@/router/routes';
 
 import Container from '@/layout/Container.vue';
-// import ChildView from '@/layout/ChildView.vue';
+import ChildView from '@/layout/ChildView.vue';
 
 const ansycRoute = [{
     meta: {
@@ -386,7 +386,7 @@ const ansycRoute = [{
             },
             path: '/page/crawler',
             name: 'crawler',
-            component: routes.get('crawler'),
+            component: ChildView,
             children: [{
                 meta: {
                     title: '站点配置',
@@ -398,6 +398,17 @@ const ansycRoute = [{
                 path: '/page/crawler/site',
                 name: 'crawlerSite',
                 component: routes.get('crawlerSite'),
+            }, {
+                meta: {
+                    title: '栏目配置',
+                    hidden: false,
+                    leaf: true,
+                    iconCls: "el-icon-cpu",
+                    topPath: '/page'
+                },
+                path: '/page/crawler/column',
+                name: 'crawlerColumn',
+                component: routes.get('crawlerColumn'),
             }]
         }
     ]

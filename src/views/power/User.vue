@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-22 09:33:38
+ * @lastTime: 2021-01-18 11:55:44
  -->
 <template>
 	<el-container>
@@ -38,18 +38,18 @@
 				<el-scrollbar wrap-class="scrollbar-wrapper">
 					<div class="table-box">
 						<el-table :data="menus" stripe style="width: 100%;height:100%;" size="small">
-							<el-table-column prop="image_url" label="用户头像" width="120" align="center">
+							<el-table-column prop="imageUrl" label="用户头像" width="120" align="center">
 								<template slot-scope="scope">
-									<el-avatar size="small" :src="scope.row.pow_user_inf.image_url"></el-avatar>
+									<el-avatar size="small" :src="scope.row.powUserInf.imageUrl"></el-avatar>
 								</template>
 							</el-table-column>
 							<el-table-column prop="name" label="用户名" align="left"></el-table-column>
-							<el-table-column prop="pow_user_inf[real_name]" label="真实姓名" align="left"></el-table-column>
-							<el-table-column prop="pow_user_inf[phone]" label="手机号码" align="left"></el-table-column>
-							<el-table-column prop="pow_user_inf[email]" label="邮箱号码" align="left"></el-table-column>
-							<el-table-column prop="last_login_time" label="后登录时间" align="left"></el-table-column>
+							<el-table-column prop="powUserInf[realName]" label="真实姓名" align="left"></el-table-column>
+							<el-table-column prop="powUserInf[phone]" label="手机号码" align="left"></el-table-column>
+							<el-table-column prop="powUserInf[email]" label="邮箱号码" align="left"></el-table-column>
+							<el-table-column prop="lastLoginTime" label="后登录时间" align="left"></el-table-column>
 							<el-table-column prop="status" label="用户状态" align="left"></el-table-column>
-							<el-table-column prop="login_count" label="登录次数" align="left"></el-table-column>
+							<el-table-column prop="loginCount" label="登录次数" align="left"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -120,8 +120,8 @@
 										:disabled="userDialog.type == 'add'? false:true"
 									></el-input>
 								</el-form-item>
-								<el-form-item label="真实姓名" prop="real_name">
-									<el-input v-model="userForm.pow_user_inf.real_name" maxlength="50"></el-input>
+								<el-form-item label="真实姓名" prop="realName">
+									<el-input v-model="userForm.powUserInf.realName" maxlength="50"></el-input>
 								</el-form-item>
 							</div>
 							<div class="form-first-right">
@@ -137,8 +137,8 @@
 									:before-upload="beforeAvatarUpload"
 								>
 									<img
-										v-if="userForm.pow_user_inf.image_url"
-										:src="userForm.pow_user_inf.image_url"
+										v-if="userForm.powUserInf.imageUrl"
+										:src="userForm.powUserInf.imageUrl"
 										class="avatar"
 									/>
 									<i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -153,23 +153,23 @@
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="身份证">
-							<el-input v-model="userForm.pow_user_inf.id_card" maxlength="200"></el-input>
+							<el-input v-model="userForm.powUserInf.idCard" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="手机号码">
-							<el-input v-model="userForm.pow_user_inf.phone" maxlength="200"></el-input>
+							<el-input v-model="userForm.powUserInf.phone" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="邮箱号码">
-							<el-input v-model="userForm.pow_user_inf.email" maxlength="200"></el-input>
+							<el-input v-model="userForm.powUserInf.email" maxlength="200"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="userDialog.span">
 						<el-form-item label="所在部门">
 							<el-cascader
-								v-model="userForm.dept_id"
+								v-model="userForm.deptId"
 								:options="deptTree"
 								:props="deptCascaderProps"
 								:show-all-levels="false"
@@ -246,16 +246,16 @@ export default {
 			userForm: {
 				name: "",
 				pswd: "",
-				dept_id: "",
+				deptId: "",
 				roles: "",
-				pow_user_inf: {
-					real_name: "",
-					id_card: "",
+				powUserInf: {
+					realName: "",
+					idCard: "",
 					phone: "",
 					qq: "",
 					email: "",
 					github: "",
-					image_url: "",
+					imageUrl: "",
 				},
 			},
 			deptTreeProps: {
@@ -273,13 +273,13 @@ export default {
 			// 表单验证规则
 			userFormRules: {
 				name: [r_required, r_checkChinese],
-				real_name: [r_required],
+				realName: [r_required],
 				pswd: [r_required, r_pswd],
 				_pswd: [r_pswd],
-				id_card: [r_required, r_isCardNo],
+				idCard: [r_required, r_isCardNo],
 				phone: [r_required, r_mobile],
 				email: [r_required, r_email],
-				dept_id: [r_required],
+				deptId: [r_required],
 				roles: [r_required],
 			},
 		};
@@ -371,16 +371,16 @@ export default {
 			this.userForm = {
 				name: "",
 				pswd: "",
-				dept_id: "",
+				deptId: "",
 				roles: "",
-				pow_user_inf: {
-					real_name: "",
-					id_card: "",
+				powUserInf: {
+					realName: "",
+					idCard: "",
 					phone: "",
 					qq: "",
 					email: "",
 					github: "",
-					image_url: "",
+					imageUrl: "",
 				},
 			};
 		},
@@ -421,7 +421,7 @@ export default {
 		getUserList(id) {
 			this.tableLoading = true;
 			getUser({
-				dept_id: id,
+				deptId: id,
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
 			}).then((res) => {
@@ -431,10 +431,10 @@ export default {
 			});
 		},
 		//获取菜单树
-		getDeptTree(lazy, parent_id) {
+		getDeptTree(lazy, parentId) {
 			this.treeLoading = true;
-			this.nowDeptID = parent_id;
-			this.getUserList(parent_id); //获取用户列表
+			this.nowDeptID = parentId;
+			this.getUserList(parentId); //获取用户列表
 			fetchDeptTree(lazy, -1).then((res) => {
 				this.deptTree = res.data;
 				this.treeLoading = false;
@@ -457,7 +457,7 @@ export default {
 					id: obj.id,
 				};
 				arr.push(params);
-				this.creatBread(obj.parent_id, arr);
+				this.creatBread(obj.parentId, arr);
 			} else {
 				arr.push(this.breadItems[0]);
 				this.breadItems = arr.reverse();
@@ -476,7 +476,7 @@ export default {
 		// eslint-disable-next-line no-unused-vars
 		handleAvatarSuccess(res, file) {
 			// this.imageUrl = URL.createObjectURL(file.raw);
-			this.userForm.pow_user_inf.image_url =
+			this.userForm.powUserInf.imageUrl =
 				process.env.VUE_APP_SERVER_API + res.data.url;
 		},
 		beforeAvatarUpload(file) {

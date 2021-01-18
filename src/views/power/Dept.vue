@@ -105,7 +105,7 @@
 					<el-col :span="menuDialog.span">
 						<el-form-item label="上级部门">
 							<el-cascader
-								v-model="deptForm.parent_id"
+								v-model="deptForm.parentId"
 								:options="deptTree"
 								:props="deptCascaderProps"
 								:show-all-levels="false"
@@ -131,7 +131,7 @@
 					</el-col>
 					<el-col :span="menuDialog.span">
 						<el-form-item label="排序">
-							<el-input-number v-model="deptForm.order_num" controls-position="right" class="w100"></el-input-number>
+							<el-input-number v-model="deptForm.orderNum" controls-position="right" class="w100"></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.desc">
@@ -202,12 +202,12 @@ export default {
 				span: 24,
 			},
 			deptForm: {
-				parent_id: -1,
+				parentId: -1,
 				name: "",
 				abbreviation: "",
 				code: "",
 				desc: "",
-				order_num: 0,
+				orderNum: 0,
 			},
 			deptTreeProps: {
 				children: "children",
@@ -226,7 +226,7 @@ export default {
 				name: [r_required],
 				abbreviation: [r_required],
 				code: [r_checkChinese],
-				order_num: [r_required, r_number],
+				orderNum: [r_required, r_number],
 				desc: [r_notRequired],
 			},
 		};
@@ -252,8 +252,8 @@ export default {
 		saveForm() {
 			this.$refs["deptForm"].validate((valid) => {
 				if (valid) {
-					if (this.deptForm.parent_id == "") {
-						this.deptForm.parent_id = -1;
+					if (this.deptForm.parentId == "") {
+						this.deptForm.parentId = -1;
 					}
 					if (this.menuDialog.deptForm == "add") {
 						addObj(this.deptForm).then(() => {
@@ -279,12 +279,12 @@ export default {
 			this.menuDialog.deptForm = "add";
 			this.menuDialog.title = "新增";
 			this.deptForm = {
-				parent_id: Number(this.nowDeptID),
+				parentId: Number(this.nowDeptID),
 				name: "",
 				abbreviation: "",
 				code: "",
 				desc: "",
-				order_num: 0,
+				orderNum: 0,
 			};
 		},
 		//删除
@@ -320,7 +320,7 @@ export default {
 		getDeptList(id) {
 			this.tableLoading = true;
 			getDept({
-				parent_id: id,
+				parentId: id,
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
 			}).then((res) => {
@@ -330,10 +330,10 @@ export default {
 			});
 		},
 		//获取部门树
-		getDeptTree(lazy, parent_id) {
+		getDeptTree(lazy, parentId) {
 			this.treeLoading = true;
-			this.nowDeptID = parent_id;
-			this.getDeptList(parent_id); //获取部门列表
+			this.nowDeptID = parentId;
+			this.getDeptList(parentId); //获取部门列表
 			fetchDeptTree(lazy, -1).then((res) => {
 				this.deptTree = res.data;
 				this.treeLoading = false;
@@ -356,7 +356,7 @@ export default {
 					id: obj.id,
 				};
 				arr.push(params);
-				this.creatBread(obj.parent_id, arr);
+				this.creatBread(obj.parentId, arr);
 			} else {
 				arr.push(this.breadItems[0]);
 				this.breadItems = arr.reverse();

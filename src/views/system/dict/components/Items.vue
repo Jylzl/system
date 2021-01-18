@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 17:01:57
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 11:23:18
+ * @lastTime: 2021-01-18 11:56:29
 -->
 <template>
 	<div class="dialog-box h100">
@@ -13,14 +13,14 @@
 		<div class="box-center">
 			<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 				<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-				<el-table-column prop="dict_id" label="名称" width="120" align="center">
+				<el-table-column prop="dictId" label="名称" width="120" align="center">
 					<template>{{name}}</template>
 				</el-table-column>
 				<el-table-column prop="label" label="标签名" width="100" align="center"></el-table-column>
 				<el-table-column prop="value" label="数据值" width="100" align="center"></el-table-column>
 				<el-table-column prop="description" label="描述"></el-table-column>
 				<el-table-column prop="remarks" label="备注"></el-table-column>
-				<el-table-column prop="order_num" label="排序" width="80" align="center"></el-table-column>
+				<el-table-column prop="orderNum" label="排序" width="80" align="center"></el-table-column>
 				<el-table-column label="操作" width="120" align="center">
 					<template slot-scope="scope">
 						<el-button
@@ -99,7 +99,7 @@
 					</el-col>
 					<el-col :span="editDialog.span">
 						<el-form-item label="排序">
-							<el-input-number v-model="editForm.order_num"></el-input-number>
+							<el-input-number v-model="editForm.orderNum"></el-input-number>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -150,16 +150,16 @@ export default {
 				span: 24,
 			},
 			editForm: {
-				dict_id: null,
+				dictId: null,
 				label: "",
 				value: "",
 				description: "",
 				remarks: "",
-				order_num: null,
+				orderNum: null,
 			},
 			// 表单验证规则
 			editFormRules: {
-				dict_id: [r_required],
+				dictId: [r_required],
 				label: [r_required],
 				value: [r_required, r_checkDictItemName],
 				description: [r_required],
@@ -167,7 +167,7 @@ export default {
 		};
 	},
 	created() {
-		this.editForm.dict_id = this.dictId;
+		this.editForm.dictId = this.dictId;
 		this.getDictItem(this.dictId);
 	},
 	methods: {
@@ -185,12 +185,12 @@ export default {
 		},
 		add() {
 			this.editForm = {
-				dict_id: this.dictId,
+				dictId: this.dictId,
 				label: "",
 				value: "",
 				description: "",
 				remarks: "",
-				order_num: null,
+				orderNum: null,
 			};
 			this.editDialog.type = "add";
 			this.editDialog.title = "新增";
@@ -198,7 +198,7 @@ export default {
 		},
 		update(row) {
 			this.editForm = row;
-			this.editForm.dict_id = this.dictId;
+			this.editForm.dictId = this.dictId;
 			this.editDialog.type = "update";
 			this.editDialog.title = "修改";
 			this.editDialog.visible = true;

@@ -12,7 +12,7 @@
 				:inline="true"
 				:model="formInline"
 				label-suffix=":"
-				class="demo-form-inline"
+				class="top-form-inline"
 				size="small"
 			>
 				<el-form-item label="创建方式">
@@ -134,7 +134,7 @@
 						:inline="true"
 						:model="formInline"
 						label-suffix=":"
-						class="demo-form-inline"
+						class="top-form-inline"
 						size="mini"
 					>
 						<el-form-item>
@@ -226,7 +226,7 @@
 					:model="formInline"
 					label-suffix=":"
 					label-width="80px"
-					class="demo-form-inline"
+					class="top-form-inline"
 					size="small"
 				>
 					<el-form-item label="创建方式">

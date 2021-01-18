@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-05 14:58:06
+ * @lastTime: 2021-01-18 11:58:49
 -->
 <template>
 	<el-container>
@@ -15,9 +15,9 @@
 					</el-radio-group>
 				</div>
 				<div class="right-top-right">
-					<el-form :inline="true" :model="searchForm" size="mini" class="demo-form-inline">
+					<el-form :inline="true" :model="searchForm" size="mini" class="top-form-inline">
 						<el-form-item label="请求类型">
-							<el-select v-model="searchForm.request_type" placeholder="请选择" class="w100" clearable>
+							<el-select v-model="searchForm.requestType" placeholder="请选择" class="w100" clearable>
 								<el-option
 									v-for="item in requestType"
 									:key="item.value"
@@ -43,10 +43,10 @@
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
 							<el-table-column prop="title" label="标题"></el-table-column>
 							<el-table-column prop="ip" label="IP地址" width="200" align="center"></el-table-column>
-							<el-table-column prop="user_name" label="操作人" width="200" align="center"></el-table-column>
-							<el-table-column prop="request_type" label="请求类型" width="120" align="center"></el-table-column>
+							<el-table-column prop="userName" label="操作人" width="200" align="center"></el-table-column>
+							<el-table-column prop="requestType" label="请求类型" width="120" align="center"></el-table-column>
 							<el-table-column prop="time" label="请求时间(ms)" width="200" align="center"></el-table-column>
-							<el-table-column prop="created_at" label="创建时间" width="200" align="center"></el-table-column>
+							<el-table-column prop="createdAt" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="80" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -105,7 +105,7 @@ export default {
 			tableData: [],
 			searchForm: {
 				type: 1,
-				request_type: "",
+				requestType: "",
 				title: "",
 			},
 		};
@@ -118,7 +118,7 @@ export default {
 	mounted() {},
 	methods: {
 		getDictType() {
-			getDictItemByType("request_type").then((res) => {
+			getDictItemByType("requestType").then((res) => {
 				this.requestType = res.data;
 			});
 		},
@@ -171,15 +171,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-.right-top-right {
-	height: 28px;
-	line-height: 28px;
-	padding: 6px 0;
-}
-
-.demo-form-inline .el-form-item {
-	margin-bottom: 0;
-}
-</style>

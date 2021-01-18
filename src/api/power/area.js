@@ -24,11 +24,11 @@ export function getTopArea() {
   })
 }
 
-export function fetchAreaTree(lazy, parent_id) {
+export function fetchAreaTree(lazy, parentId) {
   return request({
     url: '/api/area/tree',
     method: 'get',
-    params: { lazy, parent_id }
+    params: { lazy, parentId }
   })
 }
 

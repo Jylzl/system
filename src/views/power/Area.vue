@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-29 11:27:51
+ * @lastTime: 2021-01-18 11:53:01
  -->
 <template>
 	<el-container>
@@ -105,7 +105,7 @@
 					<el-col :span="menuDialog.span">
 						<el-form-item label="上级区域">
 							<el-cascader
-								v-model="areaForm.parent_id"
+								v-model="areaForm.parentId"
 								:options="areaTree"
 								:props="areaCascaderProps"
 								:show-all-levels="false"
@@ -131,7 +131,7 @@
 					</el-col>
 					<el-col :span="menuDialog.span">
 						<el-form-item label="排序">
-							<el-input-number v-model="areaForm.order_num" controls-position="right" class="w100"></el-input-number>
+							<el-input-number v-model="areaForm.orderNum" controls-position="right" class="w100"></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.desc">
@@ -202,12 +202,12 @@ export default {
 				span: 24,
 			},
 			areaForm: {
-				parent_id: -1,
+				parentId: -1,
 				name: "",
 				abbreviation: "",
 				code: "",
 				desc: "",
-				order_num: 0,
+				orderNum: 0,
 			},
 			areaTreeProps: {
 				children: "children",
@@ -226,7 +226,7 @@ export default {
 				name: [r_required],
 				abbreviation: [r_required],
 				code: [r_required, r_checkChinese],
-				order_num: [r_required, r_number],
+				orderNum: [r_required, r_number],
 				desc: [r_notRequired],
 			},
 		};
@@ -252,8 +252,8 @@ export default {
 		saveForm() {
 			this.$refs["areaForm"].validate((valid) => {
 				if (valid) {
-					if (this.areaForm.parent_id == "") {
-						this.areaForm.parent_id = -1;
+					if (this.areaForm.parentId == "") {
+						this.areaForm.parentId = -1;
 					}
 					if (this.menuDialog.areaForm == "add") {
 						addObj(this.areaForm).then(() => {
@@ -279,12 +279,12 @@ export default {
 			this.menuDialog.areaForm = "add";
 			this.menuDialog.title = "新增";
 			this.areaForm = {
-				parent_id: Number(this.nowAreaID),
+				parentId: Number(this.nowAreaID),
 				name: "",
 				abbreviation: "",
 				code: "",
 				desc: "",
-				order_num: 0,
+				orderNum: 0,
 			};
 		},
 		//删除
@@ -320,7 +320,7 @@ export default {
 		getAreaList(id) {
 			this.tableLoading = true;
 			getArea({
-				parent_id: id,
+				parentId: id,
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
 			}).then((res) => {
@@ -330,10 +330,10 @@ export default {
 			});
 		},
 		//获取区域树
-		getAreaTree(lazy, parent_id) {
+		getAreaTree(lazy, parentId) {
 			this.treeLoading = true;
-			this.nowAreaID = parent_id;
-			this.getAreaList(parent_id); //获取区域列表
+			this.nowAreaID = parentId;
+			this.getAreaList(parentId); //获取区域列表
 			fetchAreaTree(lazy, -1).then((res) => {
 				this.areaTree = res.data;
 				this.treeLoading = false;
@@ -356,7 +356,7 @@ export default {
 					id: obj.id,
 				};
 				arr.push(params);
-				this.creatBread(obj.parent_id, arr);
+				this.creatBread(obj.parentId, arr);
 			} else {
 				arr.push(this.breadItems[0]);
 				this.breadItems = arr.reverse();

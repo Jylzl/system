@@ -1,40 +1,24 @@
 /**
- * @description: 部门接口
+ * @description: 采集站点管理接口
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-13 09:16:08
+ * @lastTime: 2021-01-18 15:34:26
  */
 
 import request from '@/utils/request'
 
-export function getDept(params) {
+export function getList(params) {
   return request({
-    url: '/api/dept',
+    url: '/api/crawler/site',
     params,
     method: 'get'
   })
 }
 
-export function getTopDept() {
-  return request({
-    url: '/api/dept',
-    params: { type: 'top' },
-    method: 'get'
-  })
-}
-
-export function fetchDeptTree(lazy, parentId) {
-  return request({
-    url: '/api/dept/tree',
-    method: 'get',
-    params: { lazy, parentId }
-  })
-}
-
 export function addObj(obj) {
   return request({
-    url: '/api/dept',
+    url: '/api/crawler/site',
     method: 'post',
     data: obj
   })
@@ -42,22 +26,30 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/api/dept/' + id,
+    url: '/api/crawler/site/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/api/dept/' + id,
+    url: '/api/crawler/site/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(obj) {
   return request({
-    url: '/api/dept/' + obj.id,
+    url: '/api/crawler/site/' + obj.id,
     method: 'put',
     data: obj
+  })
+}
+
+export function checkObj(params) {
+  return request({
+    url: '/api/crawler/site/check',
+    params,
+    method: 'get'
   })
 }

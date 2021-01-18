@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-23 09:56:07
+ * @lastTime: 2021-01-18 11:56:58
 -->
 <template>
 	<el-container>
@@ -27,10 +27,10 @@
 								<template slot-scope="scope">{{scope.row.type == 1?'系统类':'业务类'}}</template>
 							</el-table-column>
 							<el-table-column prop="name" label="名称" width="220"></el-table-column>
-							<el-table-column prop="value_type" label="数据类型" width="120" align="center"></el-table-column>
+							<el-table-column prop="valueType" label="数据类型" width="120" align="center"></el-table-column>
 							<el-table-column prop="description" label="描述"></el-table-column>
 							<el-table-column prop="remarks" label="备注信息"></el-table-column>
-							<el-table-column prop="created_at" label="创建时间" width="200" align="center"></el-table-column>
+							<el-table-column prop="createdAt" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -148,9 +148,9 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="数据类型" prop="value_type">
+						<el-form-item label="数据类型" prop="valueType">
 							<el-radio-group
-								v-model="editForm.value_type"
+								v-model="editForm.valueType"
 								:disabled="editForm.type == 1  && editDialog.type=='update' ? true : false"
 							>
 								<el-radio-button label="string">字符类型</el-radio-button>
@@ -219,7 +219,7 @@ export default {
 			editForm: {
 				type: null,
 				name: "",
-				value_type: "string",
+				valueType: "string",
 				description: "",
 				remarks: "",
 			},
@@ -227,7 +227,7 @@ export default {
 			editFormRules: {
 				type: [r_required],
 				name: [r_required, r_checkDictName],
-				value_type: [r_required],
+				valueType: [r_required],
 				description: [r_required],
 			},
 		};
@@ -267,7 +267,7 @@ export default {
 			this.editForm = {
 				type: this.type,
 				name: "",
-				value_type: "string",
+				valueType: "string",
 				description: "",
 				remarks: "",
 			};

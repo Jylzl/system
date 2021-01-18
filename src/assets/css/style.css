@@ -87,3 +87,11 @@
 .el-table__body-wrapper {
   height: calc(100% - 40px);
 }
+
+.top-form-inline .el-form-item {
+  margin-bottom: 0 !important;
+}
+
+.top-form-inline .el-form-item .el-form-item__content {
+  line-height: inherit;
+}

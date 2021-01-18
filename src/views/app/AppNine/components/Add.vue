@@ -242,11 +242,11 @@ export default {
 		onSuccess(response, file, fileList) {
 			console.log(response);
 			this.form.attachments.filename = response.data.name;
-			this.form.attachments.content = response.data.new_name;
+			this.form.attachments.content = response.data.newName;
 			this.form.attachments.encoding = "";
 			this.form.attachments.path =
 				process.env.VUE_APP_SERVER_API + response.data.url;
-			this.form.attachments.contentType = response.data.mime_type;
+			this.form.attachments.contentType = response.data.mimeType;
 		},
 		// eslint-disable-next-line no-unused-vars
 		beforeRemove(file, fileList) {

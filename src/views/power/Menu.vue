@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2020-12-18 12:01:46
+ * @lastTime: 2021-01-18 11:51:35
  -->
 <template>
 	<el-container>
@@ -112,7 +112,7 @@
 								<template slot-scope="props">
 									<el-form label-position="left" inline class="demo-table-expand">
 										<el-form-item label="上级Id:">
-											<span>{{ props.row.parent_id }}</span>
+											<span>{{ props.row.parentId }}</span>
 										</el-form-item>
 										<el-form-item label="名称:">
 											<span>{{ props.row.name }}</span>
@@ -167,7 +167,7 @@
 									<span v-else>否</span>
 								</template>
 							</el-table-column>
-							<el-table-column prop="order_num" label="排序" width="60" align="center"></el-table-column>
+							<el-table-column prop="orderNum" label="排序" width="60" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -216,7 +216,7 @@
 					<el-col :span="menuDialog.span">
 						<el-form-item label="上级菜单">
 							<el-cascader
-								v-model="menuForm.parent_id"
+								v-model="menuForm.parentId"
 								:options="menuTree"
 								:props="menProps"
 								:show-all-levels="false"
@@ -279,7 +279,7 @@
 					</el-col>
 					<el-col :span="menuDialog.span">
 						<el-form-item label="排序">
-							<el-input-number v-model="menuForm.order_num" controls-position="right" class="w100"></el-input-number>
+							<el-input-number v-model="menuForm.orderNum" controls-position="right" class="w100"></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="menuDialog.span">
@@ -375,8 +375,8 @@ export default {
 				span: 12,
 			},
 			menuForm: {
-				parent_id: -1,
-				order_num: 0,
+				parentId: -1,
+				orderNum: 0,
 				icon: "",
 				type: 2,
 				name: "",
@@ -439,8 +439,8 @@ export default {
 		saveForm() {
 			this.$refs["menuForm"].validate((valid) => {
 				if (valid) {
-					if (this.menuForm.parent_id == "") {
-						this.menuForm.parent_id = -1;
+					if (this.menuForm.parentId == "") {
+						this.menuForm.parentId = -1;
 					}
 					if (this.menuDialog.menuForm == "add") {
 						addObj(this.menuForm).then(() => {
@@ -466,8 +466,8 @@ export default {
 			this.menuDialog.menuForm = "add";
 			this.menuDialog.title = "新增";
 			this.menuForm = {
-				parent_id: Number(this.nowMenuID),
-				order_num: 0,
+				parentId: Number(this.nowMenuID),
+				orderNum: 0,
 				icon: "",
 				type: menuType,
 				name: "",
@@ -515,17 +515,17 @@ export default {
 		getMenuList(id) {
 			this.tableLoading = true;
 			getMenu({
-				parent_id: id,
+				parentId: id,
 			}).then((res) => {
 				this.menus = res.data;
 				this.tableLoading = false;
 			});
 		},
 		//获取菜单树
-		getMenuTree(lazy, parent_id) {
+		getMenuTree(lazy, parentId) {
 			this.treeLoading = true;
-			this.nowMenuID = parent_id;
-			this.getMenuList(parent_id); //获取菜单列表
+			this.nowMenuID = parentId;
+			this.getMenuList(parentId); //获取菜单列表
 			fetchMenuTree(lazy, -1, "1,2").then((res) => {
 				this.menuTree = res.data;
 				this.treeLoading = false;
@@ -548,7 +548,7 @@ export default {
 					id: obj.id,
 				};
 				arr.push(params);
-				this.creatBread(obj.parent_id, arr);
+				this.creatBread(obj.parentId, arr);
 			} else {
 				arr.push(this.breadItems[0]);
 				this.breadItems = arr.reverse();
