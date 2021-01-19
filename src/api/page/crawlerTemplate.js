@@ -1,16 +1,16 @@
 /**
- * @description: 采集站点管理接口
+ * @description: 采集模板管理接口
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-19 14:13:20
+ * @lastTime: 2021-01-19 09:41:52
  */
 
 import request from '@/utils/request'
 
 export function getList(params) {
   return request({
-    url: '/api/crawler/column',
+    url: '/api/crawler/template',
     params,
     method: 'get'
   })
@@ -18,7 +18,7 @@ export function getList(params) {
 
 export function addObj(obj) {
   return request({
-    url: '/api/crawler/column',
+    url: '/api/crawler/template',
     method: 'post',
     data: obj
   })
@@ -26,38 +26,22 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/api/crawler/column/' + id,
+    url: '/api/crawler/template/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/api/crawler/column/' + id,
+    url: '/api/crawler/template/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(obj) {
   return request({
-    url: '/api/crawler/column/' + obj.id,
+    url: '/api/crawler/template/' + obj.id,
     method: 'put',
     data: obj
-  })
-}
-
-export function checkObj(params) {
-  return request({
-    url: '/api/crawler/column/check',
-    params,
-    method: 'get'
-  })
-}
-
-export function collectObj(params) {
-  return request({
-    url: '/api/crawler/column/collect',
-    params,
-    method: 'get'
   })
 }

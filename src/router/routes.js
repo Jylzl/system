@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 16:47:32
+ * @lastTime: 2021-01-19 09:32:18
  */
 const work = r => require.ensure([], () => r(require('@/views/work/Work.vue')), 'work') // 工作台
 const personal = r => require.ensure([], () => r(require('@/views/work/Personal.vue')), 'personal') // 个人中心
@@ -39,6 +39,7 @@ const columnList = r => require.ensure([], () => r(require('@/views/page/column/
 const crawler = r => require.ensure([], () => r(require('@/views/page/crawler/Index.vue')), 'crawler') // 采集列表
 const crawlerSite = r => require.ensure([], () => r(require('@/views/page/crawler/site/Index.vue')), 'crawlerSite') // 采集列表
 const crawlerColumn = r => require.ensure([], () => r(require('@/views/page/crawler/column/Index.vue')), 'crawlerColumn') // 采集列表
+const crawlerTemplate = r => require.ensure([], () => r(require('@/views/page/crawler/template/Index.vue')), 'crawlerTemplate') // 采集模板
 
 let routes = new Map()
 
@@ -75,6 +76,7 @@ routes.set("columnList", columnList)
 routes.set("crawler", crawler)
 routes.set("crawlerSite", crawlerSite)
 routes.set("crawlerColumn", crawlerColumn)
+routes.set("crawlerTemplate", crawlerTemplate)
 
 export {
     routes

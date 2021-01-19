@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:44
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 16:48:10
+ * @lastTime: 2021-01-19 16:13:08
  */
 
 import {
@@ -375,43 +375,54 @@ const ansycRoute = [{
             path: '/page/column_list',
             name: 'columnList',
             component: routes.get('columnList')
-        },
-        {
-            meta: {
-                title: '采集列表',
-                hidden: false,
-                leaf: false,
-                iconCls: "el-icon-cpu",
-                topPath: '/page'
-            },
-            path: '/page/crawler',
-            name: 'crawler',
-            component: ChildView,
-            children: [{
-                meta: {
-                    title: '站点配置',
-                    hidden: false,
-                    leaf: true,
-                    iconCls: "el-icon-cpu",
-                    topPath: '/page'
-                },
-                path: '/page/crawler/site',
-                name: 'crawlerSite',
-                component: routes.get('crawlerSite'),
-            }, {
-                meta: {
-                    title: '栏目配置',
-                    hidden: false,
-                    leaf: true,
-                    iconCls: "el-icon-cpu",
-                    topPath: '/page'
-                },
-                path: '/page/crawler/column',
-                name: 'crawlerColumn',
-                component: routes.get('crawlerColumn'),
-            }]
         }
     ]
+}, {
+    meta: {
+        title: '采集管理',
+        hidden: false,
+        leaf: false,
+        iconCls: "el-icon-cpu",
+        topPath: '/page'
+    },
+    path: '/crawler',
+    redirect: '/crawler/template',
+    name: 'crawler',
+    component: Container,
+    children: [{
+        meta: {
+            title: '模板配置',
+            hidden: false,
+            leaf: true,
+            iconCls: "el-icon-cpu",
+            topPath: '/crawler'
+        },
+        path: '/crawler/template',
+        name: 'crawlerTemplate',
+        component: routes.get('crawlerTemplate'),
+    }, {
+        meta: {
+            title: '站点配置',
+            hidden: false,
+            leaf: true,
+            iconCls: "el-icon-cpu",
+            topPath: '/crawler'
+        },
+        path: '/crawler/site',
+        name: 'crawlerSite',
+        component: routes.get('crawlerSite'),
+    }, {
+        meta: {
+            title: '栏目配置',
+            hidden: false,
+            leaf: true,
+            iconCls: "el-icon-cpu",
+            topPath: '/crawler'
+        },
+        path: '/crawler/column',
+        name: 'crawlerColumn',
+        component: routes.get('crawlerColumn'),
+    }]
 }];
 
 export { ansycRoute };

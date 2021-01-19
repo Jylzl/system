@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 17:49:16
+ * @lastTime: 2021-01-19 17:21:32
 -->
 <template>
 	<el-container>
@@ -125,6 +125,11 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
+						<el-form-item label="备注信息" prop="desc">
+							<el-input v-model="editForm.desc" maxlength="100"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
 						<el-form-item label="采集栏目链接" prop="crawlerColumnUrl">
 							<el-input placeholder="请输入采集栏目链接" v-model="editForm.crawlerColumnUrl">
 								<el-button slot="append" icon="el-icon-magic-stick" @click="checkObj"></el-button>
@@ -137,7 +142,18 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="采集栏目页数" prop="crawlerPageSize">
+						<el-form-item label="栏目总页数" prop="crawlerPageCount">
+							<el-input-number
+								v-model="editForm.crawlerPageCount"
+								controls-position="right"
+								:min="1"
+								:max="10000"
+								class="w100"
+							></el-input-number>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="每页条数" prop="crawlerPageSize">
 							<el-input-number
 								v-model="editForm.crawlerPageSize"
 								controls-position="right"
@@ -148,8 +164,57 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="备注信息">
-							<el-input v-model="editForm.desc" maxlength="100"></el-input>
+						<el-form-item label="动态链接" prop="crawlerReUrl">
+							<el-input v-model="editForm.crawlerReUrl" maxlength="100"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="开始页码" prop="crawlerStartPage">
+							<el-input-number
+								v-model="editForm.crawlerStartPage"
+								controls-position="right"
+								:min="0"
+								:max="10000"
+								class="w100"
+							></el-input-number>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="结束页码" prop="crawlerEndPage">
+							<el-input-number
+								v-model="editForm.crawlerEndPage"
+								controls-position="right"
+								:min="editForm.crawlerStartPage"
+								:max="editForm.crawlerPageCount"
+								class="w100"
+							></el-input-number>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="列表元素" prop="crawlerItem">
+							<el-input v-model="editForm.crawlerItem" maxlength="128"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="标题元素" prop="crawlerItemTitle">
+							<el-input v-model="editForm.crawlerItemTitle" maxlength="128"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="链接元素" prop="crawlerItemUrl">
+							<el-input v-model="editForm.crawlerItemUrl" maxlength="128"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="日期元素" prop="crawlerItemTime">
+							<el-input v-model="editForm.crawlerItemTime" maxlength="128"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="内容模板" prop="templateId">
+							<el-select v-model="editForm.templateId" placeholder="请选择模板" class="w100" clearable>
+								<el-option v-for="item in templateList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+							</el-select>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -158,6 +223,18 @@
 				<el-button type="primary" @click="saveForm()" icon="el-icon-circle-check" size="small">保 存</el-button>
 				<el-button @click="resetForm('editForm')" icon="el-icon-circle-close" size="small">取 消</el-button>
 			</span>
+		</el-dialog>
+		<!-- 字典项弹窗 -->
+		<el-dialog
+			:title="collectDialog.title"
+			:visible.sync="collectDialog.visible"
+			:top="collectDialog.top"
+			:width="collectDialog.width"
+			:close-on-click-modal="false"
+			:destroy-on-close="true"
+			:before-close="beforeClose"
+		>
+			<Collect :columnId="columnId"></Collect>
 		</el-dialog>
 	</el-container>
 </template>
@@ -171,15 +248,21 @@ import {
 	checkObj,
 } from "@/api/page/crawlerColumn";
 import { getList as getSiteList } from "@/api/page/crawlerSite";
+import { getList as getTemplateList } from "@/api/page/crawlerTemplate";
 import va from "@/rules/index.js";
+import Collect from "./components/Collect.vue";
 
 export default {
-	components: {},
+	components: {
+		Collect,
+	},
 	data() {
 		//引入自定义验证规则
 		let r_required = va.required();
 		return {
+			columnId: null,
 			siteList: [],
+			templateList: [],
 			page: {
 				currentPage: 1,
 				pageSize: 20,
@@ -188,18 +271,36 @@ export default {
 			},
 			tableLoading: false,
 			tableData: [],
+			collectData: [],
+			collectDialog: {
+				top: "15vh",
+				width: "65%",
+				type: "add",
+				title: "采集",
+				visible: false,
+				span: 12,
+			},
 			editDialog: {
 				top: "15vh",
-				width: "600px",
+				width: "65%",
 				type: "add",
 				title: "新增",
 				visible: false,
-				span: 24,
+				span: 12,
 			},
 			editForm: {
 				crawlerColumnName: "",
 				crawlerColumnUrl: "",
+				crawlerPageCount: null,
 				crawlerPageSize: null,
+				crawlerReUrl: "",
+				crawlerStartPage: null,
+				crawlerEndPage: null,
+				crawlerItem: "",
+				crawlerItemTitle: "",
+				crawlerItemUrl: "",
+				crawlerItemTime: "",
+				templateId: "",
 				siteId: "",
 				name: "",
 				columnId: "",
@@ -216,11 +317,17 @@ export default {
 				siteId: [r_required],
 				name: [r_required],
 				columnId: [r_required],
+				desc: [r_required],
+				templateId: [r_required],
+				crawlerItem: [r_required],
+				crawlerItemTitle: [r_required],
+				crawlerItemUrl: [r_required],
 			},
 		};
 	},
 	computed: {},
 	created() {
+		this.getTemplateList();
 		this.getSiteList();
 	},
 	mounted() {},
@@ -232,6 +339,11 @@ export default {
 					res.data.length > 0 ? res.data[0].id : "";
 				this.getList();
 				console.log(res);
+			});
+		},
+		getTemplateList() {
+			getTemplateList().then((res) => {
+				this.templateList = res.data;
 			});
 		},
 		getList() {
@@ -250,6 +362,14 @@ export default {
 				crawlerColumnName: "",
 				crawlerColumnUrl: "",
 				crawlerPageSize: null,
+				crawlerReUrl: "",
+				crawlerStartPage: null,
+				crawlerEndPage: null,
+				crawlerItem: "",
+				crawlerItemTitle: "",
+				crawlerItemUrl: "",
+				crawlerItemTime: "",
+				templateId: "",
 				siteId: "",
 				name: "",
 				columnId: "",
@@ -340,6 +460,8 @@ export default {
 		// 采集
 		collect(row) {
 			console.log(row);
+			this.columnId = row.id;
+			this.collectDialog.visible = true;
 		},
 	},
 };
