@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-20 18:51:52
+ * @lastTime: 2021-01-20 22:31:59
 -->
 <template>
 	<div class="dialog-box h100">
@@ -17,7 +17,11 @@
 			<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 				<el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
 				<el-table-column prop="title" label="标题"></el-table-column>
-				<el-table-column prop="href" label="链接"></el-table-column>
+				<el-table-column prop="href" label="链接" width="460" align="center">
+					<template slot-scope="scope">
+						<el-link :href="scope.row.href" target="_blank" type="primary">{{scope.row.href}}</el-link>
+					</template>
+				</el-table-column>
 				<el-table-column prop="status" label="状态" width="60" align="center"></el-table-column>
 				<el-table-column prop="date" label="日期" width="200" align="center"></el-table-column>
 			</el-table>
@@ -74,8 +78,9 @@ export default {
 			id: null,
 			page: {
 				currentPage: 1,
-				pageSize: 10,
+				pageSize: 20,
 				total: 0,
+				pageSizes: [5, 10, 15, 20, 50, 100, 200],
 			},
 			tableData: [],
 			timer: null,
@@ -115,21 +120,19 @@ export default {
 		getList() {
 			// this.tableLoading = true;
 			getList({
-				id: this.id,
+				columnId: this.id,
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
 			}).then((res) => {
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;
-				const percentage = res.data.count
-					? parseInt(
-							(res.data.count /
-								((this.endPage - this.startPage + 2) *
-									this.pageSize)) *
-								100
-							// eslint-disable-next-line no-mixed-spaces-and-tabs
-					  )
-					: 0;
+				const percentage =
+					res.data.count && this.total > 0
+						? parseInt(
+								(res.data.count / this.total) * 100
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+						  )
+						: 0;
 				this.percentage = percentage;
 				if (this.total != 0 && res.data.count >= this.total) {
 					clearInterval(this.timer);

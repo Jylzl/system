@@ -288,7 +288,7 @@ export default {
 				currentPage: 1,
 				pageSize: 20,
 				total: 0,
-				pageSizes: [1, 20, 50, 100, 200],
+				pageSizes: [10, 20, 50, 100, 200],
 			},
 			tableLoading: false,
 			tableData: [],
