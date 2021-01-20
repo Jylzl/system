@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-19 10:35:25
+ * @lastTime: 2021-01-20 10:01:44
 -->
 <template>
 	<el-container>
@@ -292,14 +292,14 @@ export default {
 		add() {
 			this.editForm = {
 				name: "",
-				articleTitle: "",
-				pubDate: "",
-				contentSource: "",
-				keywords: "",
-				author: "",
-				description: "",
-				image: "",
-				url: "",
+				articleTitle: "meta[name='ArticleTitle']",
+				pubDate: "meta[name='PubDate']",
+				contentSource: "meta[name='ContentSource']",
+				keywords: "meta[name='Keywords']",
+				author: "meta[name='Author']",
+				description: "meta[name='Description']",
+				image: "meta[name='Image']",
+				url: "meta[name='Url']",
 				content: "",
 				views: "",
 				desc: "",

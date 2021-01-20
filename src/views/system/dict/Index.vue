@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 11:56:58
+ * @lastTime: 2021-01-20 16:21:04
 -->
 <template>
 	<el-container>
@@ -90,7 +90,7 @@
 			:destroy-on-close="true"
 			:before-close="beforeClose"
 		>
-			<Items :dictId="dictId" :name="name"></Items>
+			<Items :dictId="dictId" :name="name" v-if="itemsDialog.visible"></Items>
 		</el-dialog>
 		<!-- 修改表单弹窗 -->
 		<el-dialog

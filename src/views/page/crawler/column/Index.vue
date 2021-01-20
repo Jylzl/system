@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-19 17:21:32
+ * @lastTime: 2021-01-20 18:49:59
 -->
 <template>
 	<el-container>
@@ -116,7 +116,7 @@
 					</el-col>
 					<el-col :span="editDialog.span">
 						<el-form-item label="栏目名称" prop="name">
-							<el-input v-model="editForm.name" maxlength="100"></el-input>
+							<el-input placeholder="请输入栏目名称" v-model="editForm.name" maxlength="100"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
@@ -130,15 +130,35 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
+						<el-form-item label="采集栏目名称" prop="crawlerColumnName">
+							<el-input
+								placeholder="请先输入采集栏目链接点击右侧检验"
+								v-model="editForm.crawlerColumnName"
+								maxlength="100"
+							></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
+						<el-form-item label="内容模板" prop="templateId">
+							<el-select v-model="editForm.templateId" placeholder="请选择内容采集模板" class="w100" clearable>
+								<el-option v-for="item in templateList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :span="editDialog.span">
 						<el-form-item label="采集栏目链接" prop="crawlerColumnUrl">
-							<el-input placeholder="请输入采集栏目链接" v-model="editForm.crawlerColumnUrl">
+							<el-input placeholder="请输入采集栏目首页链接" v-model="editForm.crawlerColumnUrl">
 								<el-button slot="append" icon="el-icon-magic-stick" @click="checkObj"></el-button>
 							</el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="采集栏目名称" prop="crawlerColumnName">
-							<el-input v-model="editForm.crawlerColumnName" maxlength="100"></el-input>
+						<el-form-item label="动态链接" prop="crawlerReUrl">
+							<el-input
+								placeholder="第二页开始使用动态链接，使用${page}代替页码"
+								v-model="editForm.crawlerReUrl"
+								maxlength="100"
+							></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
@@ -157,19 +177,15 @@
 							<el-input-number
 								v-model="editForm.crawlerPageSize"
 								controls-position="right"
-								:min="1"
+								:min="0"
 								:max="10000"
+								:step="5"
 								class="w100"
 							></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="动态链接" prop="crawlerReUrl">
-							<el-input v-model="editForm.crawlerReUrl" maxlength="100"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="开始页码" prop="crawlerStartPage">
+						<el-form-item label="动态开始页码" prop="crawlerStartPage">
 							<el-input-number
 								v-model="editForm.crawlerStartPage"
 								controls-position="right"
@@ -180,7 +196,7 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="结束页码" prop="crawlerEndPage">
+						<el-form-item label="动态结束页码" prop="crawlerEndPage">
 							<el-input-number
 								v-model="editForm.crawlerEndPage"
 								controls-position="right"
@@ -210,13 +226,6 @@
 							<el-input v-model="editForm.crawlerItemTime" maxlength="128"></el-input>
 						</el-form-item>
 					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="内容模板" prop="templateId">
-							<el-select v-model="editForm.templateId" placeholder="请选择模板" class="w100" clearable>
-								<el-option v-for="item in templateList" :key="item.id" :label="item.name" :value="item.id"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
 				</el-row>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
@@ -234,7 +243,14 @@
 			:destroy-on-close="true"
 			:before-close="beforeClose"
 		>
-			<Collect :columnId="columnId"></Collect>
+			<Collect
+				:columnId="columnId"
+				:pageSize="pageSize"
+				:startPage="startPage"
+				:endPage="endPage"
+				:pageCount="pageCount"
+				v-if="collectDialog.visible"
+			></Collect>
 		</el-dialog>
 	</el-container>
 </template>
@@ -259,8 +275,13 @@ export default {
 	data() {
 		//引入自定义验证规则
 		let r_required = va.required();
+		let r_requiredc = va.required("", "change");
 		return {
 			columnId: null,
+			pageSize: null,
+			startPage: null,
+			endPage: null,
+			pageCount: null,
 			siteList: [],
 			templateList: [],
 			page: {
@@ -312,8 +333,11 @@ export default {
 			// 表单验证规则
 			editFormRules: {
 				crawlerColumnUrl: [r_required],
-				crawlerColumnName: [r_required],
+				crawlerColumnName: [r_requiredc],
+				crawlerPageCount: [r_required],
 				crawlerPageSize: [r_required],
+				crawlerStartPage: [r_required],
+				crawlerEndPage: [r_required],
 				siteId: [r_required],
 				name: [r_required],
 				columnId: [r_required],
@@ -338,7 +362,6 @@ export default {
 				this.searchForm.siteId =
 					res.data.length > 0 ? res.data[0].id : "";
 				this.getList();
-				console.log(res);
 			});
 		},
 		getTemplateList() {
@@ -361,6 +384,7 @@ export default {
 			this.editForm = {
 				crawlerColumnName: "",
 				crawlerColumnUrl: "",
+				crawlerPageCount: null,
 				crawlerPageSize: null,
 				crawlerReUrl: "",
 				crawlerStartPage: null,
@@ -461,6 +485,11 @@ export default {
 		collect(row) {
 			console.log(row);
 			this.columnId = row.id;
+			this.pageSize = row.crawlerPageSize;
+			this.startPage = row.crawlerStartPage;
+			this.endPage = row.crawlerEndPage;
+			this.pageCount = row.crawlerPageCount;
+
 			this.collectDialog.visible = true;
 		},
 	},
