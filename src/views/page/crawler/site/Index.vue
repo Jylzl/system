@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 17:05:26
+ * @lastTime: 2021-01-21 10:06:41
 -->
 <template>
 	<el-container>
@@ -19,10 +19,10 @@
 					<div class="h100" style="box-sizing:border-box;padding: 15px;">
 						<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-							<el-table-column prop="name" label="站点名称" width="220" align="center"></el-table-column>
-							<el-table-column prop="siteId" label="站点ID" align="center"></el-table-column>
-							<el-table-column prop="crawlerSiteUrl" label="采集站点网址"></el-table-column>
-							<el-table-column prop="crawlerSiteName" label="采集站点名称" align="center"></el-table-column>
+							<el-table-column prop="name" label="网站名称" width="220" align="center"></el-table-column>
+							<el-table-column prop="siteId" label="存储网站ID" align="center"></el-table-column>
+							<el-table-column prop="crawlerSiteUrl" label="采集网站链接"></el-table-column>
+							<el-table-column prop="crawlerSiteName" label="采集网站名称" align="center"></el-table-column>
 							<el-table-column prop="desc" label="备注信息"></el-table-column>
 							<el-table-column prop="createdAt" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
@@ -86,12 +86,12 @@
 				<el-row :gutter="20">
 					<el-col :span="editDialog.span">
 						<el-form-item label="站点名称" prop="name">
-							<el-input v-model="editForm.name" maxlength="100"></el-input>
+							<el-input placeholder="请输入站点名称" v-model="editForm.name" maxlength="100"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">
-						<el-form-item label="网站ID" prop="siteId">
-							<el-input v-model="editForm.siteId" maxlength="100"></el-input>
+						<el-form-item label="存储网站ID" prop="siteId">
+							<el-input placeholder="请输入存储网站ID" v-model="editForm.siteId" maxlength="100"></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="editDialog.span">

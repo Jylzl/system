@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-20 18:49:59
+ * @lastTime: 2021-01-21 10:09:43
 -->
 <template>
 	<el-container>
@@ -35,7 +35,7 @@
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
 							<el-table-column prop="crawlerSite[name]" label="所属站点" align="center"></el-table-column>
 							<el-table-column prop="name" label="栏目名称" width="220" align="center"></el-table-column>
-							<el-table-column prop="columnId" label="栏目ID" width="220" align="center"></el-table-column>
+							<el-table-column prop="columnId" label="存储栏目ID" width="220" align="center"></el-table-column>
 							<el-table-column prop="crawlerColumnUrl" label="采集栏目网址" align="center"></el-table-column>
 							<el-table-column prop="crawlerColumnName" label="采集栏目名称" align="center"></el-table-column>
 							<el-table-column prop="desc" label="备注信息"></el-table-column>
@@ -243,14 +243,7 @@
 			:destroy-on-close="true"
 			:before-close="beforeClose"
 		>
-			<Collect
-				:columnId="columnId"
-				:pageSize="pageSize"
-				:startPage="startPage"
-				:endPage="endPage"
-				:pageCount="pageCount"
-				v-if="collectDialog.visible"
-			></Collect>
+			<Collect :columnId="columnId" :pageSize="pageSize" v-if="collectDialog.visible"></Collect>
 		</el-dialog>
 	</el-container>
 </template>
@@ -279,9 +272,6 @@ export default {
 		return {
 			columnId: null,
 			pageSize: null,
-			startPage: null,
-			endPage: null,
-			pageCount: null,
 			siteList: [],
 			templateList: [],
 			page: {
@@ -486,10 +476,6 @@ export default {
 			console.log(row);
 			this.columnId = row.id;
 			this.pageSize = row.crawlerPageSize;
-			this.startPage = row.crawlerStartPage;
-			this.endPage = row.crawlerEndPage;
-			this.pageCount = row.crawlerPageCount;
-
 			this.collectDialog.visible = true;
 		},
 	},

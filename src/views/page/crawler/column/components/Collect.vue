@@ -3,26 +3,44 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-20 22:31:59
+ * @lastTime: 2021-01-21 11:51:09
 -->
 <template>
 	<div class="dialog-box h100">
 		<div class="box-top">
-			<el-button type="primary" icon="el-icon-circle-check" size="small" @click="collectObj">保存采集任务</el-button>
+			<div class="box-top-left">
+				<el-button
+					type="primary"
+					icon="el-icon-circle-check"
+					size="small"
+					@click="saveCollect"
+					:disabled="page.total"
+				>保存采集任务</el-button>
+				<el-button
+					type="primary"
+					icon="el-icon-refresh"
+					size="small"
+					@click="updateCollect"
+					:disabled="!page.total"
+				>更新采集任务</el-button>
+				<el-button type="success" icon="el-icon-video-play" size="small" @click="startCollect">开始采集任务</el-button>
+				<el-button type="warning" icon="el-icon-video-pause" size="small" @click="suspendCollect">暂停采集任务</el-button>
+				<el-button type="danger" icon="el-icon-circle-close" size="small" @click="clearCollect">清空采集任务</el-button>
+			</div>
 		</div>
-		<div class="box-progress">
+		<div class="box-progress" v-if="total">
 			<el-progress :text-inside="true" :stroke-width="20" :percentage="percentage" :color="colors"></el-progress>
 		</div>
 		<div class="box-center">
 			<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 				<el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
 				<el-table-column prop="title" label="标题"></el-table-column>
-				<el-table-column prop="href" label="链接" width="460" align="center">
+				<el-table-column prop="href" label="链接">
 					<template slot-scope="scope">
 						<el-link :href="scope.row.href" target="_blank" type="primary">{{scope.row.href}}</el-link>
 					</template>
 				</el-table-column>
-				<el-table-column prop="status" label="状态" width="60" align="center"></el-table-column>
+				<el-table-column prop="status" label="状态" width="100" align="center" :formatter="formatter"></el-table-column>
 				<el-table-column prop="date" label="日期" width="200" align="center"></el-table-column>
 			</el-table>
 		</div>
@@ -51,6 +69,7 @@ import {
 	collectObj as collectTaskObj,
 	progressObj,
 } from "@/api/page/crawlerTask";
+import { getDictItemByType } from "@/api/system/dict";
 
 export default {
 	name: "Collect",
@@ -62,20 +81,12 @@ export default {
 			type: Number,
 			default: 10,
 		},
-		startPage: {
-			type: Number,
-		},
-		endPage: {
-			type: Number,
-		},
-		pageCount: {
-			type: Number,
-		},
 	},
 	data() {
 		return {
 			tableLoading: false,
 			id: null,
+			collectStateDict: [],
 			page: {
 				currentPage: 1,
 				pageSize: 20,
@@ -98,27 +109,36 @@ export default {
 	created() {
 		this.id = this.columnId;
 		this.page.pageSize = this.pageSize;
+		this.getDictType("collect_state", "status");
 		this.getList();
 	},
 	beforeDestroy() {
 		clearInterval(this.timer);
 	},
 	methods: {
+		getDictType(dict, key) {
+			getDictItemByType(dict).then((res) => {
+				this[key + "Dict"] = res.data;
+			});
+		},
 		// 保存采集任务
-		collectObj() {
-			// this.tableLoading = true;
+		saveCollect() {
 			collectObj({
 				id: this.id,
 			}).then((res) => {
 				this.total = res.data.total;
-				console.log(res);
 			});
 			this.timer = setInterval(() => {
 				this.getList();
 			}, 500);
 		},
+		// 更新采集任务
+		updateCollect() {},
+		// 开始采集任务
+		startCollect() {},
+		// 暂停采集任务
+		suspendCollect() {},
 		getList() {
-			// this.tableLoading = true;
 			getList({
 				columnId: this.id,
 				currentPage: this.page.currentPage,
@@ -170,6 +190,14 @@ export default {
 		handleCurrentChange(val) {
 			this.page.currentPage = val;
 			this.getList();
+		},
+		// 表格
+		formatter(row, column) {
+			const arr = this[column.property + "Dict"] || [];
+			const data = arr.filter((item) => {
+				return item.value == row[column.property];
+			});
+			return data.length > 0 ? data[0].label : row[column.property];
 		},
 	},
 };
