@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-21 11:51:09
+ * @lastTime: 2021-01-22 11:17:00
 -->
 <template>
 	<div class="dialog-box h100">
@@ -14,16 +14,21 @@
 					icon="el-icon-circle-check"
 					size="small"
 					@click="saveCollect"
-					:disabled="page.total"
+					:disabled="page.total != 0"
 				>保存采集任务</el-button>
 				<el-button
 					type="primary"
 					icon="el-icon-refresh"
 					size="small"
 					@click="updateCollect"
-					:disabled="!page.total"
+					:disabled="page.total == 0"
 				>更新采集任务</el-button>
-				<el-button type="success" icon="el-icon-video-play" size="small" @click="startCollect">开始采集任务</el-button>
+				<el-button
+					type="success"
+					icon="el-icon-video-play"
+					size="small"
+					@click="startCollect(46)"
+				>开始采集任务</el-button>
 				<el-button type="warning" icon="el-icon-video-pause" size="small" @click="suspendCollect">暂停采集任务</el-button>
 				<el-button type="danger" icon="el-icon-circle-close" size="small" @click="clearCollect">清空采集任务</el-button>
 			</div>
@@ -63,12 +68,12 @@
 
 
 <script>
-import { collectObj } from "@/api/page/crawlerColumn";
 import {
 	getList,
 	collectObj as collectTaskObj,
 	progressObj,
 } from "@/api/page/crawlerTask";
+import { collectObj as collectContentObj } from "@/api/page/crawlerContent";
 import { getDictItemByType } from "@/api/system/dict";
 
 export default {
@@ -123,7 +128,7 @@ export default {
 		},
 		// 保存采集任务
 		saveCollect() {
-			collectObj({
+			collectTaskObj({
 				id: this.id,
 			}).then((res) => {
 				this.total = res.data.total;
@@ -135,7 +140,12 @@ export default {
 		// 更新采集任务
 		updateCollect() {},
 		// 开始采集任务
-		startCollect() {},
+		startCollect(id) {
+			collectContentObj({ id }).then((res) => {
+				console.log(res);
+				this.getList();
+			});
+		},
 		// 暂停采集任务
 		suspendCollect() {},
 		getList() {
@@ -159,6 +169,8 @@ export default {
 				}
 			});
 		},
+		// 清除采集任务
+		clearCollect() {},
 		progressObj(num) {
 			progressObj({
 				id: this.id,
@@ -173,13 +185,6 @@ export default {
 				if (res.data >= 100) {
 					clearInterval(this.timer);
 				}
-			});
-		},
-		collectTaskObj(id) {
-			collectTaskObj({
-				id,
-			}).then((res) => {
-				console.log(res);
 			});
 		},
 		// 分页

@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 11:58:06
+ * @lastTime: 2021-01-22 17:42:18
 -->
 <template>
 	<el-container>
@@ -41,7 +41,7 @@
 							<el-table-column prop="newName" label="文件名"></el-table-column>
 							<el-table-column prop="name" label="原文件名"></el-table-column>
 							<el-table-column prop="extname" label="扩展名" width="120" align="center"></el-table-column>
-							<el-table-column prop="mimeType" label="文件类型" width="160" align="center"></el-table-column>
+							<el-table-column prop="mimetype" label="文件类型" width="160" align="center"></el-table-column>
 							<el-table-column prop="size" label="文件大小" width="120" align="center"></el-table-column>
 							<el-table-column prop="createdAt" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
@@ -180,7 +180,7 @@ export default {
 			};
 		},
 		accept() {
-			return "image/*,application/*,text/*,audio/*";
+			return "image/png,application/*,text/*,audio/*";
 		},
 	},
 	created() {
