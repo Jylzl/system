@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: Do not edit
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-20 16:37:21
+ * @lastTime: 2021-01-23 17:11:22
  */
 
 import request from '@/utils/request'
@@ -59,5 +59,12 @@ export function progressObj(params) {
     url: '/api/crawler/task/progress',
     params,
     method: 'get'
+  })
+}
+
+export function clearObj(columnId) {
+  return request({
+    url: '/api/crawler/task/clear/' + columnId,
+    method: 'delete'
   })
 }

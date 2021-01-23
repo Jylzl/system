@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-21 10:09:43
+ * @lastTime: 2021-01-23 17:56:17
 -->
 <template>
 	<el-container>
@@ -39,6 +39,7 @@
 							<el-table-column prop="crawlerColumnUrl" label="采集栏目网址" align="center"></el-table-column>
 							<el-table-column prop="crawlerColumnName" label="采集栏目名称" align="center"></el-table-column>
 							<el-table-column prop="desc" label="备注信息"></el-table-column>
+							<el-table-column prop="status" label="状态" width="100" align="center" :formatter="formatter"></el-table-column>
 							<el-table-column prop="createdAt" label="创建时间" width="200" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
@@ -258,6 +259,7 @@ import {
 } from "@/api/page/crawlerColumn";
 import { getList as getSiteList } from "@/api/page/crawlerSite";
 import { getList as getTemplateList } from "@/api/page/crawlerTemplate";
+import { getDictItemByType } from "@/api/system/dict";
 import va from "@/rules/index.js";
 import Collect from "./components/Collect.vue";
 
@@ -341,11 +343,17 @@ export default {
 	},
 	computed: {},
 	created() {
+		this.getDictType("speed_state", "status");
 		this.getTemplateList();
 		this.getSiteList();
 	},
 	mounted() {},
 	methods: {
+		getDictType(dict, key) {
+			getDictItemByType(dict).then((res) => {
+				this[key + "Dict"] = res.data;
+			});
+		},
 		getSiteList() {
 			getSiteList().then((res) => {
 				this.siteList = res.data;
@@ -477,6 +485,14 @@ export default {
 			this.columnId = row.id;
 			this.pageSize = row.crawlerPageSize;
 			this.collectDialog.visible = true;
+		},
+		// 表格
+		formatter(row, column) {
+			const arr = this[column.property + "Dict"] || [];
+			const data = arr.filter((item) => {
+				return item.value == row[column.property];
+			});
+			return data.length > 0 ? data[0].label : row[column.property];
 		},
 	},
 };

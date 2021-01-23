@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-22 11:17:00
+ * @lastTime: 2021-01-23 17:21:40
 -->
 <template>
 	<div class="dialog-box h100">
@@ -28,9 +28,22 @@
 					icon="el-icon-video-play"
 					size="small"
 					@click="startCollect(46)"
+					:disabled="page.total == 0"
 				>开始采集任务</el-button>
-				<el-button type="warning" icon="el-icon-video-pause" size="small" @click="suspendCollect">暂停采集任务</el-button>
-				<el-button type="danger" icon="el-icon-circle-close" size="small" @click="clearCollect">清空采集任务</el-button>
+				<el-button
+					type="warning"
+					icon="el-icon-video-pause"
+					size="small"
+					@click="suspendCollect"
+					:disabled="page.total == 0"
+				>暂停采集任务</el-button>
+				<el-button
+					type="danger"
+					icon="el-icon-circle-close"
+					size="small"
+					@click="clearCollect"
+					:disabled="page.total == 0"
+				>清空采集任务</el-button>
 			</div>
 		</div>
 		<div class="box-progress" v-if="total">
@@ -72,6 +85,7 @@ import {
 	getList,
 	collectObj as collectTaskObj,
 	progressObj,
+	clearObj,
 } from "@/api/page/crawlerTask";
 import { collectObj as collectContentObj } from "@/api/page/crawlerContent";
 import { getDictItemByType } from "@/api/system/dict";
@@ -170,7 +184,16 @@ export default {
 			});
 		},
 		// 清除采集任务
-		clearCollect() {},
+		clearCollect() {
+			clearObj(this.id).then((res) => {
+				if (res.code == 200) {
+					this.$message.success(`成功清除${res.data}条任务`);
+					this.getList();
+				}
+				console.log(res);
+			});
+		},
+		// 保存进度
 		progressObj(num) {
 			progressObj({
 				id: this.id,
