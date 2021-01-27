@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-23 17:21:40
+ * @lastTime: 2021-01-27 15:37:33
 -->
 <template>
 	<div class="dialog-box h100">
@@ -27,7 +27,7 @@
 					type="success"
 					icon="el-icon-video-play"
 					size="small"
-					@click="startCollect(46)"
+					@click="startCollect"
 					:disabled="page.total == 0"
 				>开始采集任务</el-button>
 				<el-button
@@ -154,8 +154,8 @@ export default {
 		// 更新采集任务
 		updateCollect() {},
 		// 开始采集任务
-		startCollect(id) {
-			collectContentObj({ id }).then((res) => {
+		startCollect() {
+			collectContentObj({ columnId: this.id }).then((res) => {
 				console.log(res);
 				this.getList();
 			});
