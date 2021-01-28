@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-27 15:37:33
+ * @lastTime: 2021-01-28 18:17:44
 -->
 <template>
 	<div class="dialog-box h100">
@@ -131,6 +131,9 @@ export default {
 		this.getDictType("collect_state", "status");
 		this.getList();
 	},
+	mounted() {
+		this.progress(this.id);
+	},
 	beforeDestroy() {
 		clearInterval(this.timer);
 	},
@@ -146,10 +149,8 @@ export default {
 				id: this.id,
 			}).then((res) => {
 				this.total = res.data.total;
+				this.progress(this.id);
 			});
-			this.timer = setInterval(() => {
-				this.getList();
-			}, 500);
 		},
 		// 更新采集任务
 		updateCollect() {},
@@ -170,42 +171,40 @@ export default {
 			}).then((res) => {
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;
-				const percentage =
-					res.data.count && this.total > 0
-						? parseInt(
-								(res.data.count / this.total) * 100
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
-						  )
-						: 0;
-				this.percentage = percentage;
-				if (this.total != 0 && res.data.count >= this.total) {
-					clearInterval(this.timer);
-				}
 			});
 		},
 		// 清除采集任务
 		clearCollect() {
 			clearObj(this.id).then((res) => {
 				if (res.code == 200) {
-					this.$message.success(`成功清除${res.data}条任务`);
+					this.$message.success(
+						`成功清除${res.data.delTaskResult}条任务,${res.data.delContentResult}条内容`
+					);
 					this.getList();
 				}
 				console.log(res);
 			});
 		},
-		// 保存进度
-		progressObj(num) {
+		// 任务保存进度
+		progress(columnId) {
 			progressObj({
-				id: this.id,
-				num,
+				columnId,
 			}).then((res) => {
-				this.percentage = res.data;
-				if (num == 0) {
+				console.log(res);
+
+				const percentage =
+					this.total > 0
+						? parseInt(
+								(res.data.count / this.total) * 100
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+						  )
+						: 0;
+				this.percentage = percentage;
+				if (res.data.status == 1) {
 					this.timer = setInterval(() => {
-						this.progressObj(this.percentage);
-					}, 500);
-				}
-				if (res.data >= 100) {
+						this.progress(this.id);
+					}, 1500);
+				} else {
 					clearInterval(this.timer);
 				}
 			});
