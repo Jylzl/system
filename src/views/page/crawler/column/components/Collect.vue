@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-28 18:17:44
+ * @lastTime: 2021-01-28 22:18:34
 -->
 <template>
 	<div class="dialog-box h100">
@@ -46,7 +46,7 @@
 				>清空采集任务</el-button>
 			</div>
 		</div>
-		<div class="box-progress" v-if="total">
+		<div class="box-progress">
 			<el-progress :text-inside="true" :stroke-width="20" :percentage="percentage" :color="colors"></el-progress>
 		</div>
 		<div class="box-center">
@@ -135,7 +135,7 @@ export default {
 		this.progress(this.id);
 	},
 	beforeDestroy() {
-		clearInterval(this.timer);
+		clearTimeout(this.timer);
 	},
 	methods: {
 		getDictType(dict, key) {
@@ -190,8 +190,6 @@ export default {
 			progressObj({
 				columnId,
 			}).then((res) => {
-				console.log(res);
-
 				const percentage =
 					this.total > 0
 						? parseInt(
@@ -201,11 +199,12 @@ export default {
 						: 0;
 				this.percentage = percentage;
 				if (res.data.status == 1) {
-					this.timer = setInterval(() => {
+					this.timer = setTimeout(() => {
 						this.progress(this.id);
+						this.getList();
 					}, 1500);
 				} else {
-					clearInterval(this.timer);
+					clearTimeout(this.timer);
 				}
 			});
 		},
