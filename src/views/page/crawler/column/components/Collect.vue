@@ -3,51 +3,27 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-28 22:18:34
+ * @lastTime: 2021-01-29 16:19:53
 -->
 <template>
 	<div class="dialog-box h100">
 		<div class="box-top">
 			<div class="box-top-left">
-				<el-button
-					type="primary"
-					icon="el-icon-circle-check"
-					size="small"
-					@click="saveCollect"
-					:disabled="page.total != 0"
-				>保存采集任务</el-button>
-				<el-button
-					type="primary"
-					icon="el-icon-refresh"
-					size="small"
-					@click="updateCollect"
-					:disabled="page.total == 0"
-				>更新采集任务</el-button>
-				<el-button
-					type="success"
-					icon="el-icon-video-play"
-					size="small"
-					@click="startCollect"
-					:disabled="page.total == 0"
-				>开始采集任务</el-button>
-				<el-button
-					type="warning"
-					icon="el-icon-video-pause"
-					size="small"
-					@click="suspendCollect"
-					:disabled="page.total == 0"
-				>暂停采集任务</el-button>
-				<el-button
-					type="danger"
-					icon="el-icon-circle-close"
-					size="small"
-					@click="clearCollect"
-					:disabled="page.total == 0"
-				>清空采集任务</el-button>
+				<el-button type="primary" icon="el-icon-circle-check" size="small" @click="saveCollect">保存采集任务</el-button>
+				<el-button type="primary" icon="el-icon-refresh" size="small" @click="updateCollect">更新采集任务</el-button>
+				<el-button type="success" icon="el-icon-video-play" size="small" @click="startCollect">开始采集任务</el-button>
+				<el-button type="warning" icon="el-icon-video-pause" size="small" @click="suspendCollect">暂停采集任务</el-button>
+				<el-button type="danger" icon="el-icon-circle-close" size="small" @click="clearCollect">清空采集任务</el-button>
 			</div>
 		</div>
-		<div class="box-progress">
-			<el-progress :text-inside="true" :stroke-width="20" :percentage="percentage" :color="colors"></el-progress>
+		<div class="box-progress" v-show="status == 1 || status == 3">
+			<el-progress
+				:text-inside="true"
+				:stroke-width="20"
+				:percentage="percentage"
+				:color="colors"
+				:format="format"
+			></el-progress>
 		</div>
 		<div class="box-center">
 			<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
@@ -84,10 +60,13 @@
 import {
 	getList,
 	collectObj as collectTaskObj,
-	progressObj,
+	progressObj as progressTaskObj,
 	clearObj,
 } from "@/api/page/crawlerTask";
-import { collectObj as collectContentObj } from "@/api/page/crawlerContent";
+import {
+	collectObj as collectContentObj,
+	progressObj as progressContentObj,
+} from "@/api/page/crawlerContent";
 import { getDictItemByType } from "@/api/system/dict";
 
 export default {
@@ -122,7 +101,9 @@ export default {
 				{ color: "#409EFF", percentage: 80 },
 				{ color: "#67C23A", percentage: 100 },
 			],
+			finish: 0,
 			total: 0,
+			status: 0,
 		};
 	},
 	created() {
@@ -132,7 +113,7 @@ export default {
 		this.getList();
 	},
 	mounted() {
-		this.progress(this.id);
+		this.progressTask(this.id);
 	},
 	beforeDestroy() {
 		clearTimeout(this.timer);
@@ -148,8 +129,9 @@ export default {
 			collectTaskObj({
 				id: this.id,
 			}).then((res) => {
-				this.total = res.data.total;
-				this.progress(this.id);
+				this.total = res.data.crawlerPageTotal;
+				this.progressTask(this.id);
+				this.$emit("refresh");
 			});
 		},
 		// 更新采集任务
@@ -157,8 +139,9 @@ export default {
 		// 开始采集任务
 		startCollect() {
 			collectContentObj({ columnId: this.id }).then((res) => {
-				console.log(res);
-				this.getList();
+				this.total = res.data.crawlerPageTotal;
+				this.progressContent(this.id);
+				this.$emit("refresh");
 			});
 		},
 		// 暂停采集任务
@@ -171,6 +154,9 @@ export default {
 			}).then((res) => {
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;
+				if (this.status != 1) {
+					this.total = res.data.count;
+				}
 			});
 		},
 		// 清除采集任务
@@ -180,16 +166,18 @@ export default {
 					this.$message.success(
 						`成功清除${res.data.delTaskResult}条任务,${res.data.delContentResult}条内容`
 					);
+					this.$emit("refresh");
 					this.getList();
 				}
-				console.log(res);
 			});
 		},
 		// 任务保存进度
-		progress(columnId) {
-			progressObj({
+		progressTask(columnId) {
+			progressTaskObj({
 				columnId,
 			}).then((res) => {
+				this.status = res.data.status;
+				this.finish = res.data.count;
 				const percentage =
 					this.total > 0
 						? parseInt(
@@ -200,10 +188,37 @@ export default {
 				this.percentage = percentage;
 				if (res.data.status == 1) {
 					this.timer = setTimeout(() => {
-						this.progress(this.id);
+						this.progressTask(this.id);
 						this.getList();
 					}, 1500);
 				} else {
+					this.$emit("refresh");
+					clearTimeout(this.timer);
+				}
+			});
+		},
+		// 任务采集进度
+		progressContent(columnId) {
+			progressContentObj({
+				columnId,
+			}).then((res) => {
+				this.status = res.data.status;
+				this.finish = res.data.count;
+				const percentage =
+					this.total > 0
+						? parseInt(
+								(res.data.count / this.total) * 100
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+						  )
+						: 0;
+				this.percentage = percentage;
+				if (res.data.status == 3) {
+					this.timer = setTimeout(() => {
+						this.progressContent(this.id);
+						this.getList();
+					}, 1500);
+				} else {
+					this.$emit("refresh");
 					clearTimeout(this.timer);
 				}
 			});
@@ -224,6 +239,9 @@ export default {
 				return item.value == row[column.property];
 			});
 			return data.length > 0 ? data[0].label : row[column.property];
+		},
+		format(percentage) {
+			return `(${this.finish}/${this.total})(${percentage}%)`;
 		},
 	},
 };

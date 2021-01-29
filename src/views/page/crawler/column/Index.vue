@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-27 11:19:55
+ * @lastTime: 2021-01-29 11:28:56
 -->
 <template>
 	<el-container>
@@ -40,11 +40,20 @@
 							<el-table-column prop="crawlerColumnName" label="采集栏目名称" align="center"></el-table-column>
 							<el-table-column prop="desc" label="备注信息"></el-table-column>
 							<el-table-column prop="status" label="状态" width="100" align="center" :formatter="formatter"></el-table-column>
+							<el-table-column prop="crawlerPageTotal" label="任务量" width="100" align="center"></el-table-column>
 							<el-table-column prop="collectStartAt" label="任务开始时间" width="180" align="center"></el-table-column>
 							<el-table-column prop="collectEndAt" label="任务结束时间" width="180" align="center"></el-table-column>
-							<el-table-column prop="createdAt" label="创建时间" width="180" align="center"></el-table-column>
-							<el-table-column label="操作" width="160" align="center">
+							<el-table-column prop="updatedAt" label="最后修改时间" width="180" align="center"></el-table-column>
+							<el-table-column label="操作" width="180" align="center">
 								<template slot-scope="scope">
+									<el-button
+										size="mini"
+										type="primary"
+										icon="el-icon-refresh"
+										title="刷新"
+										@click="refresh(scope.row)"
+										circle
+									></el-button>
 									<el-button
 										size="mini"
 										type="info"
@@ -246,7 +255,12 @@
 			:destroy-on-close="true"
 			:before-close="beforeClose"
 		>
-			<Collect :columnId="columnId" :pageSize="pageSize" v-if="collectDialog.visible"></Collect>
+			<Collect
+				:columnId="columnId"
+				:pageSize="pageSize"
+				v-if="collectDialog.visible"
+				@refresh="getList"
+			></Collect>
 		</el-dialog>
 	</el-container>
 </template>
@@ -408,6 +422,12 @@ export default {
 			this.editDialog.type = "update";
 			this.editDialog.title = "修改";
 			this.editDialog.visible = true;
+		},
+		refresh(row) {
+			putObj(row).then(() => {
+				this.getList();
+				this.$message.success("刷新成功");
+			});
 		},
 		del(id) {
 			this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
