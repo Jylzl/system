@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2021-01-19 16:31:18
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-29 16:19:53
+ * @lastTime: 2021-01-30 14:16:30
 -->
 <template>
 	<div class="dialog-box h100">
@@ -114,6 +114,7 @@ export default {
 	},
 	mounted() {
 		this.progressTask(this.id);
+		this.progressContent(this.id);
 	},
 	beforeDestroy() {
 		clearTimeout(this.timer);

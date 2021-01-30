@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-29 18:21:17
+ * @lastTime: 2021-01-30 11:05:08
 -->
 <template>
 	<el-container>
@@ -11,8 +11,30 @@
 			<div class="right-top">
 				<div class="right-top-left">
 					<el-form :inline="true" :model="searchForm" size="mini" class="top-form-inline">
+						<el-form-item prop="siteId">
+							<el-select
+								v-model="searchForm.siteId"
+								placeholder="请选择站点"
+								class="w100"
+								@change="getColumnList(e)"
+								clearable
+							>
+								<el-option v-for="item in siteList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item prop="columnId">
+							<el-select
+								v-model="searchForm.columnId"
+								placeholder="请选择站点"
+								class="w100"
+								@change="getList"
+								clearable
+							>
+								<el-option v-for="item in columnList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+							</el-select>
+						</el-form-item>
 						<el-form-item>
-							<el-input v-model="searchForm.name" maxlength="100" placeholder="模板名称"></el-input>
+							<el-input v-model="searchForm.articleTitle" maxlength="100" placeholder="文章标题"></el-input>
 						</el-form-item>
 						<el-form-item>
 							<el-button type="primary" @click="getList">查询</el-button>
@@ -28,16 +50,26 @@
 					<div class="h100" style="box-sizing:border-box;padding: 15px;">
 						<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-							<el-table-column prop="articleTitle" label="文章标题"></el-table-column>
+							<el-table-column prop="articleTitle" label="文章标题">
+								<template slot-scope="scope">
+									<el-link
+										:href="scope.row.url"
+										target="_blank"
+										:title="scope.row.articleTitle"
+										v-if="scope.row.url"
+									>{{scope.row.articleTitle}}</el-link>
+									<el-link :underline="false" v-else>{{scope.row.articleTitle}}</el-link>
+								</template>
+							</el-table-column>
 							<el-table-column prop="pubDate" label="发布时间" width="220" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
 										size="mini"
 										type="primary"
-										icon="el-icon-edit"
-										title="编辑"
-										@click="update(scope.row)"
+										icon="el-icon-camera"
+										title="预览"
+										@click="view(scope.row.id)"
 										circle
 									></el-button>
 									<el-button
@@ -80,96 +112,33 @@
 			:destroy-on-close="true"
 			:before-close="beforeClose"
 		>
-			<el-form
-				:model="editForm"
-				:rules="editFormRules"
-				ref="editForm"
-				label-width="120px"
-				size="medium"
-				label-suffix=":"
-			>
-				<el-row :gutter="20">
-					<el-col :span="editDialog.span">
-						<el-form-item label="模板名称" prop="name">
-							<el-input v-model="editForm.name" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="备注信息">
-							<el-input v-model="editForm.desc" maxlength="200"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="标题" prop="articleTitle">
-							<el-input v-model="editForm.articleTitle" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="发布时间" prop="pubDate">
-							<el-input v-model="editForm.pubDate" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="来源" prop="contentSource">
-							<el-input v-model="editForm.contentSource" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="关键词" prop="keywords">
-							<el-input v-model="editForm.keywords" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="作者" prop="author">
-							<el-input v-model="editForm.author" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="摘要" prop="description">
-							<el-input v-model="editForm.description" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="图片" prop="image">
-							<el-input v-model="editForm.image" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="网址" prop="url">
-							<el-input v-model="editForm.url" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="内容" prop="content">
-							<el-input v-model="editForm.content" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="editDialog.span">
-						<el-form-item label="阅读量" prop="views">
-							<el-input v-model="editForm.views" maxlength="128"></el-input>
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
-			<span slot="footer" class="dialog-footer">
-				<el-button type="primary" @click="saveForm()" icon="el-icon-circle-check" size="small">保 存</el-button>
-				<el-button @click="resetForm('editForm')" icon="el-icon-circle-close" size="small">取 消</el-button>
-			</span>
+			<div>
+				<article class="article-view">
+					<h1 class="article-title">{{article.articleTitle}}</h1>
+					<div class="article-inf">
+						<span v-if="article.pubDate">发布时间：{{article.pubDate}}</span>
+						<span v-if="article.contentSource">来源：{{article.contentSource}}</span>
+						<span v-if="article.views">阅读量：{{article.views}}</span>
+					</div>
+					<div class="article-text htmledit_views" v-html="article.content"></div>
+				</article>
+			</div>
 		</el-dialog>
 	</el-container>
 </template>
 
 <script>
-import { getList, addObj, delObj, putObj } from "@/api/page/crawlerContent";
-import va from "@/rules/index.js";
+import { getList as getSiteList } from "@/api/page/crawlerSite";
+import { getList as getColumnList } from "@/api/page/crawlerColumn";
+import { getList, delObj, getObj } from "@/api/page/crawlerContent";
 
 export default {
 	components: {},
 	data() {
-		//引入自定义验证规则
-		let r_required = va.required();
 		return {
 			socialType: [],
+			siteList: [],
+			columnList: [],
 			page: {
 				currentPage: 1,
 				pageSize: 20,
@@ -186,41 +155,43 @@ export default {
 				visible: false,
 				span: 12,
 			},
-			editForm: {
-				name: "",
-				articleTitle: "",
-				pubDate: "",
-				contentSource: "",
-				keywords: "",
-				author: "",
-				description: "",
-				image: "",
-				url: "",
-				content: "",
-				views: "",
-				desc: "",
-			},
+			article: {},
 			searchForm: {
-				name: "",
-			},
-			// 表单验证规则
-			editFormRules: {
-				name: [r_required],
+				articleTitle: "",
+				siteId: "",
+				columnId: "",
 			},
 		};
 	},
 	computed: {},
 	created() {
-		this.getList();
+		this.getSiteList();
 	},
 	mounted() {},
 	methods: {
+		getSiteList() {
+			getSiteList().then((res) => {
+				this.siteList = res.data;
+				this.searchForm.siteId =
+					res.data.length > 0 ? res.data[0].id : "";
+				this.getColumnList(this.searchForm.siteId);
+			});
+		},
+		getColumnList(siteId) {
+			getColumnList({ siteId }).then((res) => {
+				this.columnList = res.data;
+				this.searchForm.columnId =
+					res.data.length > 0 ? res.data[0].id : "";
+				this.getList();
+			});
+		},
 		getList() {
 			getList({
 				currentPage: this.page.currentPage,
 				pageSize: this.page.pageSize,
-				siteId: 1,
-				columnId: 2,
+				siteId: this.searchForm.siteId,
+				columnId: this.searchForm.columnId,
+				articleTitle: this.searchForm.articleTitle,
 			}).then((res) => {
 				this.tableData = res.data.rows;
 				this.page.total = res.data.count;
@@ -228,29 +199,19 @@ export default {
 			});
 		},
 		add() {
-			this.editForm = {
-				name: "",
-				articleTitle: "meta[name='ArticleTitle']",
-				pubDate: "meta[name='PubDate']",
-				contentSource: "meta[name='ContentSource']",
-				keywords: "meta[name='Keywords']",
-				author: "meta[name='Author']",
-				description: "meta[name='Description']",
-				image: "meta[name='Image']",
-				url: "meta[name='Url']",
-				content: "",
-				views: "",
-				desc: "",
-			};
 			this.editDialog.type = "add";
 			this.editDialog.title = "新增";
 			this.editDialog.visible = true;
 		},
-		update(row) {
-			this.editForm = row;
-			this.editDialog.type = "update";
-			this.editDialog.title = "修改";
-			this.editDialog.visible = true;
+		view(id) {
+			this.editDialog.type = "view";
+			this.editDialog.title = "预览";
+			getObj(id).then((res) => {
+				this.tableLoading = false;
+				this.article = res.data;
+				this.editDialog.visible = true;
+				console.log(res);
+			});
 		},
 		del(id) {
 			this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
@@ -275,33 +236,6 @@ export default {
 					});
 				});
 		},
-		// 重置
-		resetForm(formName) {
-			this.$refs[formName].resetFields();
-			this.editDialog.visible = false;
-		},
-		// 保存
-		saveForm() {
-			this.$refs["editForm"].validate((valid) => {
-				if (valid) {
-					if (this.editDialog.type == "add") {
-						addObj(this.editForm).then(() => {
-							this.editDialog.visible = false;
-							this.getList();
-							this.$message.success("添加成功");
-						});
-					} else {
-						putObj(this.editForm).then(() => {
-							this.editDialog.visible = false;
-							this.getList();
-							this.$message.success("修改成功");
-						});
-					}
-				} else {
-					return false;
-				}
-			});
-		},
 		beforeClose(done) {
 			done();
 		},
@@ -317,3 +251,33 @@ export default {
 	},
 };
 </script>
+
+
+<style>
+@import url(../../../../assets/css/ck_htmledit_views.min.css);
+.article-view {
+	color: #333;
+	font-size: 18px;
+	font-family: "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", "微软雅黑";
+}
+.article-view .article-title {
+	text-align: center;
+	line-height: 2.25;
+	font-size: 26px;
+	font-weight: bold;
+}
+.article-view .article-inf {
+	margin-top: 30px;
+	line-height: 28px;
+	font-size: 16px;
+	color: #999;
+	text-align: center;
+	background-color: #efefef;
+}
+.article-view .article-inf > span {
+	margin: 0 10px;
+}
+.article-view .article-text {
+	margin-top: 30px;
+}
+</style>

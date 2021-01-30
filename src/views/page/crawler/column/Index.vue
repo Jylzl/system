@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-29 11:28:56
+ * @lastTime: 2021-01-30 11:59:45
 -->
 <template>
 	<el-container>
@@ -33,10 +33,17 @@
 					<div class="h100" style="box-sizing:border-box;padding: 15px;">
 						<el-table :data="tableData" border :loading="tableLoading" style="width: 100%">
 							<el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-							<el-table-column prop="crawlerSite[name]" label="所属站点" width="120" align="center"></el-table-column>
 							<el-table-column prop="name" label="栏目名称" width="120" align="center"></el-table-column>
 							<el-table-column prop="columnId" label="存储栏目ID" width="120" align="center"></el-table-column>
-							<el-table-column prop="crawlerColumnUrl" label="采集栏目网址" align="center"></el-table-column>
+							<el-table-column prop="crawlerColumnUrl" label="采集栏目网址" align="center">
+								<template slot-scope="scope">
+									<el-link
+										:href="scope.row.crawlerColumnUrl"
+										target="_blank"
+										:title="scope.row.crawlerColumnName"
+									>{{scope.row.crawlerColumnUrl}}</el-link>
+								</template>
+							</el-table-column>
 							<el-table-column prop="crawlerColumnName" label="采集栏目名称" align="center"></el-table-column>
 							<el-table-column prop="desc" label="备注信息"></el-table-column>
 							<el-table-column prop="status" label="状态" width="100" align="center" :formatter="formatter"></el-table-column>
