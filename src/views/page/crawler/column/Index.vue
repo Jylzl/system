@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-12-21 09:13:47
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-30 11:59:45
+ * @lastTime: 2021-02-01 09:22:08
 -->
 <template>
 	<el-container>
@@ -47,6 +47,7 @@
 							<el-table-column prop="crawlerColumnName" label="采集栏目名称" align="center"></el-table-column>
 							<el-table-column prop="desc" label="备注信息"></el-table-column>
 							<el-table-column prop="status" label="状态" width="100" align="center" :formatter="formatter"></el-table-column>
+							<el-table-column prop="crawlerPageCount" label="页数" width="100" align="center"></el-table-column>
 							<el-table-column prop="crawlerPageTotal" label="任务量" width="100" align="center"></el-table-column>
 							<el-table-column prop="collectStartAt" label="任务开始时间" width="180" align="center"></el-table-column>
 							<el-table-column prop="collectEndAt" label="任务结束时间" width="180" align="center"></el-table-column>

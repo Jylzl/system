@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-06-28 09:23:17
  * @LastAuthor: lizlong
- * @lastTime: 2020-08-13 11:15:24
+ * @lastTime: 2021-02-02 15:52:11
 --> 
 <template>
 	<div>
@@ -24,14 +24,12 @@
 			<el-tabs v-model="activeName">
 				<el-tab-pane :label="i.label" :name="'name'+index" v-for="(i,index) in iocns" :key="index">
 					<div class="class-box">
-						<el-scrollbar wrap-class="scrollbar-wrapper">
-							<ul class="icon_lists">
-								<li class="dib" v-for="item in i.list" :key="item.className">
-									<i :class="item.className" @click="iconClick(item.className)" :title="item.title"></i>
-									<div class="code-name" :title="item.className">{{item.className}}</div>
-								</li>
-							</ul>
-						</el-scrollbar>
+						<ul class="icon_lists">
+							<li class="dib" v-for="item in i.list" :key="item.className">
+								<i :class="item.className" @click="iconClick(item.className)" :title="item.title"></i>
+								<div class="code-name" :title="item.className">{{item.className}}</div>
+							</li>
+						</ul>
 					</div>
 				</el-tab-pane>
 			</el-tabs>
@@ -90,10 +88,6 @@ export default {
 
 
 <style scoped>
-.class-box {
-	height: 600px;
-}
-
 .icon_lists {
 	width: 100% !important;
 	overflow: hidden;

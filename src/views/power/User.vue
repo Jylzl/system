@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2019-06-11 08:33:50
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 11:55:44
+ * @lastTime: 2021-02-02 15:48:17
  -->
 <template>
 	<el-container>
@@ -45,11 +45,17 @@
 							</el-table-column>
 							<el-table-column prop="name" label="用户名" align="left"></el-table-column>
 							<el-table-column prop="powUserInf[realName]" label="真实姓名" align="left"></el-table-column>
-							<el-table-column prop="powUserInf[phone]" label="手机号码" align="left"></el-table-column>
-							<el-table-column prop="powUserInf[email]" label="邮箱号码" align="left"></el-table-column>
-							<el-table-column prop="lastLoginTime" label="后登录时间" align="left"></el-table-column>
-							<el-table-column prop="status" label="用户状态" align="left"></el-table-column>
-							<el-table-column prop="loginCount" label="登录次数" align="left"></el-table-column>
+							<el-table-column prop="powUserInf[phone]" label="手机号码" width="220" align="center"></el-table-column>
+							<el-table-column prop="powUserInf[email]" label="邮箱号码" width="220" align="center"></el-table-column>
+							<el-table-column prop="lastLoginTime" label="后登录时间" width="220" align="center"></el-table-column>
+							<el-table-column
+								prop="status"
+								label="用户状态"
+								width="120"
+								align="center"
+								:formatter="formatter"
+							></el-table-column>
+							<el-table-column prop="loginCount" label="登录次数" width="120" align="center"></el-table-column>
 							<el-table-column label="操作" width="160" align="center">
 								<template slot-scope="scope">
 									<el-button
@@ -201,6 +207,7 @@ import { Encrypt } from "@/utils/aes.js";
 import { fetchDeptTree } from "@/api/power/dept";
 import { addObj, delObj, putObj, getUser } from "@/api/power/user";
 import { getRole } from "@/api/power/role";
+import { getDictItemByType } from "@/api/system/dict";
 
 export default {
 	name: "menuList",
@@ -216,6 +223,7 @@ export default {
 		return {
 			tableLoading: false, //表格加载loading
 			treeLoading: false, //树加载loading
+			statusDict: [],
 			page: {
 				currentPage: 1,
 				pageSize: 20,
@@ -285,6 +293,7 @@ export default {
 		};
 	},
 	created() {
+		this.getDictType("user_state", "status");
 		this.getDeptTree(false, this.nowDeptID); //获取菜单树
 		getRole().then((res) => {
 			this.roles = res.data;
@@ -306,6 +315,11 @@ export default {
 		},
 	},
 	methods: {
+		getDictType(dict, key) {
+			getDictItemByType(dict).then((res) => {
+				this[key + "Dict"] = res.data;
+			});
+		},
 		//
 		beforeClose(done) {
 			this.$refs["userForm"].resetFields();
@@ -485,6 +499,14 @@ export default {
 				this.$message.error("上传头像图片大小不能超过 2MB!");
 			}
 			return isLt2M;
+		},
+		// 表格
+		formatter(row, column) {
+			const arr = this[column.property + "Dict"] || [];
+			const data = arr.filter((item) => {
+				return item.value == row[column.property];
+			});
+			return data.length > 0 ? data[0].label : row[column.property];
 		},
 	},
 };
