@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-07-02 10:11:54
  * @LastAuthor: lizlong
- * @lastTime: 2021-01-18 11:47:15
+ * @lastTime: 2021-02-04 10:23:13
 --> 
 
 <template>
@@ -18,7 +18,8 @@
 							</div>
 							<div class="user-header-right">
 								<h2>{{user.name}}</h2>
-								<p>{{user.powUserInf.reaNname}}</p>
+								<p>{{user.powUserInf.realName}}</p>
+								<p>{{user.createdAt | momentFilter('YYYY')}}</p>
 							</div>
 						</div>
 					</el-card>

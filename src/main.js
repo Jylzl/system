@@ -3,7 +3,7 @@
  * @author: lizlong<94648929@qq.com>
  * @since: 2020-05-21 01:44:42
  * @LastAuthor: lizlong
- * @lastTime: 2020-09-15 15:58:25
+ * @lastTime: 2021-02-04 10:01:56
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -15,11 +15,15 @@ import '@/utils/permissions' //全局路由钩子
 import "@/plugins/element/element.js"; // 引入饿了么UI
 import "@/plugins/svg/svg.js"; // 引入svg图标
 import "@/plugins/iconfont/iconfont.js"; // 引入iconfont图标
+import * as filters from '@/utils/filters.js'
 
 import VueAMap from 'vue-amap';
 
 
 Vue.use(global);
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])//插入过滤器名和对应方法
+})
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
   key: '4d73249f0948da6c9d5bfc507ff59cf0',

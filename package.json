@@ -19,6 +19,7 @@
     "fuse.js": "^6.4.3",
     "hls.js": "^0.14.15",
     "js-cookie": "^2.2.1",
+    "moment": "^2.29.1",
     "monaco-editor": "^0.21.2",
     "monaco-editor-webpack-plugin": "^2.0.0",
     "nprogress": "^0.2.0",
