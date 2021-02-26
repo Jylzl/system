@@ -326,6 +326,17 @@ const ansycRoute = [{
             path: '/app/nine',
             name: 'nine',
             component: routes.get('nine')
+        }, {
+            meta: {
+                title: '问卷管理',
+                hidden: false,
+                leaf: true,
+                iconCls: "el-icon-message",
+                topPath: '/app'
+            },
+            path: '/app/ten',
+            name: 'ten',
+            component: routes.get('ten')
         }]
 }, {
     meta: {

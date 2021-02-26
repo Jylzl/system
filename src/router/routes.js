@@ -28,6 +28,7 @@ const six = r => require.ensure([], () => r(require('@/views/app/AppSix.vue')), 
 const seven = r => require.ensure([], () => r(require('@/views/app/AppSeven.vue')), 'seven') // 菜单
 const eight = r => require.ensure([], () => r(require('@/views/app/AppEight.vue')), 'eight') // 右键
 const nine = r => require.ensure([], () => r(require('@/views/app/AppNine/Index.vue')), 'nine') // 邮箱
+const ten = r => require.ensure([], () => r(require('@/views/app/AppTen.vue')), 'ten') // 问卷
 // monitor-监控
 const baidu = r => require.ensure([], () => r(require('@/views/monitor/Baidu.vue')), 'baidu') // 机构
 const perf = r => require.ensure([], () => r(require('@/views/monitor/Perf.vue')), 'perf') // 菜单
@@ -67,6 +68,7 @@ routes.set("six", six)
 routes.set("seven", seven)
 routes.set("eight", eight)
 routes.set("nine", nine)
+routes.set("ten", ten)
 // monitor-监控
 routes.set("baidu", baidu)
 routes.set("perf", perf)
